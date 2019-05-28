@@ -1,20 +1,20 @@
 @file:JvmName("ImageLoadingHelper")
 
-package com.keylesspalace.tusky.util
+package tech.bigfig.roma.util
 
 import android.widget.ImageView
 import androidx.annotation.Px
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.keylesspalace.tusky.R
+import tech.bigfig.roma.R
 
 
 private val fitCenterTransformation = FitCenter()
 
 fun loadAvatar(url: String?, imageView: ImageView, @Px radius: Int, animate: Boolean) {
 
-    if(url.isNullOrBlank()) {
+    if (url.isNullOrBlank()) {
         Glide.with(imageView)
                 .load(R.drawable.avatar_default)
                 .into(imageView)

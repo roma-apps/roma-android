@@ -30,7 +30,7 @@ import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Account;
 import tech.bigfig.roma.interfaces.AccountActionListener;
 import tech.bigfig.roma.util.CustomEmojiHelper;
-import com.keylesspalace.tusky.util.ImageLoadingHelper;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 
 public class FollowRequestsAdapter extends AccountAdapter {
 

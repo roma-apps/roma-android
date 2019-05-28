@@ -37,6 +37,7 @@ import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Account;
 import tech.bigfig.roma.entity.Emoji;
 import tech.bigfig.roma.util.CustomEmojiHelper;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 
 /**
  * Created by charlag on 12/11/17.

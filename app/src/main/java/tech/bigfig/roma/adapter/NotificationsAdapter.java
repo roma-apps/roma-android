@@ -41,7 +41,7 @@ import tech.bigfig.roma.interfaces.LinkListener;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.util.CustomEmojiHelper;
 import tech.bigfig.roma.util.DateUtils;
-import com.keylesspalace.tusky.util.ImageLoadingHelper;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.LinkHelper;
 import tech.bigfig.roma.util.SmartLengthInputFilter;
 import tech.bigfig.roma.viewdata.NotificationViewData;

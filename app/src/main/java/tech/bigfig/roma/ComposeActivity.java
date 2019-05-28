@@ -85,6 +85,7 @@ import tech.bigfig.roma.network.ProgressRequestBody;
 import tech.bigfig.roma.service.SendTootService;
 import tech.bigfig.roma.util.CountUpDownLatch;
 import tech.bigfig.roma.util.DownsizeImageTask;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.ListUtils;
 import tech.bigfig.roma.util.ComposeTokenizer;
 import tech.bigfig.roma.util.SaveTootHelper;
