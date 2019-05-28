@@ -233,6 +233,10 @@ public class NotificationsFragment extends SFragment implements
         adapter.setMediaPreviewEnabled(mediaPreviewEnabled);
         boolean useAbsoluteTime = preferences.getBoolean("absoluteTimeView", false);
         adapter.setUseAbsoluteTime(useAbsoluteTime);
+        boolean showBotOverlay = preferences.getBoolean("showBotOverlay", true);
+        adapter.setShowBotOverlay(showBotOverlay);
+        boolean animateAvatar = preferences.getBoolean("animateGifAvatars", false);
+        adapter.setAnimateAvatar(animateAvatar);
         recyclerView.setAdapter(adapter);
 
         topLoading = false;
@@ -737,7 +741,7 @@ public class NotificationsFragment extends SFragment implements
         Log.w(TAG, "Didn't find a notification for ID: " + notificationId);
     }
 
-    public void onPreferenceChanged(String key) {
+    private void onPreferenceChanged(String key) {
         switch (key) {
             case "fabHide": {
                 hideFab = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("fabHide", false);
@@ -749,7 +753,6 @@ public class NotificationsFragment extends SFragment implements
                     adapter.setMediaPreviewEnabled(enabled);
                     fullyRefresh();
                 }
-                break;
             }
         }
     }

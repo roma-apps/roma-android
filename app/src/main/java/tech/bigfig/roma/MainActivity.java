@@ -36,6 +36,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageButton;
@@ -361,14 +362,25 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
         background.setColorFilter(ContextCompat.getColor(this, R.color.header_background_filter));
         background.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background_dark));
 
+        final boolean animateAvatars = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("animateGifAvatars", false);
+
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
             @Override
             public void set(ImageView imageView, Uri uri, Drawable placeholder, String tag) {
-                Glide.with(MainActivity.this)
-                        .asBitmap()
-                        .load(uri)
-                        .placeholder(placeholder)
-                        .into(imageView);
+                if(animateAvatars) {
+                    Glide.with(MainActivity.this)
+                            .load(uri)
+                            .placeholder(placeholder)
+                            .into(imageView);
+                } else {
+                    Glide.with(MainActivity.this)
+                            .asBitmap()
+                            .load(uri)
+                            .placeholder(placeholder)
+                            .into(imageView);
+                }
+
             }
 
             @Override

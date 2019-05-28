@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -61,25 +62,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.Px;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.view.inputmethod.InputConnectionCompat;
-import androidx.core.view.inputmethod.InputContentInfoCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.TransitionManager;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
@@ -103,6 +85,7 @@ import tech.bigfig.roma.network.ProgressRequestBody;
 import tech.bigfig.roma.service.SendTootService;
 import tech.bigfig.roma.util.CountUpDownLatch;
 import tech.bigfig.roma.util.DownsizeImageTask;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.ListUtils;
 import tech.bigfig.roma.util.ComposeTokenizer;
 import tech.bigfig.roma.util.SaveTootHelper;
@@ -312,14 +295,20 @@ public final class ComposeActivity
         if (activeAccount != null) {
             ImageView composeAvatar = findViewById(R.id.composeAvatar);
 
-            if (TextUtils.isEmpty(activeAccount.getProfilePictureUrl())) {
-                composeAvatar.setImageResource(R.drawable.avatar_default);
-            } else {
-                Glide.with(this).load(activeAccount.getProfilePictureUrl())
-                        .error(R.drawable.avatar_default)
-                        .placeholder(R.drawable.avatar_default)
-                        .into(composeAvatar);
-            }
+
+            int[] actionBarSizeAttr = new int[] { R.attr.actionBarSize };
+            TypedArray a = obtainStyledAttributes(null, actionBarSizeAttr);
+            int avatarSize = a.getDimensionPixelSize(0, 1);
+            a.recycle();
+
+            boolean animateAvatars = preferences.getBoolean("animateGifAvatars", false);
+
+            ImageLoadingHelper.loadAvatar(
+                    activeAccount.getProfilePictureUrl(),
+                    composeAvatar,
+                    avatarSize / 8,
+                    animateAvatars
+            );
 
             composeAvatar.setContentDescription(
                     getString(R.string.compose_active_account_description,

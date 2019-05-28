@@ -17,6 +17,8 @@ package tech.bigfig.roma.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +26,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Account;
 import tech.bigfig.roma.interfaces.AccountActionListener;
 import tech.bigfig.roma.util.CustomEmojiHelper;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 
 public class BlocksAdapter extends AccountAdapter {
 
@@ -69,6 +71,7 @@ public class BlocksAdapter extends AccountAdapter {
         private TextView displayName;
         private ImageButton unblock;
         private String id;
+        private boolean animateAvatar;
 
         BlockedUserViewHolder(View itemView) {
             super(itemView);
@@ -76,6 +79,9 @@ public class BlocksAdapter extends AccountAdapter {
             username = itemView.findViewById(R.id.blocked_user_username);
             displayName = itemView.findViewById(R.id.blocked_user_display_name);
             unblock = itemView.findViewById(R.id.blocked_user_unblock);
+            animateAvatar = PreferenceManager.getDefaultSharedPreferences(itemView.getContext())
+                    .getBoolean("animateGifAvatars", false);
+
         }
 
         void setupWithAccount(Account account) {
@@ -85,11 +91,9 @@ public class BlocksAdapter extends AccountAdapter {
             String format = username.getContext().getString(R.string.status_username_format);
             String formattedUsername = String.format(format, account.getUsername());
             username.setText(formattedUsername);
-            Glide.with(avatar)
-                    .asBitmap()
-                    .load(account.getAvatar())
-                    .placeholder(R.drawable.avatar_default)
-                    .into(avatar);
+            int avatarRadius = avatar.getContext().getResources()
+                    .getDimensionPixelSize(R.dimen.avatar_radius_48dp);
+            ImageLoadingHelper.loadAvatar(account.getAvatar(), avatar, avatarRadius, animateAvatar);
         }
 
         void setupActionListener(final AccountActionListener listener) {

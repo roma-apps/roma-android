@@ -16,6 +16,7 @@
 package tech.bigfig.roma.adapter;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Account;
 import tech.bigfig.roma.entity.Emoji;
 import tech.bigfig.roma.util.CustomEmojiHelper;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 
 /**
  * Created by charlag on 12/11/17.
@@ -146,13 +148,19 @@ public class ComposeAutoCompleteAdapter extends BaseAdapter
                     CharSequence emojifiedName = CustomEmojiHelper.emojifyString(account.getName(),
                             account.getEmojis(), accountViewHolder.displayName);
                     accountViewHolder.displayName.setText(emojifiedName);
-                    if (!account.getAvatar().isEmpty()) {
-                        Glide.with(accountViewHolder.avatar)
-                                .asBitmap()
-                                .load(account.getAvatar())
-                                .placeholder(R.drawable.avatar_default)
-                                .into(accountViewHolder.avatar);
-                    }
+
+                    int avatarRadius = accountViewHolder.avatar.getContext().getResources()
+                            .getDimensionPixelSize(R.dimen.avatar_radius_42dp);
+
+                    boolean animateAvatar = PreferenceManager.getDefaultSharedPreferences(accountViewHolder.avatar.getContext())
+                            .getBoolean("animateGifAvatars", false);
+
+                    ImageLoadingHelper.loadAvatar(
+                            account.getAvatar(),
+                            accountViewHolder.avatar,
+                            avatarRadius,
+                            animateAvatar
+                    );
                 }
                 break;
 
