@@ -352,7 +352,7 @@
 
         <include layout="@layout/item_status_bottom_sheet" />
 
-        <tech.bigfig.roma.view.RoundedImageView
+        <ImageView
             android:id="@+id/accountAvatarImageView"
             android:layout_width="@dimen/account_activity_avatar_size"
             android:layout_height="@dimen/account_activity_avatar_size"

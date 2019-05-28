@@ -67,6 +67,9 @@ import tech.bigfig.roma.receiver.SendStatusBroadcastReceiver;
 import tech.bigfig.roma.service.push.DeleteFcmTokenWorker;
 import tech.bigfig.roma.service.push.UpdateFcmTokenWorker;
 
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+
 public class NotificationHelper {
 
     private static int notificationId = 0;
@@ -458,13 +461,18 @@ public class NotificationHelper {
 
     public static void clearNotificationsForActiveAccount(@NonNull Context context, @NonNull AccountManager accountManager) {
         AccountEntity account = accountManager.getActiveAccount();
-        if (account != null) {
-            account.setActiveNotifications("[]");
-            accountManager.saveAccount(account);
+        if (account != null && !account.getActiveNotifications().equals("[]")) {
+            Single.fromCallable(() -> {
+                account.setActiveNotifications("[]");
+                accountManager.saveAccount(account);
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            //noinspection ConstantConditions
-            notificationManager.cancel((int) account.getId());
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                //noinspection ConstantConditions
+                notificationManager.cancel((int) account.getId());
+                return true;
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe();
         }
     }
 
