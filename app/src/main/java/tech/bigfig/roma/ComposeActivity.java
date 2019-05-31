@@ -86,6 +86,7 @@ import tech.bigfig.roma.network.ProgressRequestBody;
 import tech.bigfig.roma.service.SendTootService;
 import tech.bigfig.roma.util.CountUpDownLatch;
 import tech.bigfig.roma.util.DownsizeImageTask;
+import tech.bigfig.roma.util.IOUtils;
 import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.ListUtils;
 import tech.bigfig.roma.util.ComposeTokenizer;
@@ -1613,7 +1614,7 @@ public final class ComposeActivity
     private void pickMedia(Uri inUri, long mediaSize, String description) {
         Uri uri = inUri;
         ContentResolver contentResolver = getContentResolver();
-        String mimeType = contentResolver.getType(uri);
+        String mimeType = getMimeType(uri,contentResolver);
 
         InputStream tempInput = null;
         FileOutputStream out = null;
@@ -1648,9 +1649,6 @@ public final class ComposeActivity
             displayTransientError(R.string.error_media_upload_opening);
             return;
         }
-
-        ContentResolver contentResolver = getContentResolver();
-        String mimeType = getMimeType(uri,contentResolver);
 
         if (mimeType != null) {
             String topLevelType = mimeType.substring(0, mimeType.indexOf('/'));
