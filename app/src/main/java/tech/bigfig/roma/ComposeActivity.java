@@ -48,6 +48,7 @@ import android.text.TextWatcher;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -548,6 +550,8 @@ public final class ComposeActivity
                 updateVisibleCharactersLeft();
             }
         });
+
+        textEditor.setOnKeyListener((view, keyCode, event) -> this.onKeyDown(keyCode, event));
 
         textEditor.setAdapter(
                 new ComposeAutoCompleteAdapter(this));
@@ -1606,7 +1610,40 @@ public final class ComposeActivity
                 .start(this);
     }
 
-    private void pickMedia(Uri uri, long mediaSize, String description) {
+    private void pickMedia(Uri inUri, long mediaSize, String description) {
+        Uri uri = inUri;
+        ContentResolver contentResolver = getContentResolver();
+        String mimeType = contentResolver.getType(uri);
+
+        InputStream tempInput = null;
+        FileOutputStream out = null;
+        String filename = inUri.toString().substring(inUri.toString().lastIndexOf("/"));
+        int suffixPosition = filename.lastIndexOf(".");
+        String suffix = "";
+        if(suffixPosition > 0) suffix = filename.substring(suffixPosition);
+        try {
+            tempInput = getContentResolver().openInputStream(inUri);
+            File file = File.createTempFile("randomTemp1", suffix, getCacheDir());
+            out = new FileOutputStream(file.getAbsoluteFile());
+            byte[] buff = new byte[1024];
+            int read = 0;
+            while ((read = tempInput.read(buff)) > 0) {
+                out.write(buff, 0, read);
+            }
+            uri = FileProvider.getUriForFile(this,
+                    BuildConfig.APPLICATION_ID+".fileprovider",
+                    file);
+            mediaSize = getMediaSize(getContentResolver(), uri);
+            tempInput.close();
+            out.close();
+        } catch(IOException e) {
+            Log.w(TAG, e);
+            uri = inUri;
+        } finally {
+            IOUtils.closeQuietly(tempInput);
+            IOUtils.closeQuietly(out);
+        }
+
         if (mediaSize == MEDIA_SIZE_UNKNOWN) {
             displayTransientError(R.string.error_media_upload_opening);
             return;
@@ -1686,6 +1723,7 @@ public final class ComposeActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onBackPressed() {
         // Acting like a teen: deliberately ignoring parent.
@@ -1699,6 +1737,21 @@ public final class ComposeActivity
         }
 
         handleCloseButton();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, event.toString());
+        if (event.isCtrlPressed()) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                // send toot by pressing CTRL + ENTER
+                this.onSendClicked();
+                return true;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     private void handleCloseButton() {
