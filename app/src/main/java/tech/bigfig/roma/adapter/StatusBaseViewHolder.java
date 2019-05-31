@@ -135,7 +135,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         contentWarningButton = itemView.findViewById(R.id.status_content_warning_button);
         avatarInset = itemView.findViewById(R.id.status_avatar_inset);
 
-        pollResults = new TextView[] {
+        pollResults = new TextView[]{
                 itemView.findViewById(R.id.status_poll_option_result_0),
                 itemView.findViewById(R.id.status_poll_option_result_1),
                 itemView.findViewById(R.id.status_poll_option_result_2),
@@ -710,7 +710,8 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
                 getMediaDescription(context, status),
                 getVisibilityDescription(context, status.getVisibility()),
                 getFavsText(context, status.getFavouritesCount()),
-                getReblogsText(context, status.getReblogsCount())
+                getReblogsText(context, status.getReblogsCount()),
+                getPollDescription(context, status)
         );
         itemView.setContentDescription(description);
     }
@@ -759,7 +760,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     private CharSequence getVisibilityDescription(Context context, Status.Visibility visibility) {
-        if(visibility == null) {
+        if (visibility == null) {
             return "";
         }
         int resource;
@@ -782,6 +783,30 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         return context.getString(resource);
     }
 
+    private CharSequence getPollDescription(Context context,
+                                            @NonNull StatusViewData.Concrete status) {
+        Poll poll = status.getPoll();
+        if (poll == null) {
+            return "";
+        } else {
+            CharSequence[] args = new CharSequence[5];
+            List<PollOption> options = poll.getOptions();
+            for (int i = 0; i < args.length; i++) {
+                if (i < options.size()) {
+                    int percent = options.get(i).getPercent(poll.getVotesCount());
+                    args[i] = HtmlUtils.fromHtml(context.getString(
+                            R.string.poll_option_format,
+                            percent,
+                            options.get(i).getTitle()));
+                } else {
+                    args[i] = "";
+                }
+            }
+            args[4] = getPollInfoText(System.currentTimeMillis(), poll, context);
+            return context.getString(R.string.description_poll, args);
+        }
+    }
+
     protected CharSequence getFavsText(Context context, int count) {
         if (count > 0) {
             String countString = numberFormat.format(count);
@@ -801,14 +826,14 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setupPoll(Poll poll, List<Emoji> emojis, StatusActionListener listener) {
-        if(poll == null) {
-            for(TextView pollResult: pollResults) {
+        if (poll == null) {
+            for (TextView pollResult : pollResults) {
                 pollResult.setVisibility(View.GONE);
             }
             pollDescription.setVisibility(View.GONE);
             pollRadioGroup.setVisibility(View.GONE);
 
-            for(CheckBox checkBox: pollCheckboxOptions) {
+            for (CheckBox checkBox : pollCheckboxOptions) {
                 checkBox.setVisibility(View.GONE);
             }
 
@@ -820,38 +845,35 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
             Context context = pollDescription.getContext();
 
-            if(expired || poll.getVoted())   {
+            if (expired || poll.getVoted()) {
                 // no voting possible
-               setupPollResult(poll, emojis);
+                setupPollResult(poll, emojis);
             } else {
                 // voting possible
                 setupPollVoting(poll, emojis, listener);
             }
 
             pollDescription.setVisibility(View.VISIBLE);
-
-            String votes = numberFormat.format(poll.getVotesCount());
-            String votesText = context.getResources().getQuantityString(R.plurals.poll_info_votes, poll.getVotesCount(), votes);
-
-
-            CharSequence pollDurationInfo;
-            if(expired) {
-                pollDurationInfo = context.getString(R.string.poll_info_closed);
-            } else {
-                if(useAbsoluteTime) {
-                    pollDurationInfo = context.getString(R.string.poll_info_time_absolute, getAbsoluteTime(poll.getExpiresAt()));
-                } else {
-                    String pollDuration = DateUtils.formatPollDuration(pollDescription.getContext(), poll.getExpiresAt().getTime(), timestamp);
-                    pollDurationInfo = context.getString(R.string.poll_info_time_relative, pollDuration);
-                }
-            }
-
-            String pollInfo = pollDescription.getContext().getString(R.string.poll_info_format, votesText, pollDurationInfo);
-
-            pollDescription.setText(pollInfo);
-
-
+            pollDescription.setText(getPollInfoText(timestamp, poll, context));
         }
+    }
+
+    private CharSequence getPollInfoText(long timestamp, Poll poll, Context context) {
+        String votes = numberFormat.format(poll.getVotesCount());
+        String votesText = context.getResources().getQuantityString(R.plurals.poll_info_votes, poll.getVotesCount(), votes);
+        CharSequence pollDurationInfo;
+        if (poll.getExpired()) {
+            pollDurationInfo = context.getString(R.string.poll_info_closed);
+        } else {
+            if (useAbsoluteTime) {
+                pollDurationInfo = context.getString(R.string.poll_info_time_absolute, getAbsoluteTime(poll.getExpiresAt()));
+            } else {
+                String pollDuration = DateUtils.formatPollDuration(pollDescription.getContext(), poll.getExpiresAt().getTime(), timestamp);
+                pollDurationInfo = context.getString(R.string.poll_info_time_relative, pollDuration);
+            }
+        }
+
+        return pollDescription.getContext().getString(R.string.poll_info_format, votesText, pollDurationInfo);
     }
 
     private void setupPollResult(Poll poll, List<Emoji> emojis) {
