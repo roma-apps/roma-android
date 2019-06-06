@@ -87,7 +87,9 @@ class FiltersActivity : BaseActivity(), Injectable {
     private fun createFilter(phrase: String) {
         api.createFilter(phrase, listOf(context), false, true, "").enqueue(object : Callback<Filter> {
             override fun onResponse(call: Call<Filter>, response: Response<Filter>) {
-                filters.add(response.body()!!)
+                response.body()?.let {
+                    filters.add(it)
+                }
                 refreshFilterDisplay()
                 eventHub.dispatch(PreferenceChangedEvent(context))
             }

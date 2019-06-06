@@ -32,7 +32,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import tech.bigfig.roma.di.Injectable
-import tech.bigfig.roma.entity.MastoList
 import tech.bigfig.roma.fragment.TimelineFragment
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
@@ -50,6 +49,7 @@ import at.connyduck.sparkbutton.helpers.Utils
 import com.google.android.material.snackbar.Snackbar
 import tech.bigfig.roma.viewmodel.ListsViewModel
 import tech.bigfig.roma.di.ViewModelFactory
+import tech.bigfig.roma.entity.MastoList
 import tech.bigfig.roma.util.*
 
 /**

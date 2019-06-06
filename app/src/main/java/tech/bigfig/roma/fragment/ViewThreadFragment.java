@@ -18,7 +18,6 @@ package tech.bigfig.roma.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -93,7 +92,6 @@ public final class ViewThreadFragment extends SFragment implements
     private RecyclerView recyclerView;
     private ThreadAdapter adapter;
     private String thisThreadsStatusId;
-    private Card card;
     private boolean alwaysShowSensitiveMedia;
 
     private int statusIndex = 0;
@@ -110,7 +108,7 @@ public final class ViewThreadFragment extends SFragment implements
             });
 
     public static ViewThreadFragment newInstance(String id) {
-        Bundle arguments = new Bundle();
+        Bundle arguments = new Bundle(1);
         ViewThreadFragment fragment = new ViewThreadFragment();
         arguments.putString("id", id);
         fragment.setArguments(arguments);
@@ -148,10 +146,7 @@ public final class ViewThreadFragment extends SFragment implements
                 context, layoutManager.getOrientation());
         recyclerView.addItemDecoration(divider);
 
-        Drawable threadLineDrawable = ThemeUtils.getDrawable(context, R.attr.conversation_thread_line_drawable,
-                R.drawable.conversation_thread_line_dark);
-        recyclerView.addItemDecoration(new ConversationLineItemDecoration(context,
-                threadLineDrawable));
+        recyclerView.addItemDecoration(new ConversationLineItemDecoration(context));
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(
                 getActivity());
         alwaysShowSensitiveMedia = accountManager.getActiveAccount().getAlwaysShowSensitiveMedia();
@@ -159,6 +154,9 @@ public final class ViewThreadFragment extends SFragment implements
         adapter.setMediaPreviewEnabled(mediaPreviewEnabled);
         boolean useAbsoluteTime = preferences.getBoolean("absoluteTimeView", false);
         adapter.setUseAbsoluteTime(useAbsoluteTime);
+        boolean animateAvatars = preferences.getBoolean("animateGifAvatars", false);
+        adapter.setAnimateAvatar(animateAvatars);
+
         recyclerView.setAdapter(adapter);
 
         statuses.clear();
@@ -219,7 +217,6 @@ public final class ViewThreadFragment extends SFragment implements
     public void onRefresh() {
         sendStatusRequest(thisThreadsStatusId);
         sendThreadRequest(thisThreadsStatusId);
-        sendCardRequest(thisThreadsStatusId);
     }
 
     @Override
@@ -236,11 +233,8 @@ public final class ViewThreadFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> updateStatus(position, newStatus),
-                        (t) -> {
-                            Log.d(getClass().getSimpleName(),
-                                    "Failed to reblog status: " + status.getId());
-                            t.printStackTrace();
-                        }
+                        (t) -> Log.d(getClass().getSimpleName(),
+                                "Failed to reblog status: " + status.getId(), t)
                 );
     }
 
@@ -253,10 +247,8 @@ public final class ViewThreadFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> updateStatus(position, newStatus),
-                        (t) -> {
-                            Log.d(getClass().getSimpleName(), "Failed to favourite status: " + status.getId());
-                            t.printStackTrace();
-                        }
+                        (t) -> Log.d(getClass().getSimpleName(),
+                                "Failed to favourite status: " + status.getId(), t)
                 );
     }
 
@@ -488,26 +480,6 @@ public final class ViewThreadFragment extends SFragment implements
         callList.add(call);
     }
 
-    private void sendCardRequest(final String id) {
-        Call<Card> call = mastodonApi.statusCard(id);
-        call.enqueue(new Callback<Card>() {
-            @Override
-            public void onResponse(@NonNull Call<Card> call, @NonNull Response<Card> response) {
-                if (response.isSuccessful()) {
-                    showCard(response.body());
-                } else {
-                    onThreadRequestFailure(id);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Card> call, @NonNull Throwable t) {
-                Log.e(TAG, "Error fetching status card");
-            }
-        });
-        callList.add(call);
-    }
-
     private void onThreadRequestFailure(final String id) {
         View view = getView();
         swipeRefreshLayout.setRefreshing(false);
@@ -516,7 +488,6 @@ public final class ViewThreadFragment extends SFragment implements
                     .setAction(R.string.action_retry, v -> {
                         sendThreadRequest(id);
                         sendStatusRequest(id);
-                        sendCardRequest(id);
                     })
                     .show();
         } else {
@@ -535,14 +506,7 @@ public final class ViewThreadFragment extends SFragment implements
         int i = statusIndex;
         statuses.add(i, status);
         adapter.setDetailedStatusPosition(i);
-        StatusViewData.Concrete viewData = statuses.getPairedItem(i);
-        if (viewData.getCard() == null && card != null) {
-            viewData = new StatusViewData.Builder(viewData)
-                    .setCard(card)
-                    .createStatusViewData();
-        }
-        statuses.setPairedItem(i, viewData);
-        adapter.addItem(i, viewData);
+        adapter.addItem(i, statuses.getPairedItem(i));
         updateRevealIcon();
         return i;
     }
@@ -579,13 +543,7 @@ public final class ViewThreadFragment extends SFragment implements
             // everything except one), re-insert the remaining status here.
             statuses.add(statusIndex, mainStatus);
             StatusViewData.Concrete viewData = statuses.getPairedItem(statusIndex);
-            if (viewData.getCard() == null && card != null) {
-                viewData = new StatusViewData.Builder(viewData)
-                        .setCard(card)
-                        .createStatusViewData();
-                statuses.setPairedItem(statusIndex, viewData);
 
-            }
             adapter.addItem(statusIndex, viewData);
         }
 
@@ -606,28 +564,10 @@ public final class ViewThreadFragment extends SFragment implements
         updateRevealIcon();
     }
 
-    private void showCard(Card card) {
-        this.card = card;
-        if (statusIndex >= 0 && statusIndex < statuses.size()) {
-            StatusViewData.Concrete newViewData =
-                    new StatusViewData.Builder(statuses.getPairedItem(statusIndex))
-                            .setCard(card)
-                            .createStatusViewData();
-
-            statuses.setPairedItem(statusIndex, newViewData);
-            adapter.setItem(statusIndex, newViewData, true);
-        }
-    }
-
-    public void clear() {
-        statuses.clear();
-        adapter.clear();
-    }
-
     private void handleFavEvent(FavouriteEvent event) {
         Pair<Integer, Status> posAndStatus = findStatusAndPos(event.getStatusId());
         if (posAndStatus == null) return;
-        //noinspection ConstantConditions
+
         boolean favourite = event.getFavourite();
         posAndStatus.second.setFavourited(favourite);
 
@@ -649,7 +589,7 @@ public final class ViewThreadFragment extends SFragment implements
     private void handleReblogEvent(ReblogEvent event) {
         Pair<Integer, Status> posAndStatus = findStatusAndPos(event.getStatusId());
         if (posAndStatus == null) return;
-        //noinspection ConstantConditions
+
         boolean reblog = event.getReblog();
         posAndStatus.second.setReblogged(reblog);
 
