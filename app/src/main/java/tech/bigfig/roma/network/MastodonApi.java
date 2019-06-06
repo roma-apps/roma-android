@@ -314,11 +314,6 @@ public interface MastodonApi {
             @Field("grant_type") String grantType
     );
 
-    @GET("/api/v1/statuses/{id}/card")
-    Call<Card> statusCard(
-            @Path("id") String statusId
-    );
-
     @GET("/api/v1/lists")
     Single<List<MastoList>> getLists();
 

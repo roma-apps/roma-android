@@ -23,8 +23,12 @@ import android.view.View
 
 import tech.bigfig.roma.R
 import tech.bigfig.roma.adapter.ThreadAdapter
+import tech.bigfig.roma.util.ThemeUtils
 
-class ConversationLineItemDecoration(private val context: Context, private val divider: Drawable) : RecyclerView.ItemDecoration() {
+class ConversationLineItemDecoration(private val context: Context) : RecyclerView.ItemDecoration() {
+
+    private val divider: Drawable  = ThemeUtils.getDrawable(context, R.attr.conversation_thread_line_drawable,
+            R.drawable.conversation_thread_line_dark)
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val dividerStart = parent.paddingStart + context.resources.getDimensionPixelSize(R.dimen.status_line_margin_start)
