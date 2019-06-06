@@ -43,6 +43,8 @@ import tech.bigfig.roma.AccountActivity
 import tech.bigfig.roma.ViewTagActivity
 import tech.bigfig.roma.util.hide
 import kotlinx.android.synthetic.main.fragment_timeline.*
+import tech.bigfig.roma.chat.ChatActivity
+import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.interfaces.ReselectableFragment
 
 class ConversationsFragment : SFragment(), StatusActionListener, Injectable, ReselectableFragment {
@@ -58,6 +60,8 @@ class ConversationsFragment : SFragment(), StatusActionListener, Injectable, Res
 
     private var layoutManager: LinearLayoutManager? = null
 
+    private var useChatLayout = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this, viewModelFactory)[ConversationsViewModel::class.java]
 
@@ -71,7 +75,6 @@ class ConversationsFragment : SFragment(), StatusActionListener, Injectable, Res
 
         val account = accountManager.activeAccount
         val mediaPreviewEnabled = account?.mediaPreviewEnabled ?: true
-
 
         adapter = ConversationAdapter(useAbsoluteTime, mediaPreviewEnabled, this, ::onTopLoaded, viewModel::retry)
 
@@ -134,7 +137,17 @@ class ConversationsFragment : SFragment(), StatusActionListener, Injectable, Res
 
     override fun onViewThread(position: Int) {
         viewModel.conversations.value?.getOrNull(position)?.lastStatus?.let {
-            viewThread(it.toStatus())
+            if (useChatLayout)
+                viewThreadAsChat(it.toStatus())
+            else
+                viewThread(it.toStatus())
+        }
+    }
+
+    private fun viewThreadAsChat(status: Status) {
+        val actionableStatus = status.actionableStatus
+        context?.let { context->
+            ChatActivity.show(context, actionableStatus.id, actionableStatus.url)
         }
     }
 
@@ -194,6 +207,11 @@ class ConversationsFragment : SFragment(), StatusActionListener, Injectable, Res
         viewModel.voteInPoll(position, choices)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        useChatLayout = preferences.getBoolean("useChatLayout",true)
+    }
     companion object {
         fun newInstance() = ConversationsFragment()
     }

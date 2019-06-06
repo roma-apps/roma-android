@@ -398,4 +398,31 @@ public interface MastodonApi {
             @Path("id") String id,
             @Field("choices[]") List<Integer> choices
     );
+
+    @GET("api/v1/statuses/{id}")
+    Single<Status> statusObservable(@Path("id") String statusId);
+
+    @GET("api/v1/statuses/{id}/context")
+    Single<StatusContext> statusContextObservable(@Path("id") String statusId);
+
+    @FormUrlEncoded
+    @POST("api/v1/statuses")
+    Single<Status> createStatusObservable(
+            @Header("Authorization") String auth,
+            @Header(DOMAIN_HEADER) String domain,
+            @Field("status") String text,
+            @Field("in_reply_to_id") String inReplyToId,
+            @Field("spoiler_text") String warningText,
+            @Field("visibility") String visibility,
+            @Field("sensitive") Boolean sensitive,
+            @Field("media_ids[]") List<String> mediaIds,
+            @Header("Idempotency-Key") String idempotencyKey);
+
+    @Multipart
+    @POST("api/v1/media")
+    Single<Attachment> uploadMediaObservable(@Part MultipartBody.Part file);
+
+    @DELETE("api/v1/statuses/{id}")
+    Single<ResponseBody> deleteStatusObservable(@Path("id") String statusId);
+
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="chat_me">#9cd156</color>
+    <color name="chat_other">#eeeeee</color>
+    <color name="black">@android:color/black</color>
+    <color name="error">#B10E0E</color>
+    <color name="chat_settings_icon_light">#444444</color>
+    <color name="chat_settings_icon_dark">#dddddd</color>
+</resources>

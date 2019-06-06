@@ -19,7 +19,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/RomaTheme">
-        <activity android:name=".PrivacyPolicyActivity"/>
+        <activity android:name=".chat.ChatActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".PrivacyPolicyActivity" />
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
@@ -33,13 +35,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".SavedTootActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".LoginActivity"
             android:windowSoftInputMode="adjustResize">
@@ -56,7 +59,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ComposeActivity"
             android:theme="@style/RomaDialogActivityTheme"
@@ -182,6 +185,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"

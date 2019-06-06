@@ -11,8 +11,8 @@ android {
         applicationId "tech.bigfig.roma"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 82
-        versionName "7.2"
+        versionCode 85
+        versionName "7.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -71,6 +71,10 @@ android {
             // bundle all languages in every apk so the dynamic language switching works
             enableSplit = false
         }
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 

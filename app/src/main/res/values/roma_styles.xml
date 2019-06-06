@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Chat" parent="TextAppearance.AppCompat" />
+    <style name="TextAppearance.Chat.Date">
+        <item name="android:textSize">?attr/status_text_small</item>
+        <item name="android:textColor">?attr/chat_date_text_color</item>
+    </style>
+    <style name="TextAppearance.Chat.Content">
+        <item name="android:textSize">?attr/status_text_medium</item>
+    </style>
+    <style name="TextAppearance.Chat.Content.Me">
+        <item name="android:textColor">?attr/chat_me_text_color</item>
+    </style>
+    <style name="TextAppearance.Chat.Content.Other">
+        <item name="android:textColor">?attr/chat_other_text_color</item>
+    </style>
+
+</resources>

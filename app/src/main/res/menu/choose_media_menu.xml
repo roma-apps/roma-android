@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/takePhoto"
+        android:title="@string/action_photo_take"/>
+    <item android:id="@+id/pickMedia"
+        android:title="@string/action_add_media" />
+</menu>

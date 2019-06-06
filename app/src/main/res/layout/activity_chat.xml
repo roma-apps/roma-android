@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tech.bigfig.roma.chat.ChatActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.bigfig.roma.chat.ChatViewModel" />
+
+        <variable
+            name="clickHandler"
+            type="tech.bigfig.roma.chat.ClickHandler" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/activity_view_thread"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_basic" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:isRefreshing="@{viewModel.isRefreshing}"
+                app:layout_constraintBottom_toTopOf="@id/divider"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/items"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isLoading &amp;&amp; viewModel.statuses==null?View.VISIBLE:View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <tech.bigfig.roma.view.BackgroundMessageView
+                android:id="@+id/statusView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:color/transparent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/elephant_error"
+                tools:visibility="visible" />
+
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@id/layoutMessage" />
+
+            <ImageView
+                android:id="@+id/imagePreview"
+                android:layout_width="@dimen/chat_upload_media_preview_width"
+                android:layout_height="@dimen/chat_upload_media_preview_height"
+                android:scaleType="centerCrop"
+                android:elevation="8dp"
+                android:visibility="@{viewModel.uploadingMediaThumbnail==null?View.GONE:View.VISIBLE}"
+                app:bitmap="@{viewModel.uploadingMediaThumbnail}"
+                app:layout_constraintBottom_toTopOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ContentDescription" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"
+                app:layout_constraintTop_toTopOf="@id/imagePreview"
+                app:layout_constraintBottom_toBottomOf="@id/imagePreview"
+                android:elevation="8dp"
+                android:background="#33000000"
+                />
+            <View
+                android:id="@+id/backgroundError"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"
+                app:layout_constraintTop_toTopOf="@id/imagePreview"
+                app:layout_constraintBottom_toBottomOf="@id/imagePreview"
+                android:elevation="8dp"
+                android:background="#99000000"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressBarImage"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:progress="@{viewModel.uploadingProgress}"
+                app:layout_constraintBottom_toBottomOf="@id/imagePreview"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintTop_toTopOf="@id/imagePreview" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupMediaUploading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.uploadingMediaThumbnail!=null&amp;&amp;!viewModel.uploadingMediaError?View.VISIBLE:View.GONE}"
+                app:constraint_referenced_ids="progressBarImage" />
+
+            <ImageView
+                android:id="@+id/iconError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_error_black_24dp"
+                android:tint="@color/error"
+                android:elevation="8dp"
+                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintTop_toTopOf="@id/imagePreview"
+                app:layout_constraintBottom_toTopOf="@id/buttonTryAgain"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonTryAgain"
+                style="@style/RomaButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:elevation="8dp"
+                android:onClick="@{v->clickHandler.onTryUploadAgain()}"
+                app:icon="@drawable/ic_repeat_24dp"
+                app:layout_constraintVertical_chainStyle="spread"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintEnd_toStartOf="@id/buttonCancel"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintTop_toBottomOf="@id/iconError"
+                app:layout_constraintBottom_toBottomOf="@id/imagePreview"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonCancel"
+                style="@style/RomaButton.Outlined"
+                android:layout_width="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:elevation="8dp"
+                app:icon="@drawable/ic_close_24dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:onClick="@{v->clickHandler.onCancelUpload()}"
+                app:layout_constraintBottom_toBottomOf="@id/buttonTryAgain"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"
+                app:layout_constraintStart_toEndOf="@id/buttonTryAgain"
+                app:layout_constraintTop_toTopOf="@id/buttonTryAgain" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupMediaError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.uploadingMediaThumbnail!=null&amp;&amp;viewModel.uploadingMediaError?View.VISIBLE:View.GONE}"
+                app:constraint_referenced_ids="iconError,buttonTryAgain,buttonCancel,backgroundError" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAttach"
+                style="@style/RomaButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:enabled="@{viewModel.uploadingMediaThumbnail==null}"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:onClick="@{v->clickHandler.onAttachClick()}"
+                android:padding="8dp"
+                app:icon="@drawable/ic_attach_file_24dp"
+                app:layout_constraintBottom_toBottomOf="@id/layoutMessage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/layoutMessage" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutMessage"
+                style="@style/RomaTextInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:hintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonSend"
+                app:layout_constraintStart_toEndOf="@id/buttonAttach">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{!viewModel.isSending}"
+                    android:hint="@string/hint_direct_message"
+                    android:text="@={viewModel.messageText}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSend"
+                style="@style/RomaButton.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:enabled="@{!viewModel.isSending &amp;&amp; !TextUtils.isEmpty(viewModel.messageText)}"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:onClick="@{v->clickHandler.onSendClick()}"
+                android:padding="8dp"
+                app:icon="@drawable/ic_send_24dp"
+                app:layout_constraintBottom_toBottomOf="@id/layoutMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/layoutMessage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

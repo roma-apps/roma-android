@@ -31,6 +31,14 @@ public class DateUtils {
      * This is a rough duplicate of {@link android.text.format.DateUtils#getRelativeTimeSpanString},
      * but even with the FORMAT_ABBREV_RELATIVE flag it wasn't abbreviating enough.
      */
+    public static String getRelativeTimeSpanStringForChat(Context context, long then, long now) {
+        if (Math.abs(then - now) <= 5000)
+            return context.getString(R.string.now);
+        else
+            return android.text.format.DateUtils.getRelativeTimeSpanString(then, now, DateUtils.SECOND_IN_MILLIS).toString();
+
+    }
+
     public static String getRelativeTimeSpanString(Context context, long then, long now) {
         long span = now - then;
         boolean future = false;
@@ -77,6 +85,7 @@ public class DateUtils {
         }
         return context.getString(format, span);
     }
+
 
     public static String formatPollDuration(Context context, long then, long now) {
         long span = then - now;

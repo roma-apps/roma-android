@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="chat_me_color" format="reference|color" />
+    <attr name="chat_other_color" format="reference|color" />
+    <attr name="chat_me_text_color" format="reference|color" />
+    <attr name="chat_other_text_color" format="reference|color" />
+    <attr name="chat_date_text_color" format="reference|color" />
+    <attr name="chat_settings_icon_color" format="reference|color" />
+</resources>

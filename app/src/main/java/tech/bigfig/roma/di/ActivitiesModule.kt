@@ -18,12 +18,13 @@ package tech.bigfig.roma.di
 import tech.bigfig.roma.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import tech.bigfig.roma.chat.di.ChatModule
 
 /**
  * Created by charlag on 3/24/18.
  */
 
-@Module
+@Module(includes = [ChatModule::class])
 abstract class ActivitiesModule {
 
     @ContributesAndroidInjector

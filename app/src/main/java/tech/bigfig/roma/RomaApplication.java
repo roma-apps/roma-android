@@ -24,6 +24,7 @@ import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.emoji.text.EmojiCompat;
 import androidx.room.Room;
 import androidx.work.RxWorker;
@@ -53,6 +54,7 @@ import tech.bigfig.roma.di.HasWorkerInjector;
 import tech.bigfig.roma.util.EmojiCompatFont;
 import tech.bigfig.roma.util.LocaleManager;
 import tech.bigfig.roma.util.NotificationPullJobCreator;
+import tech.bigfig.roma.util.binding.BindingComponent;
 
 public class RomaApplication extends Application implements HasActivityInjector, HasServiceInjector, HasBroadcastReceiverInjector,
         HasWorkerInjector {
@@ -78,7 +80,7 @@ public class RomaApplication extends Application implements HasActivityInjector,
     public void onCreate() {
         super.onCreate();
         initCrashlytics();
-
+        DataBindingUtil.setDefaultComponent(new BindingComponent());
         initSecurityProvider();
 
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "romaDB")

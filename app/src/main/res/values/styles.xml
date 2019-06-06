@@ -139,7 +139,12 @@
         <item name="minTouchTargetSize">32dp</item> <!-- this affects RadioButton size -->
 
         <item name="pollOptionBackgroundColor">@color/color_primary_dark_light</item>
-
+        <item name="chat_me_color">@color/chat_me</item>
+        <item name="chat_me_text_color">@color/white</item>
+        <item name="chat_other_color">@color/chat_other</item>
+        <item name="chat_other_text_color">@color/black</item>
+        <item name="chat_date_text_color">@color/color_primary_dark_light</item>
+        <item name="chat_settings_icon_color">@color/chat_settings_icon_dark</item>
     </style>
 
     <style name="RomaImageButton.Light" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">

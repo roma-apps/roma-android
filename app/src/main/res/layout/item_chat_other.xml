@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="status"
+            type="tech.bigfig.roma.entity.Status" />
+
+        <variable
+            name="date"
+            type="String" />
+
+        <variable
+            name="clickHandler"
+            type="tech.bigfig.roma.chat.adapter.AdapterClickHandler" />
+
+        <variable
+            name="isShowContent"
+            type="androidx.databinding.ObservableBoolean" />
+
+        <variable
+            name="isShowText"
+            type="Boolean" />
+
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <import type="tech.bigfig.roma.entity.Attachment" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/chat_base_padding"
+        android:paddingTop="@dimen/chat_between_messages_padding"
+        android:paddingEnd="@dimen/chat_large_padding"
+        android:paddingBottom="@dimen/chat_between_messages_padding">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/chat_avatar_size"
+                android:layout_height="@dimen/chat_avatar_size"
+                android:onClick="@{v -> clickHandler.onAvatarClick(status.account)}"
+                app:avatar="@{status.account.avatar}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateView"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/chat_radius"
+                android:text="@{date}"
+                android:textAppearance="@style/TextAppearance.Chat.Date"
+                android:visibility="@{TextUtils.isEmpty(date)?View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@id/layoutContent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layoutContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/chat_small_padding"
+                android:orientation="horizontal"
+                android:visibility="@{TextUtils.isEmpty(status.content)||!isShowText?View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintTop_toBottomOf="@id/dateView"
+                >
+
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chat_background_other"
+                    android:minHeight="32dp"
+                    android:paddingStart="@dimen/chat_message_h_padding"
+                    android:paddingTop="@dimen/chat_message_v_padding"
+                    android:paddingEnd="@dimen/chat_message_h_padding"
+                    android:paddingBottom="@dimen/chat_message_v_padding"
+                    android:textAppearance="@style/TextAppearance.Chat.Content.Other"
+                    android:textColorLink="?attr/chat_other_text_color" />
+                <ImageButton
+                    android:id="@+id/settingsText"
+                    android:layout_width="@dimen/default_button_size"
+                    android:layout_height="@dimen/default_button_size"
+                    android:layout_gravity="bottom"
+                    android:onClick="@{v->clickHandler.onOtherStatusSettingsClick(v,status)}"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_settings_black_24dp"
+                    android:tint="?attr/chat_settings_icon_color"
+                    />
+            </LinearLayout>
+            <ImageButton
+                android:id="@+id/settingsMedia"
+                android:layout_width="@dimen/default_button_size"
+                android:layout_height="@dimen/default_button_size"
+                android:layout_gravity="bottom"
+                android:onClick="@{v->clickHandler.onOtherStatusSettingsClick(v,status)}"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_settings_black_24dp"
+                android:tint="?attr/chat_settings_icon_color"
+                android:visibility="@{status.attachments==null || status.attachments.size()==0 || safeUnbox(isShowText)?View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toEndOf="@id/layoutMediaPreview"
+                app:layout_constraintBottom_toBottomOf="@id/layoutMediaPreview"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutMediaPreview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/chat_base_padding"
+                app:layout_goneMarginTop="0dp"
+                android:layout_marginStart="@dimen/chat_small_padding"
+                android:background="@drawable/chat_background_other"
+                android:importantForAccessibility="noHideDescendants"
+                android:visibility="@{status.attachments==null || status.attachments.size()==0?View.GONE:View.VISIBLE}"
+                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintTop_toBottomOf="@id/layoutContent"
+                app:layout_constraintWidth_percent="@{status.attachments!=null &amp;&amp; status.attachments.size()==1?0.7f:0.8f}">
+
+                <ImageView
+                    android:id="@+id/status_media_preview_0"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/chat_media_preview_item_height"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{v->clickHandler.onAttachClick(v,status, 0)}"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>0?View.VISIBLE:View.GONE}"
+                    app:chatPreview="@{status}"
+                    app:chatPreviewIdx="@{0}"
+                    app:cropRadius="@{(int)(@dimen/chat_radius)}"
+                    app:layout_constraintEnd_toStartOf="@+id/status_media_preview_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_preview_1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/chat_media_preview_item_height"
+                    android:layout_marginStart="4dp"
+                    android:onClick="@{v->clickHandler.onAttachClick(v,status, 1)}"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>1?View.VISIBLE:View.GONE}"
+                    app:chatPreview="@{status}"
+                    app:chatPreviewIdx="@{1}"
+                    app:cropRadius="@{(int)(@dimen/chat_radius)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/status_media_preview_0"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+
+                <ImageView
+                    android:id="@+id/status_media_preview_2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/chat_media_preview_item_height"
+                    android:layout_marginTop="4dp"
+                    android:onClick="@{v->clickHandler.onAttachClick(v,status, 2)}"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>2?View.VISIBLE:View.GONE}"
+                    app:chatPreview="@{status}"
+                    app:chatPreviewIdx="@{2}"
+                    app:cropRadius="@{(int)(@dimen/chat_radius)}"
+                    app:layout_constraintEnd_toStartOf="@+id/status_media_preview_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/status_media_preview_0"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_preview_3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/chat_media_preview_item_height"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:onClick="@{v->clickHandler.onAttachClick(v,status, 3)}"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>3?View.VISIBLE:View.GONE}"
+                    app:chatPreview="@{status}"
+                    app:chatPreviewIdx="@{3}"
+                    app:cropRadius="@{(int)(@dimen/chat_radius)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/status_media_preview_2"
+                    app:layout_constraintTop_toTopOf="@+id/status_media_preview_2"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_overlay_0"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="center"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>0 &amp;&amp; (status.attachments.get(0).type == Attachment.Type.VIDEO || status.attachments.get(0).type == Attachment.Type.GIFV)?View.VISIBLE:View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_0"
+                    app:layout_constraintEnd_toEndOf="@+id/status_media_preview_0"
+                    app:layout_constraintStart_toStartOf="@+id/status_media_preview_0"
+                    app:layout_constraintTop_toTopOf="@+id/status_media_preview_0"
+                    app:srcCompat="?attr/play_indicator_drawable"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_overlay_1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="center"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>1 &amp;&amp; (status.attachments.get(1).type == Attachment.Type.VIDEO || status.attachments.get(1).type == Attachment.Type.GIFV)?View.VISIBLE:View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_1"
+                    app:layout_constraintEnd_toEndOf="@+id/status_media_preview_1"
+                    app:layout_constraintStart_toStartOf="@+id/status_media_preview_1"
+                    app:layout_constraintTop_toTopOf="@+id/status_media_preview_1"
+                    app:srcCompat="?attr/play_indicator_drawable"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_overlay_2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="center"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>2 &amp;&amp; (status.attachments.get(2).type == Attachment.Type.VIDEO || status.attachments.get(2).type == Attachment.Type.GIFV)?View.VISIBLE:View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_2"
+                    app:layout_constraintEnd_toEndOf="@+id/status_media_preview_2"
+                    app:layout_constraintStart_toStartOf="@+id/status_media_preview_2"
+                    app:layout_constraintTop_toTopOf="@+id/status_media_preview_2"
+                    app:srcCompat="?attr/play_indicator_drawable"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/status_media_overlay_3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="center"
+                    android:visibility="@{status.attachments!=null &amp;&amp; status.attachments.size()>3 &amp;&amp; (status.attachments.get(3).type == Attachment.Type.VIDEO || status.attachments.get(3).type == Attachment.Type.GIFV)?View.VISIBLE:View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_3"
+                    app:layout_constraintEnd_toEndOf="@+id/status_media_preview_3"
+                    app:layout_constraintStart_toStartOf="@+id/status_media_preview_3"
+                    app:layout_constraintTop_toTopOf="@+id/status_media_preview_3"
+                    app:srcCompat="?attr/play_indicator_drawable"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    android:id="@+id/status_sensitive_media_warning"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/chat_sensitive_background"
+                    android:gravity="center"
+                    android:importantForAccessibility="no"
+                    android:lineSpacingMultiplier="1.2"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="?attr/status_text_medium"
+                    android:visibility="@{isShowContent?View.GONE:View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/status_sensitive_media_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:contentDescription="@null"
+                    android:onClick="@{v->clickHandler.toggleContent(status)}"
+                    android:padding="@dimen/status_sensitive_media_button_padding"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_eye_24dp" />
+
+                <TextView
+                    android:id="@+id/status_media_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:importantForAccessibility="no"
+                    android:textSize="?attr/status_text_medium"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>
