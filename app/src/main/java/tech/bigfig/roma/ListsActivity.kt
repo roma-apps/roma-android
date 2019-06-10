@@ -38,7 +38,7 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_lists.*
 import kotlinx.android.synthetic.main.toolbar_basic.*
@@ -56,7 +56,7 @@ import tech.bigfig.roma.util.*
  * Created by charlag on 1/4/18.
  */
 
-class ListsActivity : BaseActivity(), Injectable, HasSupportFragmentInjector {
+class ListsActivity : BaseActivity(), Injectable, HasAndroidInjector {
 
     companion object {
         @JvmStatic
@@ -69,7 +69,7 @@ class ListsActivity : BaseActivity(), Injectable, HasSupportFragmentInjector {
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     private lateinit var viewModel: ListsViewModel
     private val adapter = ListsAdapter()
@@ -208,7 +208,7 @@ class ListsActivity : BaseActivity(), Injectable, HasSupportFragmentInjector {
         }
     }
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector() = dispatchingAndroidInjector
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {

@@ -22,12 +22,6 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.emoji.text.EmojiCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.mikepenz.iconics.utils.Utils;
 

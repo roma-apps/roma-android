@@ -3,18 +3,16 @@ package tech.bigfig.roma
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.fragment.app.Fragment
 import android.view.MenuItem
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import tech.bigfig.roma.fragment.TimelineFragment
 import tech.bigfig.roma.interfaces.ActionButtonActivity
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.toolbar_basic.*
 import javax.inject.Inject
 
-class ModalTimelineActivity : BottomSheetActivity(), ActionButtonActivity, HasSupportFragmentInjector {
+class ModalTimelineActivity : BottomSheetActivity(), ActionButtonActivity, HasAndroidInjector {
 
     companion object {
         private const val ARG_KIND = "kind"
@@ -32,7 +30,7 @@ class ModalTimelineActivity : BottomSheetActivity(), ActionButtonActivity, HasSu
     }
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +64,6 @@ class ModalTimelineActivity : BottomSheetActivity(), ActionButtonActivity, HasSu
         return false
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingAndroidInjector
-    }
+    override fun androidInjector() = dispatchingAndroidInjector
 
 }

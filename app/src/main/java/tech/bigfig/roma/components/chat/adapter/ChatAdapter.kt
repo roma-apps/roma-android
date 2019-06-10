@@ -1,4 +1,4 @@
-package tech.bigfig.roma.chat.adapter
+package tech.bigfig.roma.components.chat.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tech.bigfig.roma.BR
 import tech.bigfig.roma.R
-import tech.bigfig.roma.chat.AdapterListener
+import tech.bigfig.roma.components.chat.AdapterListener
 import tech.bigfig.roma.entity.Account
 import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.interfaces.BindableViewHolder

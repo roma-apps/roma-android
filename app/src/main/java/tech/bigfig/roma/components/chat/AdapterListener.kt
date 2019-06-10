@@ -1,4 +1,4 @@
-package tech.bigfig.roma.chat
+package tech.bigfig.roma.components.chat
 
 import android.view.View
 import tech.bigfig.roma.entity.Status

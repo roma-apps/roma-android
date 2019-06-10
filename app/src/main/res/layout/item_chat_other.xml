@@ -15,7 +15,7 @@
 
         <variable
             name="clickHandler"
-            type="tech.bigfig.roma.chat.adapter.AdapterClickHandler" />
+            type="tech.bigfig.roma.components.chat.adapter.AdapterClickHandler" />
 
         <variable
             name="isShowContent"

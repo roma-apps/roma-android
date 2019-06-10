@@ -18,22 +18,17 @@ package tech.bigfig.roma
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.MenuItem
-
 import tech.bigfig.roma.fragment.AccountListFragment
-
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import kotlinx.android.synthetic.main.toolbar_basic.*
 import javax.inject.Inject
 
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.toolbar_basic.*
-
-class AccountListActivity : BaseActivity(), HasSupportFragmentInjector {
+class AccountListActivity : BaseActivity(), HasAndroidInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     enum class Type {
         FOLLOWS,
@@ -83,9 +78,7 @@ class AccountListActivity : BaseActivity(), HasSupportFragmentInjector {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
-        return dispatchingAndroidInjector
-    }
+    override fun androidInjector() = dispatchingAndroidInjector
 
     companion object {
         private const val EXTRA_TYPE = "type"

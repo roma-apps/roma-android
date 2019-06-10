@@ -1,4 +1,4 @@
-package tech.bigfig.roma.chat
+package tech.bigfig.roma.components.chat
 
 /**
  * Created by pandasoft (joelpyska1@gmail.com) on 2019-05-17.

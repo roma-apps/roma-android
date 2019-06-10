@@ -1,12 +1,12 @@
-package tech.bigfig.roma.chat.di
+package tech.bigfig.roma.components.chat.di
 
 import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
-import tech.bigfig.roma.chat.ChatActivity
-import tech.bigfig.roma.chat.ChatViewModel
+import tech.bigfig.roma.components.chat.ChatActivity
+import tech.bigfig.roma.components.chat.ChatViewModel
 import tech.bigfig.roma.di.ViewModelKey
 
 /**

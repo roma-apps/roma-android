@@ -18,11 +18,9 @@ package tech.bigfig.roma.components.conversation
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
@@ -35,7 +33,6 @@ import tech.bigfig.roma.di.Injectable
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.fragment.SFragment
 import tech.bigfig.roma.interfaces.StatusActionListener
-import tech.bigfig.roma.network.TimelineCases
 import tech.bigfig.roma.util.NetworkState
 import tech.bigfig.roma.util.ThemeUtils
 import javax.inject.Inject
@@ -43,7 +40,7 @@ import tech.bigfig.roma.AccountActivity
 import tech.bigfig.roma.ViewTagActivity
 import tech.bigfig.roma.util.hide
 import kotlinx.android.synthetic.main.fragment_timeline.*
-import tech.bigfig.roma.chat.ChatActivity
+import tech.bigfig.roma.components.chat.ChatActivity
 import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.interfaces.ReselectableFragment
 

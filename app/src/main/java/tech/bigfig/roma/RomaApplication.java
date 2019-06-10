@@ -15,7 +15,6 @@
 
 package tech.bigfig.roma;
 
-import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -42,32 +41,23 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
-import dagger.android.HasBroadcastReceiverInjector;
-import dagger.android.HasServiceInjector;
+import dagger.android.HasAndroidInjector;
 import io.fabric.sdk.android.Fabric;
 import tech.bigfig.roma.db.AccountManager;
 import tech.bigfig.roma.db.AppDatabase;
 import tech.bigfig.roma.di.AppInjector;
 import tech.bigfig.roma.di.DaggerWorkerFactory;
-import tech.bigfig.roma.di.HasWorkerInjector;
 import tech.bigfig.roma.util.EmojiCompatFont;
 import tech.bigfig.roma.util.LocaleManager;
 import tech.bigfig.roma.util.NotificationPullJobCreator;
 import tech.bigfig.roma.util.binding.BindingComponent;
 
-public class RomaApplication extends Application implements HasActivityInjector, HasServiceInjector, HasBroadcastReceiverInjector,
-        HasWorkerInjector {
+public class RomaApplication extends Application implements HasAndroidInjector {
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
-    @Inject
-    DispatchingAndroidInjector<Service> dispatchingServiceInjector;
-    @Inject
-    DispatchingAndroidInjector<BroadcastReceiver> dispatchingBroadcastReceiverInjector;
+    DispatchingAndroidInjector<Object> androidInjector;
+
     @Inject
     NotificationPullJobCreator notificationPullJobCreator;
-    @Inject
-    DispatchingAndroidInjector<RxWorker> dispatchingWorkerInjector;
 
     private AppDatabase appDatabase;
     private AccountManager accountManager;
@@ -115,12 +105,14 @@ public class RomaApplication extends Application implements HasActivityInjector,
         JobManager.create(this).addJobCreator(notificationPullJobCreator);
 
     }
-    private void initWorkManager(){
+
+    private void initWorkManager() {
         androidx.work.Configuration config = new androidx.work.Configuration.Builder()
                 .setWorkerFactory(new DaggerWorkerFactory()) // Overrides default WorkerFactory
                 .build();
-        WorkManager.initialize(this,config);
+        WorkManager.initialize(this, config);
     }
+
     /**
      * Init crashlytics and disable crash reports for debug builds
      */
@@ -176,26 +168,9 @@ public class RomaApplication extends Application implements HasActivityInjector,
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingAndroidInjector;
+    public AndroidInjector<Object> androidInjector() {
+        return androidInjector;
     }
-
-    @Override
-    public AndroidInjector<Service> serviceInjector() {
-        return dispatchingServiceInjector;
-    }
-
-    @Override
-    public AndroidInjector<BroadcastReceiver> broadcastReceiverInjector() {
-        return dispatchingBroadcastReceiverInjector;
-    }
-
-    @NonNull
-    @Override
-    public AndroidInjector<RxWorker> workerInjector() {
-        return dispatchingWorkerInjector;
-    }
-
 
     public interface ServiceLocator {
         <T> T get(Class<T> clazz);

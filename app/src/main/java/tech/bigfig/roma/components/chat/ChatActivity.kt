@@ -1,4 +1,4 @@
-package tech.bigfig.roma.chat
+package tech.bigfig.roma.components.chat
 
 import android.Manifest
 import android.app.Activity
@@ -40,7 +40,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import tech.bigfig.roma.*
-import tech.bigfig.roma.chat.adapter.ChatAdapter
+import tech.bigfig.roma.components.chat.adapter.ChatAdapter
+import tech.bigfig.roma.components.report.ReportActivity
 import tech.bigfig.roma.databinding.ActivityChatBinding
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.entity.Attachment
@@ -49,7 +50,6 @@ import tech.bigfig.roma.util.*
 import tech.bigfig.roma.viewdata.AttachmentViewData
 import java.io.File
 import java.io.IOException
-import java.security.AccessController.getContext
 import javax.inject.Inject
 
 class ChatActivity : BaseActivity(), HasSupportFragmentInjector, ClickHandler, AdapterListener {
@@ -495,11 +495,11 @@ class ChatActivity : BaseActivity(), HasSupportFragmentInjector, ClickHandler, A
                                 viewModel.deleteStatus(status)
                                 true
                             }
-                            it.itemId == R.id.actionViewMyAccount -> return@setOnMenuItemClickListener viewModel.me?.accountId?.let { myId->
-                                ContextCompat.startActivity(this@ChatActivity,AccountActivity.getIntent(this@ChatActivity,myId),
+                            it.itemId == R.id.actionViewMyAccount -> return@setOnMenuItemClickListener viewModel.me?.accountId?.let { myId ->
+                                ContextCompat.startActivity(this@ChatActivity, AccountActivity.getIntent(this@ChatActivity, myId),
                                         ActivityOptionsCompat.makeCustomAnimation(this@ChatActivity, R.anim.slide_from_right, R.anim.slide_to_left).toBundle())
                                 true
-                            }?:false
+                            } ?: false
                             else -> false
                         }
                     }
@@ -514,18 +514,13 @@ class ChatActivity : BaseActivity(), HasSupportFragmentInjector, ClickHandler, A
                     setOnMenuItemClickListener {
                         when {
                             it.itemId == R.id.actionStatusReport -> {
-                                val intent = Intent(this@ChatActivity, ReportActivity::class.java)
-                                intent.putExtra("account_id", status.account.id)
-                                intent.putExtra("account_username", status.account.username)
-                                intent.putExtra("status_id", status.id)
-                                intent.putExtra("status_content", HtmlUtils.toHtml(status.content))
-                                ContextCompat.startActivity(this@ChatActivity,intent,
+                                ContextCompat.startActivity(this@ChatActivity, ReportActivity.getIntent(this@ChatActivity, status.account.id, status.account.username, status.id, status.content),
                                         ActivityOptionsCompat.makeCustomAnimation(this@ChatActivity, R.anim.slide_from_right, R.anim.slide_to_left).toBundle())
 
                                 true
                             }
                             it.itemId == R.id.actionViewOtherAccount -> {
-                                ContextCompat.startActivity(this@ChatActivity,AccountActivity.getIntent(this@ChatActivity,status.account.id),
+                                ContextCompat.startActivity(this@ChatActivity, AccountActivity.getIntent(this@ChatActivity, status.account.id),
                                         ActivityOptionsCompat.makeCustomAnimation(this@ChatActivity, R.anim.slide_from_right, R.anim.slide_to_left).toBundle())
                                 true
                             }

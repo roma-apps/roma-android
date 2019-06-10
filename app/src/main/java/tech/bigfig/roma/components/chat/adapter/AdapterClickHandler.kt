@@ -1,4 +1,4 @@
-package tech.bigfig.roma.chat.adapter
+package tech.bigfig.roma.components.chat.adapter
 
 import android.view.View
 import tech.bigfig.roma.entity.Account

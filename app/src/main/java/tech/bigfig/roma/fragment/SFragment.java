@@ -39,14 +39,20 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import tech.bigfig.roma.BaseActivity;
 import tech.bigfig.roma.BottomSheetActivity;
 import tech.bigfig.roma.ComposeActivity;
 import tech.bigfig.roma.MainActivity;
 import tech.bigfig.roma.R;
-import tech.bigfig.roma.ReportActivity;
 import tech.bigfig.roma.ViewMediaActivity;
 import tech.bigfig.roma.ViewTagActivity;
+import tech.bigfig.roma.components.report.ReportActivity;
 import tech.bigfig.roma.db.AccountEntity;
 import tech.bigfig.roma.db.AccountManager;
 import tech.bigfig.roma.di.Injectable;
@@ -54,14 +60,7 @@ import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.entity.Status;
 import tech.bigfig.roma.network.MastodonApi;
 import tech.bigfig.roma.network.TimelineCases;
-import tech.bigfig.roma.util.HtmlUtils;
 import tech.bigfig.roma.viewdata.AttachmentViewData;
-
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.inject.Inject;
 
 /* Note from Andrew on Jan. 22, 2017: This class is a design problem for me, so I left it with an
  * awkward name. TimelineFragment and NotificationFragment have significant overlap but the nature
@@ -327,12 +326,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
 
     protected void openReportPage(String accountId, String accountUsername, String statusId,
                                   Spanned statusContent) {
-        Intent intent = new Intent(getContext(), ReportActivity.class);
-        intent.putExtra("account_id", accountId);
-        intent.putExtra("account_username", accountUsername);
-        intent.putExtra("status_id", statusId);
-        intent.putExtra("status_content", HtmlUtils.toHtml(statusContent));
-        startActivity(intent);
+        startActivity(ReportActivity.getIntent(requireContext(),accountId,accountUsername,statusId,statusContent));
     }
 
     protected void showConfirmDeleteDialog(final String id, final int position) {

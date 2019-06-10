@@ -1,8 +1,7 @@
 package tech.bigfig.roma.di
 
-import androidx.work.ListenableWorker
 import androidx.work.RxWorker
-import androidx.work.Worker
+import dagger.android.HasAndroidInjector
 
 /**
  * Created by pandasoft (joelpyska1@gmail.com) on 15/03/2019.
@@ -11,13 +10,13 @@ object AndroidWorkerInjection {
 
     fun inject(worker: RxWorker) {
         val application = worker.applicationContext
-        if (application !is HasWorkerInjector) {
+        if (application !is HasAndroidInjector) {
             throw RuntimeException(
-                    "${application.javaClass.canonicalName} does not implement ${HasWorkerInjector::class.java.canonicalName}")
+                    "${application.javaClass.canonicalName} does not implement ${HasAndroidInjector::class.java.canonicalName}")
         }
 
-        val workerInjector = (application as HasWorkerInjector).workerInjector()
-        checkNotNull(workerInjector) { "${application.javaClass}.workerInjector() return null" }
-        workerInjector.inject(worker)
+        val injector = (application as HasAndroidInjector).androidInjector()
+        checkNotNull(injector) { "${application.javaClass}.androidInjector() return null" }
+        injector.inject(worker)
     }
 }

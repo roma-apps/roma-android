@@ -15,15 +15,16 @@
 
 package tech.bigfig.roma;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.MenuItem;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import tech.bigfig.roma.fragment.TimelineFragment;
 
@@ -31,19 +32,27 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import dagger.android.HasAndroidInjector;
 
-public class ViewTagActivity extends BottomSheetActivity implements HasSupportFragmentInjector {
+public class ViewTagActivity extends BottomSheetActivity implements HasAndroidInjector {
+
+    private static final String HASHTAG = "hashtag";
 
     @Inject
-    public DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    public DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
+
+    public static Intent getIntent(Context context, String tag){
+        Intent intent = new Intent(context,ViewTagActivity.class);
+        intent.putExtra(HASHTAG,tag);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tag);
 
-        String hashtag = getIntent().getStringExtra("hashtag");
+        String hashtag = getIntent().getStringExtra(HASHTAG);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +82,7 @@ public class ViewTagActivity extends BottomSheetActivity implements HasSupportFr
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return dispatchingAndroidInjector;
     }
 

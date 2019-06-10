@@ -79,7 +79,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.ViewPager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import dagger.android.HasAndroidInjector;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -116,7 +116,7 @@ import static tech.bigfig.roma.util.MediaUtilsKt.deleteStaleCachedMedia;
 
 
 public final class MainActivity extends BottomSheetActivity implements ActionButtonActivity,
-        HasSupportFragmentInjector {
+        HasAndroidInjector {
 
     private static final String TAG = "MainActivity"; // logging tag
     private static final long DRAWER_ITEM_ADD_ACCOUNT = -13;
@@ -133,7 +133,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
     public static final String STATUS_URL = "statusUrl";
 
     @Inject
-    public DispatchingAndroidInjector<Fragment> fragmentInjector;
+    public DispatchingAndroidInjector<Object> androidInjector;
     @Inject
     public EventHub eventHub;
     @Inject
@@ -663,7 +663,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentInjector;
+    public AndroidInjector<Object> androidInjector() {
+        return androidInjector;
     }
 }
