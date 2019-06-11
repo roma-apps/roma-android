@@ -44,7 +44,7 @@
     <string name="title_licenses">লাইসেন্সগুলি</string>
 
     <string name="status_username_format">\@%s</string>
-    <string name="status_boosted_format">%s সমর্থন দিয়েছে</string>
+    <string name="status_reposted_format">%s সমর্থন দিয়েছে</string>
     <string name="status_sensitive_media_title">সংবেদনশীল কন্টেন্ট</string>
     <string name="status_media_hidden_title">মিডিয়া লুকানো</string>
     <string name="status_sensitive_media_directions">দেখার জন্য ক্লিক করুন</string>
@@ -216,7 +216,7 @@
 
     <string name="pref_title_status_filter">টাইমলাইন ফিল্টারিং</string>
     <string name="pref_title_status_tabs">ট্যাবগুলি</string>
-    <string name="pref_title_show_boosts">সমর্থন দেখান</string>
+    <string name="pref_title_show_reposts">সমর্থন দেখান</string>
     <string name="pref_title_show_replies">উত্তর প্রদর্শন করুন</string>
     <string name="pref_title_show_media_preview">মিডিয়া পূর্বরূপ ডাউনলোড করুন</string>
     <string name="pref_title_proxy_settings">প্রক্সি</string>
@@ -246,8 +246,8 @@
     <string name="notification_mention_descriptions">নতুন উল্লেখ সম্পর্কে বিজ্ঞপ্তি</string>
     <string name="notification_follow_name">নতুন অনুসরণকারী</string>
     <string name="notification_follow_description">নতুন অনুসরণকারী সম্পর্কে বিজ্ঞপ্তি</string>
-    <string name="notification_boost_name">সমর্থনগুলি</string>
-    <string name="notification_boost_description">আপনার টুটগুলি সমর্থন হলে বিজ্ঞপ্তিগুলি</string>
+    <string name="notification_repost_name">সমর্থনগুলি</string>
+    <string name="notification_repost_description">আপনার টুটগুলি সমর্থন হলে বিজ্ঞপ্তিগুলি</string>
     <string name="notification_favourite_name">প্রিয়গুলি</string>
     <string name="notification_favourite_description">আপনার টুটগুলি প্রিয় হিসাবে চিহ্নিত পেতে বিজ্ঞপ্তি</string>
     <string name="notification_poll_name">নির্বাচনগুলি</string>
@@ -263,8 +263,8 @@
     <string name="description_account_locked">লক অ্যাকাউন্ট</string>
 
     <string name="about_title_activity">সম্পর্কিত</string>
-    <string name="about_tusky_version">টাস্কি %s</string>
-    <string name="about_tusky_license">টাস্কি মুক্ত এবং ওপেন সোর্স সফ্টওয়্যার। এটি GNU জেনারেল পাবলিক লাইসেন্স সংস্করণ 3 এর অধীনে লাইসেন্সযুক্ত। আপনি এখানে লাইসেন্স দেখতে পারেন: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_roma_version">টাস্কি %s</string>
+    <string name="about_roma_license">টাস্কি মুক্ত এবং ওপেন সোর্স সফ্টওয়্যার। এটি GNU জেনারেল পাবলিক লাইসেন্স সংস্করণ 3 এর অধীনে লাইসেন্সযুক্ত। আপনি এখানে লাইসেন্স দেখতে পারেন: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
@@ -272,10 +272,10 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">প্রকল্প ওয়েবসাইট:
-\nhttps://tusky.app</string>
+\nhttps://romaapp.github.io</string>
     <string name="about_bug_feature_request_site">বাগ রিপোর্ট এবং বৈশিষ্ট্য অনুরোধ:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">টাস্কির প্রোফাইল</string>
+\nhttps://github.com/romaapp/Roma/issues</string>
+    <string name="about_roma_account">টাস্কির প্রোফাইল</string>
 
     <string name="status_share_content">টুট এর কন্টেন্ট ভাগ করুন</string>
     <string name="status_share_link">টুট এর সাথে লিংক ভাগ করুন</string>

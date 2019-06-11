@@ -1,19 +1,19 @@
 /* Copyright 2019 Joel Pyska
  *
- * This file is a part of Tusky.
+ * This file is a part of Roma.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Tusky is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Roma is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Tusky; if not,
+ * You should have received a copy of the GNU General Public License along with Roma; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package com.keylesspalace.tusky.components.report.fragments
+package tech.bigfig.roma.components.report.fragments
 
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -30,24 +30,24 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.snackbar.Snackbar
-import com.keylesspalace.tusky.AccountActivity
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.ViewMediaActivity
-import com.keylesspalace.tusky.ViewTagActivity
-import com.keylesspalace.tusky.components.report.ReportViewModel
-import com.keylesspalace.tusky.components.report.Screen
-import com.keylesspalace.tusky.components.report.adapter.AdapterHandler
-import com.keylesspalace.tusky.components.report.adapter.StatusesAdapter
-import com.keylesspalace.tusky.db.AccountManager
-import com.keylesspalace.tusky.di.Injectable
-import com.keylesspalace.tusky.di.ViewModelFactory
-import com.keylesspalace.tusky.entity.Attachment
-import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.util.ThemeUtils
-import com.keylesspalace.tusky.util.hide
-import com.keylesspalace.tusky.util.show
-import com.keylesspalace.tusky.viewdata.AttachmentViewData
+import tech.bigfig.roma.components.report.ReportViewModel
+import tech.bigfig.roma.components.report.Screen
 import kotlinx.android.synthetic.main.fragment_report_statuses.*
+import tech.bigfig.roma.AccountActivity
+import tech.bigfig.roma.R
+import tech.bigfig.roma.ViewMediaActivity
+import tech.bigfig.roma.ViewTagActivity
+import tech.bigfig.roma.components.report.adapter.AdapterHandler
+import tech.bigfig.roma.components.report.adapter.StatusesAdapter
+import tech.bigfig.roma.db.AccountManager
+import tech.bigfig.roma.di.Injectable
+import tech.bigfig.roma.di.ViewModelFactory
+import tech.bigfig.roma.entity.Attachment
+import tech.bigfig.roma.entity.Status
+import tech.bigfig.roma.util.ThemeUtils
+import tech.bigfig.roma.util.hide
+import tech.bigfig.roma.util.show
+import tech.bigfig.roma.viewdata.AttachmentViewData
 import javax.inject.Inject
 
 class ReportStatusesFragment : Fragment(), Injectable, AdapterHandler {
@@ -108,7 +108,7 @@ class ReportStatusesFragment : Fragment(), Injectable, AdapterHandler {
     }
 
     private fun setupSwipeRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.tusky_blue)
+        swipeRefreshLayout.setColorSchemeResources(R.color.roma_blue)
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ThemeUtils.getColor(swipeRefreshLayout.context, android.R.attr.colorBackground))
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -139,34 +139,34 @@ class ReportStatusesFragment : Fragment(), Injectable, AdapterHandler {
         })
 
         viewModel.networkStateAfter.observe(viewLifecycleOwner, Observer {
-            if (it?.status == com.keylesspalace.tusky.util.Status.RUNNING)
+            if (it?.status == tech.bigfig.roma.util.Status.RUNNING)
                 progressBarBottom.show()
             else
                 progressBarBottom.hide()
 
-            if (it?.status == com.keylesspalace.tusky.util.Status.FAILED)
+            if (it?.status == tech.bigfig.roma.util.Status.FAILED)
                 showError(it.msg)
         })
 
         viewModel.networkStateBefore.observe(viewLifecycleOwner, Observer {
-            if (it?.status == com.keylesspalace.tusky.util.Status.RUNNING)
+            if (it?.status == tech.bigfig.roma.util.Status.RUNNING)
                 progressBarTop.show()
             else
                 progressBarTop.hide()
 
-            if (it?.status == com.keylesspalace.tusky.util.Status.FAILED)
+            if (it?.status == tech.bigfig.roma.util.Status.FAILED)
                 showError(it.msg)
         })
 
         viewModel.networkStateRefresh.observe(viewLifecycleOwner, Observer {
-            if (it?.status == com.keylesspalace.tusky.util.Status.RUNNING && !swipeRefreshLayout.isRefreshing)
+            if (it?.status == tech.bigfig.roma.util.Status.RUNNING && !swipeRefreshLayout.isRefreshing)
                 progressBarLoading.show()
             else
                 progressBarLoading.hide()
 
-            if (it?.status != com.keylesspalace.tusky.util.Status.RUNNING)
+            if (it?.status != tech.bigfig.roma.util.Status.RUNNING)
                 swipeRefreshLayout.isRefreshing = false
-            if (it?.status == com.keylesspalace.tusky.util.Status.FAILED)
+            if (it?.status == tech.bigfig.roma.util.Status.FAILED)
                 showError(it.msg)
         })
     }

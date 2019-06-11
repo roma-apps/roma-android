@@ -1,16 +1,16 @@
-package com.keylesspalace.tusky.components.instancemute
+package tech.bigfig.roma.components.instancemute
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import com.keylesspalace.tusky.BaseActivity
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.instancemute.fragment.InstanceListFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.toolbar_basic.*
+import tech.bigfig.roma.BaseActivity
+import tech.bigfig.roma.R
+import tech.bigfig.roma.components.instancemute.fragment.InstanceListFragment
+import javax.inject.Inject
 
 class InstanceListActivity: BaseActivity(), HasSupportFragmentInjector {
     @Inject

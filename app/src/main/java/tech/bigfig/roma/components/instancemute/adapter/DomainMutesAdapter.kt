@@ -1,12 +1,12 @@
-package com.keylesspalace.tusky.components.instancemute.adapter
+package tech.bigfig.roma.components.instancemute.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.instancemute.interfaces.InstanceActionListener
 import kotlinx.android.synthetic.main.item_muted_domain.view.*
+import tech.bigfig.roma.R
+import tech.bigfig.roma.components.instancemute.interfaces.InstanceActionListener
 
 class DomainMutesAdapter(private val actionListener: InstanceActionListener): RecyclerView.Adapter<DomainMutesAdapter.ViewHolder>() {
     var instances: MutableList<String> = mutableListOf()

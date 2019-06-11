@@ -5,7 +5,7 @@
     android:id="@+id/activity_instance_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.keylesspalace.tusky.InstanceListActivity">
+    tools:context=".components.instancemute.InstanceListActivity">
 
     <include layout="@layout/toolbar_basic" />
 

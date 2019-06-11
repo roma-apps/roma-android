@@ -1,4 +1,4 @@
-package com.keylesspalace.tusky.components.instancemute.fragment
+package tech.bigfig.roma.components.instancemute.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -10,16 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.instancemute.adapter.DomainMutesAdapter
-import com.keylesspalace.tusky.components.instancemute.interfaces.InstanceActionListener
-import com.keylesspalace.tusky.di.Injectable
-import com.keylesspalace.tusky.fragment.BaseFragment
-import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.util.HttpHeaderLink
-import com.keylesspalace.tusky.util.hide
-import com.keylesspalace.tusky.util.show
-import com.keylesspalace.tusky.view.EndlessOnScrollListener
+import tech.bigfig.roma.components.instancemute.adapter.DomainMutesAdapter
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,6 +18,15 @@ import kotlinx.android.synthetic.main.fragment_instance_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tech.bigfig.roma.R
+import tech.bigfig.roma.components.instancemute.interfaces.InstanceActionListener
+import tech.bigfig.roma.di.Injectable
+import tech.bigfig.roma.fragment.BaseFragment
+import tech.bigfig.roma.network.MastodonApi
+import tech.bigfig.roma.util.HttpHeaderLink
+import tech.bigfig.roma.util.hide
+import tech.bigfig.roma.util.show
+import tech.bigfig.roma.view.EndlessOnScrollListener
 import java.io.IOException
 import javax.inject.Inject
 
