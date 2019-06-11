@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.bigfig.roma.util
+package com.keylesspalace.tusky.util
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList

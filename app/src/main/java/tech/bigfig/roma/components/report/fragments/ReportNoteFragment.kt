@@ -1,19 +1,19 @@
 /* Copyright 2019 Joel Pyska
  *
- * This file is a part of Roma.
+ * This file is a part of Tusky.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  *
- * Roma is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * Tusky is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with Roma; if not,
+ * You should have received a copy of the GNU General Public License along with Tusky; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package tech.bigfig.roma.components.report.fragments
+package com.keylesspalace.tusky.components.report.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,16 +24,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
+import com.keylesspalace.tusky.R
+import com.keylesspalace.tusky.components.report.ReportViewModel
+import com.keylesspalace.tusky.components.report.Screen
+import com.keylesspalace.tusky.di.Injectable
+import com.keylesspalace.tusky.di.ViewModelFactory
+import com.keylesspalace.tusky.util.*
 import kotlinx.android.synthetic.main.fragment_report_note.*
-import tech.bigfig.roma.R
-import tech.bigfig.roma.components.report.ReportViewModel
-import tech.bigfig.roma.components.report.Screen
-import tech.bigfig.roma.di.Injectable
-import tech.bigfig.roma.di.ViewModelFactory
-import tech.bigfig.roma.util.Loading
-import tech.bigfig.roma.util.Success
-import tech.bigfig.roma.util.hide
-import tech.bigfig.roma.util.show
 import java.io.IOException
 import javax.inject.Inject
 

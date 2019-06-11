@@ -526,6 +526,11 @@ public class TimelineFragment extends SFragment implements
                                 String id = ((MuteEvent) event).getAccountId();
                                 removeAllByAccountId(id);
                             }
+                        } else if (event instanceof DomainMuteEvent) {
+                            if (kind != Kind.USER && kind != Kind.USER_WITH_REPLIES && kind != Kind.USER_PINNED) {
+                                String instance = ((DomainMuteEvent) event).getInstance();
+                                removeAllByInstance(instance);
+                            }
                         } else if (event instanceof StatusDeletedEvent) {
                             if (kind != Kind.USER && kind != Kind.USER_WITH_REPLIES && kind != Kind.USER_PINNED) {
                                 String id = ((StatusDeletedEvent) event).getStatusId();
@@ -864,6 +869,18 @@ public class TimelineFragment extends SFragment implements
         while (iterator.hasNext()) {
             Status status = iterator.next().asRightOrNull();
             if (status != null && status.getAccount().getId().equals(accountId)) {
+                iterator.remove();
+            }
+        }
+        updateAdapter();
+    }
+
+    private void removeAllByInstance(String instance) {
+        // using iterator to safely remove items while iterating
+        Iterator<Either<Placeholder, Status>> iterator = statuses.iterator();
+        while (iterator.hasNext()) {
+            Status status = iterator.next().asRightOrNull();
+            if (status != null && LinkHelper.getDomain(status.getAccount().getUrl()).equals(instance)) {
                 iterator.remove();
             }
         }

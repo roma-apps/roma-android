@@ -1029,7 +1029,7 @@ public final class ComposeActivity
         }
 
         Intent sendIntent = SendTootService.sendTootIntent(this, content, spoilerText,
-                visibility, sensitive, mediaIds, mediaUris, mediaDescriptions, inReplyToId,
+                visibility, !mediaUris.isEmpty() && sensitive, mediaIds, mediaUris, mediaDescriptions, inReplyToId,
                 getIntent().getStringExtra(REPLYING_STATUS_CONTENT_EXTRA),
                 getIntent().getStringExtra(REPLYING_STATUS_AUTHOR_USERNAME_EXTRA),
                 getIntent().getStringExtra(SAVED_JSON_URLS_EXTRA),
@@ -1747,6 +1747,11 @@ public final class ComposeActivity
                 this.onSendClicked();
                 return true;
             }
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
         }
 
         return super.onKeyDown(keyCode, event);

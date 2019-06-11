@@ -97,4 +97,9 @@ abstract class ActivitiesModule {
     @ContributesAndroidInjector
     abstract fun contributesPrivacyPolicyActivity(): PrivacyPolicyActivity
 
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun contributesReportActivity(): ReportActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun contributesInstanceListActivity(): InstanceListActivity
 }
