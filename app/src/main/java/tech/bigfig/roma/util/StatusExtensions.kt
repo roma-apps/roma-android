@@ -16,7 +16,6 @@
 package tech.bigfig.roma.util
 
 import tech.bigfig.roma.entity.Status
-import tech.bigfig.roma.util.SmartLengthInputFilter
 
 fun Status.isCollapsible(): Boolean {
     return !SmartLengthInputFilter.hasBadRatio(content, SmartLengthInputFilter.LENGTH_DEFAULT)

@@ -28,11 +28,12 @@ import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Attachment
 import tech.bigfig.roma.entity.Emoji
 import tech.bigfig.roma.entity.Poll
+import tech.bigfig.roma.entity.Status.Companion.MAX_MEDIA_ATTACHMENTS
+import tech.bigfig.roma.entity.Status.Companion.MAX_POLL_OPTIONS
 import tech.bigfig.roma.view.MediaPreviewImageView
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import tech.bigfig.roma.entity.Status
 
 class StatusViewHelper(private val itemView: View) {
     interface MediaPreviewListener {
@@ -85,7 +86,7 @@ class StatusViewHelper(private val itemView: View) {
 
         val mediaPreviewUnloadedId = ThemeUtils.getDrawableId(context, R.attr.media_preview_unloaded_drawable, android.R.color.black)
 
-        val n = Math.min(attachments.size, Status.MAX_MEDIA_ATTACHMENTS)
+        val n = Math.min(attachments.size, MAX_MEDIA_ATTACHMENTS)
 
         for (i in 0 until n) {
             val previewUrl = attachments[i].previewUrl
@@ -181,7 +182,7 @@ class StatusViewHelper(private val itemView: View) {
         }
 
         // Hide any of the placeholder previews beyond the ones set.
-        for (i in n until Status.MAX_MEDIA_ATTACHMENTS) {
+        for (i in n until MAX_MEDIA_ATTACHMENTS) {
             mediaPreviews[i].visibility = View.GONE
         }
     }
@@ -277,7 +278,7 @@ class StatusViewHelper(private val itemView: View) {
     private fun setupPollResult(poll: Poll, emojis: List<Emoji>, pollResults: List<TextView>) {
         val options = poll.options
 
-        for (i in 0 until Status.MAX_POLL_OPTIONS) {
+        for (i in 0 until MAX_POLL_OPTIONS) {
             if (i < options.size) {
                 val percent = options[i].getPercent(poll.votesCount)
 

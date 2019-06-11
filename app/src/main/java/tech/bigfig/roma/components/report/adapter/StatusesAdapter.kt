@@ -20,8 +20,8 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import tech.bigfig.roma.R
 import tech.bigfig.roma.components.report.model.StatusViewState
+import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Status
 
 class StatusesAdapter(private val useAbsoluteTime: Boolean,

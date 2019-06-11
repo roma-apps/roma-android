@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.text.Spanned
 import android.view.MenuItem
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders

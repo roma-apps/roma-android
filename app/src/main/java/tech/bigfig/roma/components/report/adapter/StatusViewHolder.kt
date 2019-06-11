@@ -19,15 +19,15 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tech.bigfig.roma.components.report.model.StatusViewState
+import tech.bigfig.roma.util.StatusViewHelper.Companion.COLLAPSE_INPUT_FILTER
+import tech.bigfig.roma.util.StatusViewHelper.Companion.NO_INPUT_FILTER
 import kotlinx.android.synthetic.main.item_report_status.view.*
 import tech.bigfig.roma.R
-import tech.bigfig.roma.components.report.model.StatusViewState
 import tech.bigfig.roma.entity.Emoji
 import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.interfaces.LinkListener
 import tech.bigfig.roma.util.*
-import tech.bigfig.roma.util.StatusViewHelper.Companion.COLLAPSE_INPUT_FILTER
-import tech.bigfig.roma.util.StatusViewHelper.Companion.NO_INPUT_FILTER
 import java.util.*
 
 class StatusViewHolder(itemView: View,

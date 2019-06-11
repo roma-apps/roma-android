@@ -30,13 +30,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.snackbar.Snackbar
+import tech.bigfig.roma.components.report.ReportViewModel
+import tech.bigfig.roma.components.report.Screen
 import kotlinx.android.synthetic.main.fragment_report_statuses.*
 import tech.bigfig.roma.AccountActivity
 import tech.bigfig.roma.R
 import tech.bigfig.roma.ViewMediaActivity
 import tech.bigfig.roma.ViewTagActivity
-import tech.bigfig.roma.components.report.ReportViewModel
-import tech.bigfig.roma.components.report.Screen
 import tech.bigfig.roma.components.report.adapter.AdapterHandler
 import tech.bigfig.roma.components.report.adapter.StatusesAdapter
 import tech.bigfig.roma.db.AccountManager

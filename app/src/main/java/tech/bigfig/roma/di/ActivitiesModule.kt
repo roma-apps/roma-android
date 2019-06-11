@@ -20,6 +20,7 @@ import tech.bigfig.roma.components.report.ReportActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import tech.bigfig.roma.components.chat.di.ChatModule
+import tech.bigfig.roma.components.instancemute.InstanceListActivity
 
 /**
  * Created by charlag on 3/24/18.
@@ -91,10 +92,12 @@ abstract class ActivitiesModule {
     @ContributesAndroidInjector
     abstract fun contributesFiltersActivity(): FiltersActivity
 
-    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
-    abstract fun contributesReportActivity(): ReportActivity
-
     @ContributesAndroidInjector
     abstract fun contributesPrivacyPolicyActivity(): PrivacyPolicyActivity
 
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun contributesReportActivity(): ReportActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun contributesInstanceListActivity(): InstanceListActivity
 }

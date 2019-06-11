@@ -22,6 +22,7 @@ import tech.bigfig.roma.fragment.preference.AccountPreferencesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import tech.bigfig.roma.components.conversation.ConversationsFragment
+import tech.bigfig.roma.components.instancemute.fragment.InstanceListFragment
 import tech.bigfig.roma.components.report.fragments.ReportDoneFragment
 import tech.bigfig.roma.components.report.fragments.ReportNoteFragment
 import tech.bigfig.roma.components.report.fragments.ReportStatusesFragment
@@ -71,4 +72,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun reportDoneFragment(): ReportDoneFragment
+
+    @ContributesAndroidInjector
+    abstract fun instanceListFragment(): InstanceListFragment
 }

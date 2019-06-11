@@ -18,6 +18,7 @@ package tech.bigfig.roma.components.report.adapter
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.ItemKeyedDataSource
+
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import tech.bigfig.roma.entity.Status

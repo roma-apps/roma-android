@@ -27,13 +27,53 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.arch.core.util.Function;
+import androidx.core.util.Pair;
+import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.lifecycle.Lifecycle;
+import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListUpdateCallback;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+
+import at.connyduck.sparkbutton.helpers.Utils;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import kotlin.Unit;
+import kotlin.collections.CollectionsKt;
+import kotlin.jvm.functions.Function1;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.bigfig.roma.AccountListActivity;
 import tech.bigfig.roma.BaseActivity;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.adapter.StatusBaseViewHolder;
 import tech.bigfig.roma.adapter.TimelineAdapter;
 import tech.bigfig.roma.appstore.BlockEvent;
+import tech.bigfig.roma.appstore.DomainMuteEvent;
 import tech.bigfig.roma.appstore.EventHub;
 import tech.bigfig.roma.appstore.FavouriteEvent;
 import tech.bigfig.roma.appstore.MuteEvent;
@@ -56,6 +96,7 @@ import tech.bigfig.roma.repository.Placeholder;
 import tech.bigfig.roma.repository.TimelineRepository;
 import tech.bigfig.roma.repository.TimelineRequestMode;
 import tech.bigfig.roma.util.Either;
+import tech.bigfig.roma.util.LinkHelper;
 import tech.bigfig.roma.util.ListStatusAccessibilityDelegate;
 import tech.bigfig.roma.util.ListUtils;
 import tech.bigfig.roma.util.PairedList;
@@ -65,45 +106,6 @@ import tech.bigfig.roma.util.ViewDataUtils;
 import tech.bigfig.roma.view.BackgroundMessageView;
 import tech.bigfig.roma.view.EndlessOnScrollListener;
 import tech.bigfig.roma.viewdata.StatusViewData;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.arch.core.util.Function;
-import androidx.core.util.Pair;
-import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.lifecycle.Lifecycle;
-import androidx.recyclerview.widget.AsyncDifferConfig;
-import androidx.recyclerview.widget.AsyncListDiffer;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListUpdateCallback;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import at.connyduck.sparkbutton.helpers.Utils;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import kotlin.Unit;
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.functions.Function1;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 import static com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from;
@@ -526,6 +528,11 @@ public class TimelineFragment extends SFragment implements
                                 String id = ((MuteEvent) event).getAccountId();
                                 removeAllByAccountId(id);
                             }
+                        } else if (event instanceof DomainMuteEvent) {
+                            if (kind != Kind.USER && kind != Kind.USER_WITH_REPLIES && kind != Kind.USER_PINNED) {
+                                String instance = ((DomainMuteEvent) event).getInstance();
+                                removeAllByInstance(instance);
+                            }
                         } else if (event instanceof StatusDeletedEvent) {
                             if (kind != Kind.USER && kind != Kind.USER_WITH_REPLIES && kind != Kind.USER_PINNED) {
                                 String id = ((StatusDeletedEvent) event).getStatusId();
@@ -864,6 +871,18 @@ public class TimelineFragment extends SFragment implements
         while (iterator.hasNext()) {
             Status status = iterator.next().asRightOrNull();
             if (status != null && status.getAccount().getId().equals(accountId)) {
+                iterator.remove();
+            }
+        }
+        updateAdapter();
+    }
+
+    private void removeAllByInstance(String instance) {
+        // using iterator to safely remove items while iterating
+        Iterator<Either<Placeholder, Status>> iterator = statuses.iterator();
+        while (iterator.hasNext()) {
+            Status status = iterator.next().asRightOrNull();
+            if (status != null && LinkHelper.getDomain(status.getAccount().getUrl()).equals(instance)) {
                 iterator.remove();
             }
         }

@@ -29,6 +29,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import tech.bigfig.roma.components.report.ReportActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
@@ -41,7 +42,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import tech.bigfig.roma.*
 import tech.bigfig.roma.components.chat.adapter.ChatAdapter
-import tech.bigfig.roma.components.report.ReportActivity
 import tech.bigfig.roma.databinding.ActivityChatBinding
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.entity.Attachment

@@ -23,10 +23,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_report_done.*
-import tech.bigfig.roma.R
 import tech.bigfig.roma.components.report.ReportViewModel
 import tech.bigfig.roma.components.report.Screen
+import kotlinx.android.synthetic.main.fragment_report_done.*
+import tech.bigfig.roma.R
 import tech.bigfig.roma.di.Injectable
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.util.Loading

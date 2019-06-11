@@ -19,28 +19,29 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import android.util.Log
 import android.view.View
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
-import tech.bigfig.roma.appstore.EventHub
-import tech.bigfig.roma.appstore.PreferenceChangedEvent
-import tech.bigfig.roma.db.AccountManager
-import tech.bigfig.roma.di.Injectable
-import tech.bigfig.roma.entity.Account
-import tech.bigfig.roma.entity.Status
-import tech.bigfig.roma.network.MastodonApi
-import tech.bigfig.roma.util.ThemeUtils
+import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tech.bigfig.roma.*
+import tech.bigfig.roma.appstore.EventHub
+import tech.bigfig.roma.appstore.PreferenceChangedEvent
+import tech.bigfig.roma.components.instancemute.InstanceListActivity
+import tech.bigfig.roma.db.AccountManager
+import tech.bigfig.roma.di.Injectable
+import tech.bigfig.roma.entity.Account
 import tech.bigfig.roma.entity.Filter
+import tech.bigfig.roma.entity.Status
+import tech.bigfig.roma.network.MastodonApi
+import tech.bigfig.roma.util.ThemeUtils
 import javax.inject.Inject
 
 
@@ -61,6 +62,7 @@ class AccountPreferencesFragment : PreferenceFragmentCompat(),
     private lateinit var tabPreference: Preference
     private lateinit var mutedUsersPreference: Preference
     private lateinit var blockedUsersPreference: Preference
+    private lateinit var mutedDomainsPreference: Preference
 
     private lateinit var defaultPostPrivacyPreference: ListPreference
     private lateinit var defaultMediaSensitivityPreference: SwitchPreferenceCompat
@@ -80,6 +82,7 @@ class AccountPreferencesFragment : PreferenceFragmentCompat(),
         tabPreference = requirePreference("tabPreference")
         mutedUsersPreference = requirePreference("mutedUsersPreference")
         blockedUsersPreference = requirePreference("blockedUsersPreference")
+        mutedDomainsPreference = requirePreference("mutedDomainsPreference")
         defaultPostPrivacyPreference = requirePreference("defaultPostPrivacy") as ListPreference
         defaultMediaSensitivityPreference = requirePreference("defaultMediaSensitivity") as SwitchPreferenceCompat
         mediaPreviewEnabledPreference = requirePreference("mediaPreviewEnabled") as SwitchPreferenceCompat
@@ -92,11 +95,13 @@ class AccountPreferencesFragment : PreferenceFragmentCompat(),
         notificationPreference.icon = IconicsDrawable(notificationPreference.context, GoogleMaterial.Icon.gmd_notifications).sizePx(iconSize).color(ThemeUtils.getColor(notificationPreference.context, R.attr.toolbar_icon_tint))
         mutedUsersPreference.icon = getTintedIcon(R.drawable.ic_mute_24dp)
         blockedUsersPreference.icon = IconicsDrawable(blockedUsersPreference.context, GoogleMaterial.Icon.gmd_block).sizePx(iconSize).color(ThemeUtils.getColor(blockedUsersPreference.context, R.attr.toolbar_icon_tint))
+        mutedDomainsPreference.icon = getTintedIcon(R.drawable.ic_mute_24dp)
 
         notificationPreference.onPreferenceClickListener = this
         tabPreference.onPreferenceClickListener = this
         mutedUsersPreference.onPreferenceClickListener = this
         blockedUsersPreference.onPreferenceClickListener = this
+        mutedDomainsPreference.onPreferenceClickListener = this
         homeFiltersPreference.onPreferenceClickListener = this
         notificationFiltersPreference.onPreferenceClickListener = this
         publicFiltersPreference.onPreferenceClickListener = this
@@ -189,6 +194,12 @@ class AccountPreferencesFragment : PreferenceFragmentCompat(),
             blockedUsersPreference -> {
                 val intent = Intent(context, AccountListActivity::class.java)
                 intent.putExtra("type", AccountListActivity.Type.BLOCKS)
+                activity?.startActivity(intent)
+                activity?.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+                true
+            }
+            mutedDomainsPreference -> {
+                val intent = Intent(context, InstanceListActivity::class.java)
                 activity?.startActivity(intent)
                 activity?.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
                 true
