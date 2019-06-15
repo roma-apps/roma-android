@@ -31,7 +31,7 @@ data class Account(
         val id: String,
         @SerializedName("username") val localUsername: String,
         @SerializedName("acct") val username: String,
-        @SerializedName("display_name") val displayName: String,
+        @SerializedName("display_name") val displayName: String?,
         val note: @WriteWith<SpannedParceler>() Spanned,
         val url: String,
         val avatar: String,
@@ -49,7 +49,7 @@ data class Account(
 ) : Parcelable {
 
     val name: String
-        get() = if (displayName.isEmpty()) {
+        get() = if (displayName.isNullOrBlank()) {
             localUsername
         } else displayName
 
