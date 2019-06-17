@@ -53,14 +53,12 @@
     <string name="status_content_show_less">Strni</string>
 
     <string name="message_empty">Tukaj ni ničesar.</string>
-    <string name="footer_empty">Tukaj ni ničesar. Potegnite navzdol za osvežitev!</string>
 
     <string name="notification_reblog_format">%s je spodbudil tvoj tut</string>
     <string name="notification_favourite_format">%s je vzljubil vaš tut</string>
     <string name="notification_follow_format">%s vam sledi</string>
 
     <string name="report_username_format">Prijavi @%s</string>
-    <string name="report_comment_hint">Dodatni komentarji\?</string>
 
     <string name="action_quick_reply">Hiter odgovor</string>
     <string name="action_reply">Odgovori</string>
@@ -83,7 +81,6 @@
     <string name="action_send">TUTNI</string>
     <string name="action_send_public">TUTNI!</string>
     <string name="action_retry">Poskusi znova</string>
-    <string name="action_close">Zapri</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Možnosti</string>
     <string name="action_view_account_preferences">Možnosti računa</string>
@@ -134,7 +131,6 @@
     <string name="send_status_content_to">Deli tut z…</string>
     <string name="send_media_to">Deli medij z…</string>
 
-    <string name="confirmation_reported">Pošlji!</string>
     <string name="status_sent">Pošlji!</string>
     <string name="status_sent_long">Odgovor je bil uspešno poslan.</string>
 
@@ -162,15 +158,7 @@
     <string name="confirmation_unmuted">Prekinjeno utišanje uporabnika</string>
 
     <string name="hint_domain">Katero vozlišče\?</string>
-    <string name="link_whats_an_instance">Kaj je vozlišče\?</string>
 
-    <string name="dialog_whats_an_instance">Tu lahko vnesete naslov ali domeno katerega koli vozlišča, na primer mastodon.social, icosahedron.website, social.tchncs.de in <a href="https://instances.social"> več! </a>
-\n
-\nČe še nimate računa, lahko vnesete ime vozlišča, kateremu bi se radi pridružili, in tam ustvarite račun.
-\n
-\nVozlišče je ena lokacija, kjer je gostovanje vašega računa, vendar lahko preprosto komunicirate in sledite ljudem na drugih vozliščih, kot da bi bili na isti lokaciji.
-\n
-\nVeč informacij najdete na naslovu <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
     <string name="dialog_title_finishing_media_upload">Dokončanje pošiljanja medija</string>
     <string name="dialog_message_uploading_media">Pošiljanje…</string>
     <string name="dialog_download_image">Prejmi</string>
@@ -244,9 +232,6 @@
     <string name="about_roma_license">Roma je prosta in odprtokodna programska oprema. Licencirana je pod licenco GNU General Public License različice 3. Licenco si lahko ogledate tukaj: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_project_site">Spletna stran projekta:
 \nhttps://romaapp.github.io</string>
-    <string name="about_bug_feature_request_site">Poročila o napakah in želje za nove funkcije:
-\nhttps://github.com/romaapp/Roma/issues</string>
-    <string name="about_roma_account">Profil Roma</string>
 
     <string name="status_share_content">Deli vsebino tuta</string>
     <string name="status_share_link">Deli povezavo do tuta</string>
@@ -342,7 +327,6 @@
     <string name="license_description">Roma vsebuje kodo in sredstva iz naslednjih odprtokodnih projektov:</string>
     <string name="license_apache_2">Licencirano pod licenco Apache (spodaj)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <string name="profile_metadata_label">Metapodatki profila</string>
     <string name="profile_metadata_add">dodaj podatke</string>
@@ -396,10 +380,6 @@
     <string name="hashtag">Ključnik</string>
     <string name="notifications_clear">Počisti</string>
     <string name="notifications_apply_filter">Filter</string>
-    <string name="filter_favorites">@string/notification_favourite_name</string>
-    <string name="filter_boosts">@string/notification_repost_name</string>
-    <string name="filter_follows">@string/notification_follow_name</string>
-    <string name="filter_mentions">@string/notification_mention_name</string>
     <string name="filter_apply">Uporabi</string>
 
     <string name="compose_shortcut_long_label">Sestavi tut</string>
@@ -489,7 +469,6 @@
     <string name="report_sent_success">\@%s je uspešno prijavljen</string>
     <string name="hint_additional_info">Dodatni komentarji</string>
     <string name="report_remote_instance">Posreduj %s</string>
-    <string name="failed_report">Prijava je bila neuspešna</string>
     <string name="failed_fetch_statuses">Statusov ni bilo mogoče pridobiti</string>
     <string name="report_description_1">Poročilo bo poslano moderatorju strežnika. Spodaj lahko navedete, zakaj prijavljate ta račun:</string>
     <string name="report_description_remote_instance">Račun je iz drugega strežnika. Pošljem anonimno kopijo poročila tudi na drugi strežnik\?</string>

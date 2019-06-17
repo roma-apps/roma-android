@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Espandi</string>
     <string name="status_content_show_less">Riduci</string>
     <string name="message_empty">Qui non c\'è niente.</string>
-    <string name="footer_empty">Qui non c\'è niente. Trascina verso il basso per aggiornare!</string>
     <string name="notification_reblog_format">%s ha repostato il tuo toot</string>
     <string name="notification_favourite_format">%s ha messo il tuo toot nei preferiti</string>
     <string name="notification_follow_format">%s ti segue</string>
     <string name="report_username_format">Segnala @%s</string>
-    <string name="report_comment_hint">Commenti aggiuntivi?</string>
     <string name="action_quick_reply">Risposta veloce</string>
     <string name="action_reply">Rispondi</string>
     <string name="action_reblog">Reposta</string>
@@ -78,7 +76,6 @@
     <string name="action_send">TOOT</string>
     <string name="action_send_public">TOOT!</string>
     <string name="action_retry">Riprova</string>
-    <string name="action_close">Chiudi</string>
     <string name="action_view_profile">Profilo</string>
     <string name="action_view_preferences">Preferenze</string>
     <string name="action_view_account_preferences">Preferenze Account</string>
@@ -125,7 +122,6 @@
     <string name="send_status_link_to">Condividi URL del toot su…</string>
     <string name="send_status_content_to">Condividi toot su…</string>
     <string name="send_media_to">Condividi media su…</string>
-    <string name="confirmation_reported">Inviato!</string>
     <string name="confirmation_unblocked">Utente sbloccato</string>
     <string name="confirmation_unmuted">Utente non più silenziato</string>
     <string name="status_sent">Inviato!</string>
@@ -140,15 +136,7 @@
     <string name="label_quick_reply">Rispondi…</string>
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Intestazione</string>
-    <string name="link_whats_an_instance">Cos\'è un\'istanza?</string>
     <string name="login_connection">Connessione…</string>
-    <string name="dialog_whats_an_instance">L\'indirizzo o il dominio di qualsiasi istanza può essere inserito qui, come mastodon.social, icosahedron.website, social.tchncs.de, e <a href="https://instances.social">altro!</a> 
-\n
-\nSe non hai ancora un account, puoi inserire il nome di un\'istanza alla quale vuoi iscriverti e creare un account.
-\n
-\nUn\'istanza è il luogo dove l\'account è custodito, ma puoi facilmente comunicare e seguire gente su altre istanze come se fossero sullo stesso sito. 
-\n
-\nPiù info possono essere trovate su <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
     <string name="dialog_title_finishing_media_upload">Terminando il caricamento dei media</string>
     <string name="dialog_message_uploading_media">Caricamento…</string>
     <string name="dialog_download_image">Scarica</string>
@@ -233,9 +221,6 @@
     -->
     <string name="about_project_site">Sito web del progetto:\n
 		https://romaapp.github.io</string>
-    <string name="about_bug_feature_request_site">Segnala problemi &amp; richiedi funzionalità:\n
-		https://github.com/romaapp/Roma/issues</string>
-    <string name="about_roma_account">Profilo di Roma</string>
     <string name="status_share_content">Condividi contenuto del toot</string>
     <string name="status_share_link">Condividi link al toot</string>
     <string name="status_media_images">Immagini</string>
@@ -317,7 +302,6 @@
     <string name="license_description">Roma contiene codice e risorse dai seguenti progetti open source:</string>
     <string name="license_apache_2">Licenziata sotto la Licenza Apache (copia sotto)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Metadati del profilo</string>
     <string name="profile_metadata_add">aggiungi dati</string>
     <string name="profile_metadata_label_label">Etichetta</string>

@@ -43,12 +43,10 @@
     <string name="status_content_warning_show_less">Dangos Llai </string>
     <string name="status_content_show_more">Chwyddo</string>
     <string name="status_content_show_less">Lleihau</string>
-    <string name="footer_empty">Dim byd yma. Tynnwch lawr i adnewyddu!</string>
     <string name="notification_reblog_format">%s wedi hybu\'ch tŵt</string>
     <string name="notification_favourite_format">%s wedi nodi\'ch tŵt yn ffefryn</string>
     <string name="notification_follow_format">%s wedi\'ch dilyn chi</string>
     <string name="report_username_format">Adrodd @%s</string>
-    <string name="report_comment_hint">Sylwadau ychwanegol?</string>
     <string name="action_quick_reply">Ateb Cyflym</string>
     <string name="action_reply">Ateb</string>
     <string name="action_reblog">Hybu</string>
@@ -69,7 +67,6 @@
     <string name="action_send">TŴTIO</string>
     <string name="action_send_public">TŴTIO!</string>
     <string name="action_retry">Ceisio eto</string>
-    <string name="action_close">Cau</string>
     <string name="action_view_profile">Proffil</string>
     <string name="action_view_preferences">Dewisiadau</string>
     <string name="action_view_favourites">Ffefrynnau</string>
@@ -102,7 +99,6 @@
     <string name="send_status_link_to">Rhannu URL Tŵt i…</string>
     <string name="send_status_content_to">Rhannu Tŵt i…</string>
     <string name="send_media_to">Rhannu cyfryngau i…</string>
-    <string name="confirmation_reported">Anfonwyd!</string>
     <string name="confirmation_unblocked">Dad-flociwyd y defnyddiwr</string>
     <string name="confirmation_unmuted">Dad-fudwyd y defnyddiwr</string>
     <string name="status_sent">Anfonwyd!</string>
@@ -117,17 +113,7 @@
     <string name="label_quick_reply">Ateb…</string>
     <string name="label_avatar">Rhithffurf</string>
     <string name="label_header">Pennawd</string>
-    <string name="link_whats_an_instance">Beth yw achos?</string>
     <string name="login_connection">Yn cysylltu …</string>
-    <string name="dialog_whats_an_instance">Gallwch nodi cyfeiriad neu barth unrhyw achos
-        yma, fel mastodon.social, twt.cymru, social.tchncs.de, a
-        <a href="https://instances.social">mwy!</a>
-        \n\n Os nad oes gennych gyfrif, gallwch nodi enw\'r achos yr hoffech ymuno
-        Ag ef a chreu cyfrif yno.\n\nAchos yw un lle yn lle mae\'ch cyfrif wedi\'i 
-        gynnal, ond gallwch yn hawdd gyfathrebu â phobl a\'u dilyn ar achosion eraill fel petasech chi
-        ar yr un safle.
-        \n\nRhagor o wybodaeth yn <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Gorffen Uwchlwytho\'r Cyfryngau</string>
     <string name="dialog_message_uploading_media">Yn uwchlwytho…</string>
     <string name="dialog_download_image">Lawrlwytho</string>
@@ -207,10 +193,6 @@
     <string name="about_project_site">        Gwefan y prosiect:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        Adrodd byg &amp; ceisiadau nodwedd:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Proffil Roma</string>
     <string name="status_share_content">Rhannu cynnwys tŵt</string>
     <string name="status_share_link">Rhannu dolen i\'r tŵt</string>
     <string name="status_media_images">Delweddau</string>

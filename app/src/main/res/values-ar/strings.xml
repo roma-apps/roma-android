@@ -50,12 +50,10 @@
     <string name="status_content_show_more">توسيع</string>
     <string name="status_content_show_less">تصغير</string>
     <string name="message_empty">لا شيء هنا.</string>
-    <string name="footer_empty">لا يوجد شيئ هنا. إسحب إلى أسفل للتحديث !</string>
     <string name="notification_reblog_format">رقّى %s تبويقك</string>
     <string name="notification_favourite_format">أعجِب %s بتبويقك</string>
     <string name="notification_follow_format">%s يتبعك</string>
     <string name="report_username_format">أبلغ عن @%s</string>
-    <string name="report_comment_hint">تعليقات إضافية ؟</string>
     <string name="action_quick_reply">إجابة سريعة</string>
     <string name="action_reply">أجب</string>
     <string name="action_reblog">رقّي</string>
@@ -78,7 +76,6 @@
     <string name="action_send">بَوّق</string>
     <string name="action_send_public">بوّق!</string>
     <string name="action_retry">إعادة المحاولة</string>
-    <string name="action_close">إغلاق</string>
     <string name="action_view_profile">الملف الشخصي</string>
     <string name="action_view_preferences">التفضيلات</string>
     <string name="action_view_account_preferences">تفضيلات الحساب</string>
@@ -123,7 +120,6 @@
     <string name="send_status_link_to">شارك رابط التبويق مع…</string>
     <string name="send_status_content_to">شارك التبويق على…</string>
     <string name="send_media_to">شارك رابط التبويق مع…</string>
-    <string name="confirmation_reported">تم الإرسال !</string>
     <string name="confirmation_unblocked">تم فك الحجب عن الحساب</string>
     <string name="confirmation_unmuted">تم فك الكتم عن الحساب</string>
     <string name="status_sent">تم إرساله !</string>
@@ -138,15 +134,8 @@
     <string name="label_quick_reply">إجابة …</string>
     <string name="label_avatar">الصورة الرمزية</string>
     <string name="label_header">رأس الصفحة</string>
-    <string name="link_whats_an_instance">ماذا نعني بمثيل الخادم ؟</string>
     <string name="login_connection">الإتصال جارٍ…</string>
-    <string name="dialog_whats_an_instance">بإمكانك إدخال عنوان أي مثيل خادوم ماستدون هنا. على سبيل المثال mastodon.social أو icosahedron.website أو social.tchncs.de أوالإطلاع على <a href="https://instances.social">لاكتشاف المزيد !</a> 
-\n 
-\n إن كنت لا تملك حسابا بإمكانك إدخال اسم مثيل خادوم تريد الانضمام إليه قصد إنشاء حسابك عليه.
-\n 
-\n نعني بمثيل الخادوم المكان الذي استُضِيف فيه حسابك و يمكنك التواصل مع أصدقائك و متابعيك و كأنكم على موقع واحد و ذلك حتى و إن كانت حساباتهم مُستضافة على مثيلات خوادم أخرى. 
-\n 
-\n للمزيد مِن التفاصيل إطّلع على <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+
     <string name="dialog_title_finishing_media_upload">تتمة رفع الوسائط</string>
     <string name="dialog_message_uploading_media">الإرسال جارٍ…</string>
     <string name="dialog_download_image">تنزيل</string>
@@ -229,9 +218,6 @@
     -->
     <string name="about_project_site">موقع المشروع :\n
                    https://romaapp.github.io</string>
-    <string name="about_bug_feature_request_site">تقارير الأخطاء و طلبات التحسينات على  :\n
-                   https://github.com/romaapp/Roma/issues</string>
-    <string name="about_roma_account">الملف الشخصي لتوسكي</string>
     <string name="status_share_content">شارك محتوى التبويق</string>
     <string name="status_share_link">شارك الرابط إلى التبويق</string>
     <string name="status_media_images">صور</string>
@@ -314,7 +300,6 @@
     <string name="license_description">يحتوي توسكي على شيفرة وأوصول صادرة مِن المشاريع المفتوحة التالية :</string>
     <string name="license_apache_2">مرخص تحت رخصة أباتشي (النسخة أسفله)</string>
     <string name="license_cc_by_4">المشاع الإبداعي CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">المشاع الإبداعي CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">البيانات الوصفية للملف الشخصي</string>
     <string name="profile_metadata_add">إضافة بيانات</string>
     <string name="profile_metadata_label_label">الوسم</string>

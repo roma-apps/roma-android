@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Genişlet</string>
     <string name="status_content_show_less">Daralt</string>
     <string name="message_empty">Burada hiçbir şey yok.</string>
-    <string name="footer_empty">Henüz hiç ileti yoktur. Yenilemek için aşağıya çek!</string>
     <string name="notification_reblog_format">%s iletini yükseltti</string>
     <string name="notification_favourite_format">%s iletini favori etti</string>
     <string name="notification_follow_format">%s seni takip etti</string>
     <string name="report_username_format">\@%s bildir</string>
-    <string name="report_comment_hint">Daha fazla yorum?</string>
     <string name="action_quick_reply">Hızlı Cevapla</string>
     <string name="action_reply">Yanıtla</string>
     <string name="action_reblog">Yükselt</string>
@@ -76,7 +74,6 @@
     <string name="action_send">İLET</string>
     <string name="action_send_public">İLET!</string>
     <string name="action_retry">Tekrar dene</string>
-    <string name="action_close">Kapat</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Ayarlar</string>
     <string name="action_view_account_preferences">Hesap Tercihleri</string>
@@ -113,7 +110,6 @@
     <string name="send_status_link_to">İletinin adresini paylaş…</string>
     <string name="send_status_content_to">İletiyi paylaş…</string>
     <string name="send_media_to">Medyayı paylaş…</string>
-    <string name="confirmation_reported">İletildi!</string>
     <string name="confirmation_unblocked">Kullanıcının engeli kaldırdı</string>
     <string name="confirmation_unmuted">Kullanıcının sesi açıldı</string>
     <string name="status_sent">İletildi!</string>
@@ -128,16 +124,7 @@
     <string name="label_quick_reply">Yanıt…</string>
     <string name="label_avatar">Simge</string>
     <string name="label_header">Üstlük</string>
-    <string name="link_whats_an_instance">Sunucu nedir?</string>
     <string name="login_connection">Bağlantı kuruluyor…</string>
-    <string name="dialog_whats_an_instance">Burada her hangi bir Mastodon sunucusunun adresi
-		(mastodon.social, icosahedron.website, social.tchncs.de, ve
-        <a href="https://github.com/tootsuite/mastodon/blob/master/docs/Using-Mastodon/List-of-Mastodon-instances.md">daha fazla!</a>) girilebiliri.
-		\n\nEğer hesabınız henüz yok ise katılmak istediğiniz sunucunun adresini girerek hesap yaratabilirsin.
-		\n\nHer bir sunucu hesaplar ağırlayan bir yer olur ancak diğer sunucularda bulunan insanlarla
-		aynı sitede olmuşcasına iletişime geçip takip edebilirsiniz.
-		\n\nDaha fazla bilgi için <a href="https://mastodon.social/about">mastodon.social</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Medya Yükleme Bittiriliyor</string>
     <string name="dialog_message_uploading_media">Yükleniyor…</string>
     <string name="dialog_download_image">İndir</string>
@@ -217,9 +204,6 @@
     <string name="about_project_site">        Proje Web sitesi:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site"> &amp; özellik istekleri hata raporları:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
     <string name="status_share_content">İletinin içeriğini paylaş</string>
     <string name="status_share_link">İletinin adresini paylaş</string>
     <string name="status_media_images">Görseller</string>
@@ -284,7 +268,6 @@
     <string name="license_description">Roma aşağıdakı açık kaynaklı projelerden kod ve materyal içeriyor:</string>
     <string name="license_apache_2">Apache Lisansı altında lisanslanmıştır (kopya aşağıda)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Profil Metaverisi</string>
     <string name="profile_metadata_add">veri ekle</string>
     <string name="profile_metadata_label_label">Etiket</string>

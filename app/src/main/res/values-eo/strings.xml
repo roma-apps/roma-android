@@ -49,12 +49,10 @@
     <string name="status_content_show_more">Pligrandigi</string>
     <string name="status_content_show_less">Malgrandigi</string>
     <string name="message_empty">Nenio ĉi tie.</string>
-    <string name="footer_empty">Nenio ĉi tie. Tiru malsupren por aktualigi!</string>
     <string name="notification_reblog_format">%s diskonigis vian mesaĝon</string>
     <string name="notification_favourite_format">%s stelumis vian mesaĝon</string>
     <string name="notification_follow_format">%s eksekvis vin</string>
     <string name="report_username_format">Signali @%s</string>
-    <string name="report_comment_hint">Pliaj komentoj?</string>
     <string name="action_quick_reply">Rapida respondo</string>
     <string name="action_reply">Respondi</string>
     <string name="action_reblog">Diskonigi</string>
@@ -77,7 +75,6 @@
     <string name="action_send">HUP</string>
     <string name="action_send_public">HUP!</string>
     <string name="action_retry">Reprovu</string>
-    <string name="action_close">Fermi</string>
     <string name="action_view_profile">Profilo</string>
     <string name="action_view_preferences">Preferoj</string>
     <string name="action_view_account_preferences">Preferoj de konto</string>
@@ -126,7 +123,6 @@
     <string name="send_status_link_to">Konigi URL de mesaĝo al…</string>
     <string name="send_status_content_to">Konigi mesaĝon al…</string>
     <string name="send_media_to">Konigi aŭdovidaĵon al…</string>
-    <string name="confirmation_reported">Sendita!</string>
     <string name="confirmation_unblocked">Malblokita uzanto</string>
     <string name="confirmation_unmuted">Malsilentigita uzanto</string>
     <string name="status_sent">Sendita!</string>
@@ -141,13 +137,7 @@
     <string name="label_quick_reply">Respondi…</string>
     <string name="label_avatar">Profilbildo</string>
     <string name="label_header">Fonbildo</string>
-    <string name="link_whats_an_instance">Kio estas nodo?</string>
     <string name="login_connection">Konektante…</string>
-    <string name="dialog_whats_an_instance">La adreso aŭ domajno de iu ajn nodo povas esti enmetitaĉi tie, kiel mastodon.social, icosahedron.website, social.tchncs.de, kaj
-        <a href="https://instances.social">pli!</a>
-        \n\nSe vi ne ankoraŭ havas konton, vi povas enmeti la nomon de la nodo ke vi volas aliĝi kaj krei konton tie.\n\nNodo estas unika loko kie via konto estas gastigita, sed vi povas facile komuniki kun kaj sekvi homojn ĉe aliaj nodoj kiel vi estus ĉe la sama retejo.
-        \n\nPliaj informoj troviĝas ĉe <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Finante alŝuto de aŭdovidaĵojn</string>
     <string name="dialog_message_uploading_media">Alŝutante…</string>
     <string name="dialog_download_image">Elŝuti</string>
@@ -230,10 +220,6 @@
     <string name="about_project_site">        Paĝaro de projekto:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        Raportoj de cimo kaj petoj de funkcio:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Profilo de Roma</string>
     <string name="status_share_content">Konigi enhavon de la mesaĝo</string>
     <string name="status_share_link">Konigi ligilon al mesaĝo</string>
     <string name="status_media_images">Bildoj</string>
@@ -315,7 +301,6 @@
     <string name="license_description">Roma enhavas kodon kaj risurcojn el la sekvantaj malfermitkodaj projetkoj:</string>
     <string name="license_apache_2">Laŭ la permesilo «Apache License» (kopio sube)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Profilaj metadatumoj</string>
     <string name="profile_metadata_add">aldoni datumon</string>
     <string name="profile_metadata_label_label">Etikedo</string>
