@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Uitklappen</string>
     <string name="status_content_show_less">Inklappen</string>
     <string name="message_empty">Hier is niets.</string>
-    <string name="footer_empty">Niets te zien. Swipe naar beneden om te verversen!</string>
     <string name="notification_reblog_format">%s repostte jouw toot</string>
     <string name="notification_favourite_format">%s markeerde jouw toot als favoriet</string>
     <string name="notification_follow_format">%s volgt jou</string>
     <string name="report_username_format">Rapporteer @%s</string>
-    <string name="report_comment_hint">Extra opmerkingen\?</string>
     <string name="action_quick_reply">Snelle reactie</string>
     <string name="action_reply">Reageren</string>
     <string name="action_reblog">Reposten</string>
@@ -78,7 +76,6 @@
     <string name="action_send">TOOT</string>
     <string name="action_send_public">TOOT!</string>
     <string name="action_retry">Opnieuw proberen</string>
-    <string name="action_close">Sluiten</string>
     <string name="action_view_profile">Profiel</string>
     <string name="action_view_preferences">Voorkeuren</string>
     <string name="action_view_account_preferences">Accountinstellingen</string>
@@ -125,7 +122,6 @@
     <string name="send_status_link_to">Link van de toot delen met…</string>
     <string name="send_status_content_to">Inhoud van de toot delen met…</string>
     <string name="send_media_to">Media delen met …</string>
-    <string name="confirmation_reported">Verzonden!</string>
     <string name="confirmation_unblocked">Gebruiker is gedeblokkeerd</string>
     <string name="confirmation_unmuted">Gebruiker wordt niet langer genegeerd</string>
     <string name="status_sent">Verzonden!</string>
@@ -140,15 +136,7 @@
     <string name="label_quick_reply">Reageren…</string>
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Omslagfoto</string>
-    <string name="link_whats_an_instance">Wat is een Mastodonserver?</string>
     <string name="login_connection">Aan het verbinden…</string>
-    <string name="dialog_whats_an_instance">Het adres of domein van elke Mastodonserver kan hier worden ingevoerd, zoals mastodon.social, mastodon.nl, octodon.social en <a href="https://instances.social">nog veel meer!</a>
-\n
-\nWanneer je nog geen account hebt, kun je de naam van de Mastodonserver waar jij je graag wil registeren invoeren, waarna je daar een account kunt aanmaken.
-\n
-\nEen Mastodonserver (Engels: instance) is een computerserver waar jouw account zich bevindt (vergelijk het met een e-mailserver). Je kan eenvoudig mensen van andere servers volgen en met ze communiceren, alsof jullie met elkaar op dezelfde website zitten.
-\n
-\n Meer informatie kun je vinden op <a href="https://joinmastodon.org" >joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Uploaden media bijna voltooid</string>
     <string name="dialog_message_uploading_media">Aan het uploaden…</string>
     <string name="dialog_download_image">Downloaden</string>
@@ -230,9 +218,6 @@
     -->
     <string name="about_project_site">Projectwebsite:\n
                     https://romaapp.github.io</string>
-    <string name="about_bug_feature_request_site">Foutmeldingen &amp; nieuwe functies aanvragen:\n
-                    https://github.com/romaapp/Roma/issues</string>
-    <string name="about_roma_account">Roma\'s profiel</string>
 
     <string name="status_share_content">Deel de inhoud van de toot</string>
     <string name="status_share_link">Deel de link van de toot</string>
@@ -300,7 +285,6 @@
     <string name="license_description">Roma bevat broncode en onderdelen van de volgende opensourceprojecten:</string>
     <string name="license_apache_2">Gelicenseerd onder de Apache-licentie (kopie hieronder)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Metadata profiel</string>
     <string name="profile_metadata_add">Metadata toevoegen</string>
     <string name="profile_metadata_label_label">Label</string>

@@ -42,14 +42,12 @@
     <string name="status_content_warning_show_more">Mostra\'n més</string>
     <string name="status_content_warning_show_less">Mostra\'n menys</string>
 
-    <string name="footer_empty">No hi ha res aquí. Llisca avall per a actualitzar!</string>
 
     <string name="notification_reblog_format">%s ha retootejat el teu toot</string>
     <string name="notification_favourite_format">%s ha marcat com a preferit el teu toot</string>
     <string name="notification_follow_format">%s et segueix</string>
 
     <string name="report_username_format">Denuncia @%s</string>
-    <string name="report_comment_hint">Cap comentari addicional?</string>
 
     <string name="action_reply">Respon</string>
     <string name="action_reblog">Retooteja</string>
@@ -67,7 +65,6 @@
     <string name="action_send">TOOT</string>
     <string name="action_send_public">TOOT!</string>
     <string name="action_retry">Torna a intentar-ho</string>
-    <string name="action_close">Tanca</string>
     <string name="action_view_profile">Perfil</string>
     <string name="action_view_preferences">Preferències</string>
     <string name="action_view_favourites">Preferits</string>
@@ -98,7 +95,6 @@
     <string name="send_status_link_to">Comparteix l\'URL del toot a…</string>
     <string name="send_status_content_to">Comparteix el toot a…</string>
 
-    <string name="confirmation_reported">Enviat!</string>
     <string name="confirmation_unblocked">Usuari desblocat</string>
     <string name="confirmation_unmuted">Usuari sense silenciar</string>
 
@@ -114,18 +110,8 @@
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Capçalera</string>
 
-    <string name="link_whats_an_instance">Què és una instància?</string>
-
     <string name="login_connection">S\'està connectant…</string>
 
-    <string name="dialog_whats_an_instance">Aquí pots introduir l\'adreça o domini de qualsevol instància,
-        com ara mastodont.cat, mastodon.social, icosahedron.website o
-        <a href="https://instances.social">molts més!</a>
-        \n\nSi encara no tens cap copte, pots introduir el nom de la instància on t\'agradaria
-        unir-te i crear un compte allà.\n\nUna instànica és un únic lloc on el teu compte s\'hostatja
-        , però pots comunicar-te fàcilment i seguir amics d\'altres instàncies com si fossiu en el mateix lloc.
-        \n\nTens més informació a <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">S\'està finalitzant la pujada de materila multimèdia</string>
     <string name="dialog_message_uploading_media">S\'està pujant…</string>
     <string name="dialog_download_image">Baixa</string>
@@ -194,11 +180,6 @@
         Lloc web del projecte:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">
-        Informes d\'errors i peticions de funcionalitats:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Perfil del Roma</string>
 
     <string name="status_share_content">Comparteix el contingut del toot</string>
     <string name="status_share_link">Comparteix l\'enllaç al toot</string>
@@ -385,7 +366,6 @@
     <string name="license_description">Roma conté codi i recursos dels següents projectes:</string>
     <string name="license_apache_2">Sota llicencia Apache (text a sota)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <string name="profile_metadata_label">Metadades del perfil</string>
     <string name="profile_metadata_add">Afegir dada</string>

@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Kibont</string>
     <string name="status_content_show_less">Összecsuk</string>
     <string name="message_empty">Nincs itt semmi.</string>
-    <string name="footer_empty">Üres tartalom. Húzd le a frissítéshez!</string>
     <string name="notification_reblog_format">%s rebloggolta tülkölésed</string>
     <string name="notification_favourite_format">%s kedvencnek jelölte tülkölésed</string>
     <string name="notification_follow_format">%s követett</string>
     <string name="report_username_format">\@%s jelentése</string>
-    <string name="report_comment_hint">Egyéb megjegyzés?</string>
     <string name="action_quick_reply">Gyors válasz</string>
     <string name="action_reply">Válasz</string>
     <string name="action_reblog">Rebloggol</string>
@@ -76,7 +74,6 @@
     <string name="action_send">TÜLK</string>
     <string name="action_send_public">TÜLK!</string>
     <string name="action_retry">Próbálja újra</string>
-    <string name="action_close">Bezár</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Beállítások</string>
     <string name="action_view_account_preferences">Fiókbeállítások</string>
@@ -119,7 +116,6 @@
     <string name="action_share_as">Megosztás mint …</string>
     <string name="send_status_link_to">Tülk URL megosztása…</string>
     <string name="send_status_content_to">Tülk megosztása…</string>
-    <string name="confirmation_reported">Elküldve!</string>
     <string name="confirmation_unblocked">Felhasználó deblokkolva</string>
     <string name="confirmation_unmuted">Felhasználó kinémítva</string>
     <string name="status_sent">Elküldve!</string>
@@ -134,17 +130,7 @@
     <string name="label_quick_reply">Válasz…</string>
     <string name="label_avatar">Avatár</string>
     <string name="label_header">Fejléc</string>
-    <string name="link_whats_an_instance">Mi egy példány?</string>
     <string name="login_connection">Csatlakozás…</string>
-    <string name="dialog_whats_an_instance">Bármely példány címe vagy tartománya beírható ide,
-        mint mastodon.social, icosahedron.website, social.tchncs.de, és
-        <a href="https://instances.social">mások!</a>
-        \n\nHa még nincs fiókja, beírhatja a címét azon példánynak amelyhez csatlakozna
-        és hozzon létre egy fiókot.\n\nA példány azon hely ahol a fiókja van tárolva,
-        de könnyen kommunikálhat más példányokon tartozkodő személyekkel mintha ugyanazon
-        az oldalon lennének.
-        \n\nTöbb információt találhat: <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Média feltöltés befejezése</string>
     <string name="dialog_message_uploading_media">Feltöltés…</string>
     <string name="dialog_download_image">Letöltés</string>
@@ -216,11 +202,6 @@
         Projekt honlapja:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">
-        Hibajeletés &amp; funkcionalitási kérések:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Roma Profilja</string>
 
     <string name="status_share_content">Tülk! tartalmának megosztása</string>
     <string name="status_share_link">Tülk linkjének megosztása</string>
@@ -265,7 +246,6 @@
     <string name="account_moved_description">%1$s elköltözött:</string>
     <string name="license_description">A Roma a következő nyílt forráskódú projektekből tartalmaz programkódot és más elemeket:</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Profil metaadatok</string>
     <string name="profile_metadata_add">adatok hozzáadása</string>
     <string name="profile_metadata_label_label">Címke</string>

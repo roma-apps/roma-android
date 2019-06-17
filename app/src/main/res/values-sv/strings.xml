@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Expandera</string>
     <string name="status_content_show_less">Dölj</string>
     <string name="message_empty">Ingenting här.</string>
-    <string name="footer_empty">Inget här. Dra ner för att uppdatera!</string>
     <string name="notification_reblog_format">%s knuffade din toot</string>
     <string name="notification_favourite_format">%s favoriserade din toot</string>
     <string name="notification_follow_format">%s följer dig</string>
     <string name="report_username_format">Rapportera @%s</string>
-    <string name="report_comment_hint">Ytterligare kommentarer?</string>
     <string name="action_quick_reply">Snabbsvar</string>
     <string name="action_reply">Svara</string>
     <string name="action_reblog">Knuffa</string>
@@ -78,7 +76,6 @@
     <string name="action_send">TOOT</string>
     <string name="action_send_public">TOOT!</string>
     <string name="action_retry">Försök igen</string>
-    <string name="action_close">Stäng</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Inställningar</string>
     <string name="action_view_account_preferences">Kontospecifika inställningar</string>
@@ -125,7 +122,6 @@
     <string name="send_status_link_to">Dela toot-URL till…</string>
     <string name="send_status_content_to">Dela toot till…</string>
     <string name="send_media_to">Dela media till…</string>
-    <string name="confirmation_reported">Skickat!</string>
     <string name="confirmation_unblocked">Användare avblockerad</string>
     <string name="confirmation_unmuted">Användaren är inte tystad längre</string>
     <string name="status_sent">Skickat!</string>
@@ -140,16 +136,7 @@
     <string name="label_quick_reply">Svara…</string>
     <string name="label_avatar">Profilbild</string>
     <string name="label_header">Bakgrundsbild</string>
-    <string name="link_whats_an_instance">Vad är en instans?</string>
     <string name="login_connection">Ansluter…</string>
-    <string name="dialog_whats_an_instance">Adressen eller domänen för varje instans kan anges 
-		här, till exempel mastodon.social, icosahedron.website, social.tchncs.de och 
-        <a href="https://instances.social"> mer! </a>
-        \n\nOm du inte har något konto kan du ange namnet på instansen du vill ansluta till och skapa ett konto där.
-        \n\nEn instans är en plats där ditt konto finns, men du kan enkelt kommunicera med och följa andra personer på andra instanser, 
-        som om du var på samma sajt.
-        \n\nMer information finns på <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Uppladdning av media</string>
     <string name="dialog_message_uploading_media">Laddar upp…</string>
     <string name="dialog_download_image">Ladda ned</string>
@@ -235,10 +222,6 @@
     <string name="about_project_site">        Romas webbsida:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        Buggrapporter &amp; funktionsförslag:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Romas Profil</string>
     <string name="status_share_content">Dela innehåll av toot</string>
     <string name="status_share_link">Dela länk till toot</string>
     <string name="status_media_images">Bilder</string>
@@ -321,7 +304,6 @@
     <string name="license_description">Roma innehåller kod och tillgångar från följande öppen källkodsprojekt:</string>
     <string name="license_apache_2">Licensierad under the Apache License (kopia nedanför)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Profil-metadata</string>
     <string name="profile_metadata_add">Spara ändringar</string>
     <string name="profile_metadata_label_label">Etikett</string>

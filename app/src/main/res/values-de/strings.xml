@@ -50,12 +50,10 @@
     <string name="status_content_show_more">Mehr</string>
     <string name="status_content_show_less">Weniger</string>
     <string name="message_empty">Hier ist nichts.</string>
-    <string name="footer_empty">Noch keine Beiträge hier! Ziehe nach unten um zu aktualisieren!</string>
     <string name="notification_reblog_format">%s teilte deinen Beitrag</string>
     <string name="notification_favourite_format">%s favorisierte deinen Beitrag</string>
     <string name="notification_follow_format">%s folgt dir</string>
     <string name="report_username_format">\@%s melden</string>
-    <string name="report_comment_hint">Irgendwelche Anmerkungen?</string>
     <string name="action_quick_reply">Schnell antworten</string>
     <string name="action_reply">Antworten</string>
     <string name="action_reblog">Teilen</string>
@@ -78,7 +76,6 @@
     <string name="action_send">TRÖT</string>
     <string name="action_send_public">TRÖT!</string>
     <string name="action_retry">Erneut versuchen</string>
-    <string name="action_close">Schließen</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Einstellungen</string>
     <string name="action_view_favourites">Favouriten</string>
@@ -124,7 +121,6 @@
     <string name="send_status_link_to">Beitragslink teilen</string>
     <string name="send_status_content_to">Beitragsinhalt teilen</string>
     <string name="send_media_to">Mediendatei teilen…</string>
-    <string name="confirmation_reported">Gesendet!</string>
     <string name="confirmation_unblocked">entblockt</string>
     <string name="confirmation_unmuted">Stummschaltung aufgehoben</string>
     <string name="status_sent">Gesendet!</string>
@@ -139,17 +135,7 @@
     <string name="label_quick_reply">Antworten…</string>
     <string name="label_avatar">Profilbild</string>
     <string name="label_header">Titelbild</string>
-    <string name="link_whats_an_instance">Was ist eine Instanz?</string>
     <string name="login_connection">Verbinden…</string>
-    <string name="dialog_whats_an_instance">Die Adresse einer Instanz oder Domain kann
-        hier eingegeben werden, wie z.B. mastodon.social, icosahedron.website, social.tchncs.de, und
-        <a href="https://instances.social">mehr!</a>
-        \n\nWenn du bis jetzt kein Konto hast, kannst du hier den Namen einer Instanz eingeben
-        und dort ein Konto einrichten.\n\nEine Instanz ist ein einziger Ort, wo dein Konto
-        gehostet ist, aber du kannst dennoch mit anderen Leuten reden und mit ihnen interagieren, als
-        wärt ihr alle auf einer Webseite.
-        \n\nWeitere Informationen gibt es auf <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Stelle Medienupload fertig</string>
     <string name="dialog_message_uploading_media">Lade hoch…</string>
     <string name="dialog_download_image">Herunterladen</string>
@@ -224,11 +210,6 @@
         Webseite des Projekts:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">
-        Fehlermeldungen &amp; Verbesserungsvorschläge:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Romas Profil</string>
 
     <string name="status_media_images">Bilder</string>
     <string name="status_media_video">Video</string>
@@ -297,7 +278,6 @@
     <string name="license_description">Roma enthält Code und Inhalte von den folgenden Open-Source-Projekten:</string>
     <string name="license_apache_2">Lizenziert unter der Apache-Lizenz (s. u.)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Profil-Metadaten</string>
     <string name="profile_metadata_add">Feld hinzufügen</string>
     <string name="profile_metadata_label_label">Bezeichnung</string>

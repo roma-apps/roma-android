@@ -53,14 +53,12 @@
     <string name="status_content_show_less">折叠</string>
 
     <string name="message_empty">还没有内容</string>
-    <string name="footer_empty">还没有内容，向下拉动即可刷新</string>
 
     <string name="notification_reblog_format">%s 转嘟了你的嘟文</string>
     <string name="notification_favourite_format">%s 收藏了你的嘟文</string>
     <string name="notification_follow_format">%s 关注了你</string>
 
     <string name="report_username_format">报告用户 @%s 的滥用行为</string>
-    <string name="report_comment_hint">报告更多信息</string>
 
     <string name="action_quick_reply">快速回复</string>
     <string name="action_reply">回复</string>
@@ -85,7 +83,6 @@
     <string name="action_send">嘟嘟</string>
     <string name="action_send_public">嘟嘟！</string>
     <string name="action_retry">重试</string>
-    <string name="action_close">关闭</string>
     <string name="action_view_profile">个人资料</string>
     <string name="action_view_preferences">设置</string>
     <string name="action_view_account_preferences">帐户设置</string>
@@ -139,7 +136,6 @@
     <string name="send_status_content_to">分享嘟文到…</string>
     <string name="send_media_to">分享媒体到…</string>
 
-    <string name="confirmation_reported">报告已发送！</string>
     <string name="confirmation_unblocked">已解除屏蔽</string>
     <string name="confirmation_unmuted">已取消隐藏</string>
 
@@ -159,17 +155,7 @@
     <string name="label_avatar">头像</string>
     <string name="label_header">标题</string>
 
-    <string name="link_whats_an_instance">需要帮助？</string>
-
     <string name="login_connection">正在连接…</string>
-
-    <string name="dialog_whats_an_instance">请输入你帐号所在的 Mastodon 站点的域名，比如 pawoo.net，acg.mn，wxw.moe，<a href="https://instances.social">等等</a> 。
-        \n\n还没有 Mastodon 帐号？你也可以输入想注册的 Mastodon 站点的域名，然后在该服务器创建新的帐号并授权 Roma 登入。
-        \n\n在 Mastodon 里，跨站互动和站内互动一样简单。可以前往 <a href="https://joinmastodon.org">https://joinmastodon.org</a> 了解更多信息。
-    </string>
-
-
-
 
 
     <string name="dialog_title_finishing_media_upload">正在结束上传…</string>
@@ -270,11 +256,6 @@
         项目地址：\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">
-        问题反馈：\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Roma 官方帐号</string>
     <string name="status_share_content">分享嘟文内容</string>
     <string name="status_share_link">分享嘟文链接</string>
     <string name="status_media_images">照片</string>
@@ -371,7 +352,6 @@
     <string name="license_description">Roma 使用了以下开源项目的源码：</string>
     <string name="license_apache_2">以 Apache License 授权（复制如下）</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <string name="profile_metadata_label">个人资料附加信息</string>
     <string name="profile_metadata_add">添加信息</string>

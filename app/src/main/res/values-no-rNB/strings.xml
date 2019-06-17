@@ -53,14 +53,12 @@
     <string name="status_content_show_less">Kollaps</string>
 
     <string name="message_empty">Her er det ingenting.</string>
-    <string name="footer_empty">Her er det ingenting. Dra ned for å oppdatere!</string>
 
     <string name="notification_reblog_format">%s boostet tootet ditt</string>
     <string name="notification_favourite_format">%s favoriserte tootet ditt</string>
     <string name="notification_follow_format">%s fulgte deg</string>
 
     <string name="report_username_format">Rapporter @%s</string>
-    <string name="report_comment_hint">Ytterligere kommentarer\?</string>
 
     <string name="action_quick_reply">Hurtigsvar</string>
     <string name="action_reply">Svar</string>
@@ -84,7 +82,6 @@
     <string name="action_send">TOOT</string>
     <string name="action_send_public">TOOT!</string>
     <string name="action_retry">Prøv igjen</string>
-    <string name="action_close">Steng</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Innstillinger</string>
     <string name="action_view_account_preferences">Kontoinnstillinger</string>
@@ -138,7 +135,6 @@
     <string name="send_status_content_to">Del toot til…</string>
     <string name="send_media_to">Del media til…</string>
 
-    <string name="confirmation_reported">Sendt!</string>
     <string name="confirmation_unblocked">Fjernet blokkering av bruker</string>
     <string name="confirmation_unmuted">Fjernet demping av bruker</string>
 
@@ -158,17 +154,8 @@
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Overskrift</string>
 
-    <string name="link_whats_an_instance">Hva er en instans\?</string>
-
     <string name="login_connection">Kobler til…</string>
 
-    <string name="dialog_whats_an_instance">Adressen eller domenet til en instans kan skrives inn her, for eksempel mastodon.social, icosahedron.website, social.tchncs.de, og <a href="https://instances.social">flere!</a>!
-\n
-\nHvis du ikke har en konto, kan du skrive inn navnet på instansen du ønsker å opprette en konto på her.
-\n
-\nEn instans er en sted hvor kontoen din er registrert, men du kan enkelt kommunisere med og følge brukere på andre instanser som om dere er på den samme instansen.
-\n
-\nMer informasjon finner du på <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Mediaopplasting er ferdig</string>
     <string name="dialog_message_uploading_media">Laster opp…</string>
     <string name="dialog_download_image">Last ned</string>
@@ -242,9 +229,6 @@
     <string name="description_account_locked">Låst konto</string>
 
     <string name="about_title_activity">Om</string>
-    <string name="about_bug_feature_request_site">Rapporter feil og ønsker om funksjonalitet her:
-\n https://github.com/romaapp/Roma/issues</string>
-    <string name="about_roma_account">Romas Mastodon-profil</string>
 
     <string name="status_share_content">Del inneholdet i tootet</string>
     <string name="status_share_link">Del link til tootet</string>
@@ -346,7 +330,6 @@
     <string name="license_description">Roma inneholder programkode og elementer fra følgende åpen kildekode-prosjekter:</string>
     <string name="license_apache_2">Lisensiert under Apache License (kopi under)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
-    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <string name="profile_metadata_label">Profilmetadata</string>
     <string name="profile_metadata_add">legg til profilmetadata</string>
@@ -475,7 +458,6 @@
     <string name="report_sent_success">\@%s er rapportert</string>
     <string name="hint_additional_info">Flere kommentarer</string>
     <string name="report_remote_instance">Videresend til %s</string>
-    <string name="failed_report">Klarte ikke å rapportere</string>
     <string name="failed_fetch_statuses">Klarte ikke å hente statuser</string>
     <string name="report_description_1">Rapporten vil bli sendt til instansmoderatoren. Under kan du skrive en forklaring på hvorfor du rapporterer denne kontoen:</string>
     <string name="report_description_remote_instance">Kontoen tilhører en annen instans. Vil du også sende en anonymisert kopi av rapporten dit\?</string>

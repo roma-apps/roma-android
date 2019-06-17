@@ -43,12 +43,10 @@
     <string name="status_content_warning_show_less">نمایش کمتر</string>
     <string name="status_content_show_more">بازکردن</string>
     <string name="status_content_show_less">بستن</string>
-    <string name="footer_empty">چیزی اینجا نیست.برای تازه سازی، به پایین بکشید</string>
     <string name="notification_reblog_format">%s بوق شما را تقویت کرد</string>
     <string name="notification_favourite_format">%s بوق شما را پسندید</string>
     <string name="notification_follow_format">%s شما را دنبال می‌کند</string>
     <string name="report_username_format">گزارش @%s</string>
-    <string name="report_comment_hint">پیام‌های اضافی</string>
     <string name="action_quick_reply">پاسخ سریع</string>
     <string name="action_reply">پاسخ</string>
     <string name="action_reblog">تقویت</string>
@@ -69,7 +67,6 @@
     <string name="action_send">بوق</string>
     <string name="action_send_public">بوق!</string>
     <string name="action_retry">تلاش مجدد</string>
-    <string name="action_close">بستن</string>
     <string name="action_view_profile">نمایه</string>
     <string name="action_view_preferences">ترجیحات</string>
     <string name="action_view_account_preferences">ترجیحات حساب</string>
@@ -103,7 +100,6 @@
     <string name="send_status_link_to">هم‌رسانی نشانی بوق با</string>
     <string name="send_status_content_to">هم‌رسانی بوق با</string>
     <string name="send_media_to">هم‌رسانی رسانه با…</string>
-    <string name="confirmation_reported">فرستاده شد!</string>
     <string name="confirmation_unblocked">کاربر رفع انسداد شد</string>
     <string name="confirmation_unmuted">کاربر رفع بی‌صدا شد</string>
     <string name="status_sent">فرستاده شد!</string>
@@ -118,9 +114,7 @@
     <string name="label_quick_reply">پاسخ …</string>
     <string name="label_avatar">آواتار</string>
     <string name="label_header">سرتیتر</string>
-    <string name="link_whats_an_instance">یک نمونه چیست؟</string>
     <string name="login_connection">در حال اتصال …</string>
-    <string name="dialog_whats_an_instance">آدرس یا دامنه هر نمونه را می‌توانید وارد کنید، مثلا mastodon.social, icosahedron.website, social.tchncs.de, و         &lt;a href=\"https://instances.social\" &gt;بیشتر!\n\n اگر شما هنوز حساب کاربری ندارید، می‌توانید نام نمونه مورد نظر را وارد کنید از اینجا بپیوندید و حساب کاربری ایجاد کنید\n\n نمونه جایی است که حساب کاربری شما میزبان آن است اما شما به راحتی می‌توانید با افراد دیگر در نمونه‌های دیگر ارتباط برقرار کنید و آنها را دنبال کنید شما درست مثل اینکه در  یکجا باشید.\n\n برای اطلاعات بیشتر به اینجا مراجعه کنید <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">پایان بارگذاری رسانه</string>
     <string name="dialog_message_uploading_media">در حال بارگذاری</string>
     <string name="dialog_download_image">بارگیری</string>
@@ -205,10 +199,6 @@
     <string name="about_project_site">        سایت پروژه\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        گزارش خطا و درخواست ویژگی:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">نمایه Roma</string>
     <string name="status_share_content">هم‌رسانی محتوی بوق</string>
     <string name="status_share_link">هم‌رسانی لینک بوق</string>
     <string name="status_media_images">تصویرها</string>

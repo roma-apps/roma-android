@@ -43,12 +43,10 @@
     <string name="status_content_warning_show_less">Gutxiago erakutsi</string>
     <string name="status_content_show_more">Zabaldu</string>
     <string name="status_content_show_less">Bildu</string>
-    <string name="footer_empty">Edukirik ez. Arrastatu behera birkargatzeko!</string>
     <string name="notification_reblog_format">%s-(e)k zure tuta bultzatu du</string>
     <string name="notification_favourite_format">%s-(e)k zure tuta gogoko du</string>
     <string name="notification_follow_format">%s-(e)k jarraitu dizu</string>
     <string name="report_username_format">\@%s salatu</string>
-    <string name="report_comment_hint">Informazio gehigarria?</string>
     <string name="action_quick_reply">Erantzun azkarra</string>
     <string name="action_reply">Erantzun</string>
     <string name="action_reblog">Bultzatu</string>
@@ -69,7 +67,6 @@
     <string name="action_send">Tut</string>
     <string name="action_send_public">TUT!</string>
     <string name="action_retry">Berriz saiatu</string>
-    <string name="action_close">Itxi</string>
     <string name="action_view_profile">Profila</string>
     <string name="action_view_preferences">Ezarpenak</string>
     <string name="action_view_account_preferences">Kontuaren ezarpenak</string>
@@ -103,7 +100,6 @@
     <string name="send_status_link_to">Tutaren URL-a partekatu…</string>
     <string name="send_status_content_to">Tuta partekatu…</string>
     <string name="send_media_to">Partekatu multimedia hona…</string>
-    <string name="confirmation_reported">Bidalia!</string>
     <string name="confirmation_unblocked">Erabiltzailea ez dago blokeatuta iada.</string>
     <string name="confirmation_unmuted">Iada erabiltzailea ez dago mutututa.</string>
     <string name="status_sent">Bidalia!</string>
@@ -118,13 +114,7 @@
     <string name="label_quick_reply">Erantzuna…</string>
     <string name="label_avatar">Irudia</string>
     <string name="label_header">Goiburua</string>
-    <string name="link_whats_an_instance">Zer da instantzia?</string>
     <string name="login_connection">Konektatzen…</string>
-    <string name="dialog_whats_an_instance"> Sartu hemen helbidea edo mastodon.eus, mastodon.jalgi.eus, mastodon.social bezalako <a href="https://instances.social">edozein instantzia</a>,
-        \n\n Oraindik ez baduzu konturik, instantziaren izena sartu eta bertan kontua sortu dezakezu.
-\n\nInstantzia zure kontua dagoen gunea da, baino beste instantzietako erabiltzaileak zurean egongo balira bezala jarraitu ditzakezu.
-        \n\nInformazio gehiago <a href="https://joinmastodon.org">joinmastodon.org</a> helbidean topatuko duzu.
-    </string>
     <string name="dialog_title_finishing_media_upload">Multimedia igoera bukatzen</string>
     <string name="dialog_message_uploading_media">Igotzen…</string>
     <string name="dialog_download_image">Jaitsi</string>
@@ -207,10 +197,6 @@
     <string name="about_project_site">        Proiektuaren gunea:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        Akats jakinarazpenak eta hobekuntza eskariak:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Roma-ren profila</string>
     <string name="status_share_content">Partekatu edukia</string>
     <string name="status_share_link">Partekatu lotura</string>
     <string name="status_media_images">Irudiak</string>

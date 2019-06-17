@@ -40,12 +40,10 @@
     <string name="status_sensitive_media_directions">Naciśnij, aby wyświetlić</string>
     <string name="status_content_warning_show_more">Pokaż więcej</string>
     <string name="status_content_warning_show_less">Ukryj</string>
-    <string name="footer_empty">Pusto! Pociągnij, aby odświeżyć.</string>
     <string name="notification_reblog_format">%s podbił Twój post</string>
     <string name="notification_favourite_format">%s dodał Twój post do ulubionych</string>
     <string name="notification_follow_format">%s zaczął Cię śledzić</string>
     <string name="report_username_format">Zgłoś @%s</string>
-    <string name="report_comment_hint">Dodatkowe komentarze?</string>
     <string name="action_quick_reply">Szybka odpowiedź</string>
     <string name="action_reply">Odpowiedz</string>
     <string name="action_reblog">Podbij</string>
@@ -66,7 +64,6 @@
     <string name="action_send">Wyślij</string>
     <string name="action_send_public">Wyślij!</string>
     <string name="action_retry">Spróbuj ponownie</string>
-    <string name="action_close">Zamknij</string>
     <string name="action_view_profile">Profil</string>
     <string name="action_view_preferences">Preferencje</string>
     <string name="action_view_favourites">Ulubione</string>
@@ -98,7 +95,6 @@
     <string name="action_copy_link">Skopiuj odnośnik</string>
     <string name="send_status_link_to">Udostępnij odnośnik do wpisu…</string>
     <string name="send_status_content_to">Udostępnij wpis do…</string>
-    <string name="confirmation_reported">Wyślij!</string>
     <string name="confirmation_unblocked">Odblokowano użytkownika</string>
     <string name="confirmation_unmuted">Cofnięto wyciszenie użytkownika</string>
     <string name="status_sent">Wysłano!</string>
@@ -113,17 +109,7 @@
     <string name="label_quick_reply">Odpowiedz…</string>
     <string name="label_avatar">Obraz profilowy</string>
     <string name="label_header">Nagłówek</string>
-    <string name="link_whats_an_instance">Czym jest instancja?</string>
     <string name="login_connection">Łączenie…</string>
-    <string name="dialog_whats_an_instance">Tutaj można wprowadzić domenę lub adres instancji,
-        np. mastodon.social, icosahedron.website, social.tchncs.de, i
-        <a href="https://instances.social">wiele więcej!</a>
-        \n\nJeżeli nie posiadasz jeszcze konta, wprowadź tu nazwę instancji, na której chcesz się zarejestrować.
-        Instancja jest miejscem, na którym znajduje się twoje konto,
-        lecz komunikując się z innymi serwerami, działa tak,
-        jakby były jednym portalem.
-        Więcej informacji można znaleźć na <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
     <string name="dialog_title_finishing_media_upload">Kończenie wysyłania treści</string>
     <string name="dialog_message_uploading_media">Wysyłanie…</string>
     <string name="dialog_download_image">Pobierz</string>
@@ -201,10 +187,6 @@
     <string name="about_project_site">        Strona projektu:\n
         https://romaapp.github.io
     </string>
-    <string name="about_bug_feature_request_site">        Zgłoszenia błędów i propozycje funkcji:\n
-        https://github.com/romaapp/Roma/issues
-    </string>
-    <string name="about_roma_account">Profil Roma’ego</string>
     <string name="status_share_content">Udostępnij zawartość postu</string>
     <string name="status_share_link">Udostępnij link do postu</string>
     <string name="status_media_images">Obrazy</string>

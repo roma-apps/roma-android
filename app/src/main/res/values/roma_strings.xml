@@ -3,8 +3,4 @@
     <string name="pref_title_chat_layout_direct_messages">Use chat style for direct messages</string>
     <string name="hint_direct_message">Direct Message</string>
     <string name="now">Now</string>
-    <string name="uploading">Uploading…</string>
-    <string name="try_again">Try Again</string>
-    <string name="title_delete_chat_status">Delete message</string>
-    <string name="msg_delete_chat_message">Delete a direct message may break answers thread.\nDo you want to continue?</string>
 </resources>
