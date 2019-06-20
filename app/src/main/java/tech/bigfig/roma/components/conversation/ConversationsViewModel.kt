@@ -55,9 +55,8 @@ class ConversationsViewModel @Inject constructor(
                         val newConversation = conversation.copy(
                                 lastStatus = conversation.lastStatus.copy(favourited = favourite)
                         )
-                        Single.fromCallable {
-                            database.conversationDao().insert(newConversation)
-                        }
+
+                        database.conversationDao().insert(newConversation)
                     }
                     .subscribeOn(Schedulers.io())
                     .doOnError { t -> Log.w("ConversationViewModel", "Failed to favourite conversation", t) }
@@ -74,9 +73,8 @@ class ConversationsViewModel @Inject constructor(
                         val newConversation = conversation.copy(
                                 lastStatus = conversation.lastStatus.copy(poll = poll)
                         )
-                        Single.fromCallable {
-                            database.conversationDao().insert(newConversation)
-                        }
+
+                        database.conversationDao().insert(newConversation)
                     }
                     .subscribeOn(Schedulers.io())
                     .doOnError { t -> Log.w("ConversationViewModel", "Failed to favourite conversation", t) }
@@ -118,18 +116,14 @@ class ConversationsViewModel @Inject constructor(
             /* this is not ideal since deleting last toot from an conversation
                should not delete the conversation but show another toot of the conversation */
             timelineCases.delete(conversation.lastStatus.id)
-            Single.fromCallable {
-                        database.conversationDao().delete(conversation)
-                    }
+            database.conversationDao().delete(conversation)
                     .subscribeOn(Schedulers.io())
                     .subscribe()
         }
     }
 
     private fun saveConversationToDb(conversation: ConversationEntity) {
-        Single.fromCallable {
-                    database.conversationDao().insert(conversation)
-                }
+        database.conversationDao().insert(conversation)
                 .subscribeOn(Schedulers.io())
                 .subscribe()
     }

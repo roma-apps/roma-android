@@ -31,6 +31,8 @@ import tech.bigfig.roma.entity.AccessToken
 import tech.bigfig.roma.entity.AppCredentials
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.util.ThemeUtils
+import tech.bigfig.roma.util.rickRoll
+import tech.bigfig.roma.util.shouldRickRoll
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.HttpUrl
 import retrofit2.Call
@@ -125,6 +127,11 @@ class LoginActivity : BaseActivity(), Injectable {
         } catch (e: IllegalArgumentException) {
             setLoading(false)
             domainTextInputLayout.error = getString(R.string.error_invalid_domain)
+            return
+        }
+
+        if (shouldRickRoll(this, domain)) {
+            rickRoll(this)
             return
         }
 
