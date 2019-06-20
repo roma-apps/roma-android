@@ -1,9 +1,9 @@
-package com.keylesspalace.tusky.util
+package tech.bigfig.roma.util
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.keylesspalace.tusky.R
+import tech.bigfig.roma.R
 
 fun shouldRickRoll(context: Context, domain: String) =
         context.resources.getStringArray(R.array.rick_roll_domains).any { candidate ->
