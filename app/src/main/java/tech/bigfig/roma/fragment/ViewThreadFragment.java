@@ -262,6 +262,7 @@ public final class ViewThreadFragment extends SFragment implements
                     .setReblogsCount(actionableStatus.getReblogsCount())
                     .setFavourited(actionableStatus.getFavourited())
                     .setFavouritesCount(actionableStatus.getFavouritesCount())
+                    .setRepliesCount(actionableStatus.getRepliesCount())
                     .createStatusViewData();
             statuses.setPairedItem(position, viewData);
 
@@ -565,20 +566,25 @@ public final class ViewThreadFragment extends SFragment implements
     }
 
     private void handleFavEvent(FavouriteEvent event) {
+        Log.d("EVENT", "Count V: "+(event.getStatusOld()!=null?event.getStatusOld().getFavouritesCount():0)+" ->"+(event.getStatusNew()!=null?event.getStatusNew().getFavouritesCount():0));
+
         Pair<Integer, Status> posAndStatus = findStatusAndPos(event.getStatusId());
         if (posAndStatus == null) return;
 
         boolean favourite = event.getFavourite();
         posAndStatus.second.setFavourited(favourite);
+        posAndStatus.second.setFavouritesCount(event.getStatusNew()!= null ? event.getStatusNew().getFavouritesCount() : event.getStatusOld().getFavouritesCount());
 
         if (posAndStatus.second.getReblog() != null) {
             posAndStatus.second.getReblog().setFavourited(favourite);
+            posAndStatus.second.getReblog().setFavouritesCount(event.getStatusNew()!= null ? event.getStatusNew().getFavouritesCount() : event.getStatusOld().getFavouritesCount());
         }
 
         StatusViewData.Concrete viewdata = statuses.getPairedItem(posAndStatus.first);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder((viewdata));
         viewDataBuilder.setFavourited(favourite);
+        viewDataBuilder.setFavouritesCount(event.getStatusNew()!= null ? event.getStatusNew().getFavouritesCount() : event.getStatusOld().getFavouritesCount());
 
         StatusViewData.Concrete newViewData = viewDataBuilder.createStatusViewData();
 
@@ -596,11 +602,20 @@ public final class ViewThreadFragment extends SFragment implements
         if (posAndStatus.second.getReblog() != null) {
             posAndStatus.second.getReblog().setReblogged(reblog);
         }
+        if (event.getStatusNew()!=null){
+            posAndStatus.second.setReblogsCount(event.getStatusNew().getReblogsCount());
 
+            if (posAndStatus.second.getReblog() != null) {
+                posAndStatus.second.getReblog().setReblogged(reblog);
+                posAndStatus.second.getReblog().setReblogsCount(event.getStatusNew().getReblogsCount());
+            }
+
+        }
         StatusViewData.Concrete viewdata = statuses.getPairedItem(posAndStatus.first);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder((viewdata));
         viewDataBuilder.setReblogged(reblog);
+        viewDataBuilder.setReblogsCount(posAndStatus.second.getReblogsCount());
 
         StatusViewData.Concrete newViewData = viewDataBuilder.createStatusViewData();
 

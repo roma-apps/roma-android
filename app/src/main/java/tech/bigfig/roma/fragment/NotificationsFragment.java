@@ -298,12 +298,14 @@ public class NotificationsFragment extends SFragment implements
     }
 
     private void handleFavEvent(FavouriteEvent event) {
+        Log.d("EVENT", "Count N: "+(event.getStatusOld()!=null?event.getStatusOld().getFavouritesCount():0)+" ->"+(event.getStatusNew()!=null?event.getStatusNew().getFavouritesCount():0));
+
         Pair<Integer, Notification> posAndNotification =
                 findReplyPosition(event.getStatusId());
         if (posAndNotification == null) return;
         //noinspection ConstantConditions
         setFavouriteForStatus(posAndNotification.first,
-                posAndNotification.second.getStatus(),
+                posAndNotification.second.getStatus(),event.getStatusNew(),
                 event.getFavourite());
     }
 
@@ -313,7 +315,7 @@ public class NotificationsFragment extends SFragment implements
         //noinspection ConstantConditions
         setReblogForStatus(posAndNotification.first,
                 posAndNotification.second.getStatus(),
-                event.getReblog());
+                event.getReblog(),event.getStatusNew());
     }
 
     @Override
@@ -401,23 +403,27 @@ public class NotificationsFragment extends SFragment implements
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(autoDisposable(from(this)))
                 .subscribe(
-                        (newStatus) -> setReblogForStatus(position, status, reblog),
+                        (newStatus) -> setReblogForStatus(position, status, reblog, newStatus),
                         (t) -> Log.d(getClass().getSimpleName(),
                                 "Failed to reblog status: " + status.getId(), t)
                 );
     }
 
-    private void setReblogForStatus(int position, Status status, boolean reblog) {
+    private void setReblogForStatus(int position, Status status, boolean reblog, Status newStatus) {
         status.setReblogged(reblog);
-
+        if (newStatus!=null)
+            status.setReblogsCount(newStatus.getReblogsCount());
         if (status.getReblog() != null) {
             status.getReblog().setReblogged(reblog);
+            if (newStatus!=null)
+                status.getReblog().setReblogsCount(newStatus.getReblogsCount());
         }
 
         NotificationViewData.Concrete viewdata = (NotificationViewData.Concrete) notifications.getPairedItem(position);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder(viewdata.getStatusViewData());
         viewDataBuilder.setReblogged(reblog);
+        viewDataBuilder.setReblogsCount(status.getReblogsCount());
 
         NotificationViewData.Concrete newViewData = new NotificationViewData.Concrete(
                 viewdata.getType(), viewdata.getId(), viewdata.getAccount(),
@@ -436,23 +442,36 @@ public class NotificationsFragment extends SFragment implements
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(autoDisposable(from(this)))
                 .subscribe(
-                        (newStatus) -> setFavouriteForStatus(position, status, favourite),
+                        (newStatus) -> setFavouriteForStatus(position, status, newStatus, favourite),
                         (t) -> Log.d(getClass().getSimpleName(),
                                 "Failed to favourite status: " + status.getId(), t)
                 );
     }
 
-    private void setFavouriteForStatus(int position, Status status, boolean favourite) {
-        status.setFavourited(favourite);
+    private void setFavouriteForStatus(int position, Status status, Status newStatus, boolean favourite) {
+
+        if (newStatus!=null) {
+            status.setFavourited(newStatus.getFavourited());
+            status.setFavouritesCount(newStatus.getFavouritesCount());
+        }
+        else{
+            status.setFavourited(favourite);
+        }
 
         if (status.getReblog() != null) {
-            status.getReblog().setFavourited(favourite);
+            if (newStatus!=null) {
+                status.getReblog().setFavourited(newStatus.getFavourited());
+                status.getReblog().setFavouritesCount(newStatus.getFavouritesCount());
+            }
+            else
+                status.getReblog().setFavourited(favourite);
         }
 
         NotificationViewData.Concrete viewdata = (NotificationViewData.Concrete) notifications.getPairedItem(position);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder(viewdata.getStatusViewData());
         viewDataBuilder.setFavourited(favourite);
+        viewDataBuilder.setFavouritesCount(status.getFavouritesCount());
 
         NotificationViewData.Concrete newViewData = new NotificationViewData.Concrete(
                 viewdata.getType(), viewdata.getId(), viewdata.getAccount(),
