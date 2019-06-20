@@ -16,6 +16,7 @@
 package tech.bigfig.roma.components.conversation;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.bumptech.glide.Glide;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.adapter.StatusBaseViewHolder;
 import tech.bigfig.roma.components.conversation.ConversationAccountEntity;
@@ -31,6 +31,7 @@ import tech.bigfig.roma.components.conversation.ConversationEntity;
 import tech.bigfig.roma.components.conversation.ConversationStatusEntity;
 import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.interfaces.StatusActionListener;
+import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.SmartLengthInputFilter;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
 
     private StatusActionListener listener;
     private boolean mediaPreviewEnabled;
+    private boolean animateAvatars;
 
     ConversationViewHolder(View itemView,
                            StatusActionListener listener,
@@ -59,6 +61,8 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
 
         this.listener = listener;
         this.mediaPreviewEnabled = mediaPreviewEnabled;
+
+        this.animateAvatars = PreferenceManager.getDefaultSharedPreferences(itemView.getContext()).getBoolean("animateGifAvatars", false);
     }
 
     @Override
@@ -127,9 +131,7 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
         for(int i=0; i < avatars.length; i++) {
             ImageView avatarView = avatars[i];
             if(i < accounts.size()) {
-                Glide.with(avatarView)
-                        .load(accounts.get(i).getAvatar())
-                        .into(avatarView);
+                ImageLoadingHelper.loadAvatar(accounts.get(i).getAvatar(), avatarView, avatarRadius48dp, animateAvatars);
                 avatarView.setVisibility(View.VISIBLE);
             } else {
                 avatarView.setVisibility(View.GONE);
