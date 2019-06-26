@@ -165,14 +165,14 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.1.1'  // intentionally use 3.x version because of 2mb smaller apk
 
     //Add some useful extensions
-    implementation 'androidx.core:core-ktx:1.2.0-alpha01'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha02'
 
     //Crashlytics
-    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     //Firebase Push Messages
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
 
     //WorkManager
     implementation "androidx.work:work-runtime:2.0.1"
