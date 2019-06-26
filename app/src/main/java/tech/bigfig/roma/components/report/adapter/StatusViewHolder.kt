@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.bigfig.roma.components.report.model.StatusViewState
 import tech.bigfig.roma.util.StatusViewHelper.Companion.COLLAPSE_INPUT_FILTER
 import tech.bigfig.roma.util.StatusViewHelper.Companion.NO_INPUT_FILTER
+import tech.bigfig.roma..viewdata.toViewData
 import kotlinx.android.synthetic.main.item_report_status.view.*
 import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Emoji
@@ -72,7 +73,7 @@ class StatusViewHolder(itemView: View,
                 viewState.isMediaShow(status.id, status.sensitive),
                 mediaViewHeight)
 
-        statusViewHelper.setupPollReadonly(status.poll, status.emojis, useAbsoluteTime)
+        statusViewHelper.setupPollReadonly(status.poll.toViewData(), status.emojis, useAbsoluteTime)
         setCreatedAt(status.createdAt)
     }
 
