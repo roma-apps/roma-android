@@ -27,13 +27,16 @@ import com.bumptech.glide.Glide
 import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Attachment
 import tech.bigfig.roma.entity.Emoji
-import tech.bigfig.roma.entity.Poll
 import tech.bigfig.roma.entity.Status.Companion.MAX_MEDIA_ATTACHMENTS
 import tech.bigfig.roma.entity.Status.Companion.MAX_POLL_OPTIONS
 import tech.bigfig.roma.view.MediaPreviewImageView
+import tech.bigfig.roma.viewdata.PollViewData
+import tech.bigfig.roma.viewdata.calculatePercent
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
+import tech.bigfig.roma.entity.Status
 
 class StatusViewHelper(private val itemView: View) {
     interface MediaPreviewListener {
@@ -86,7 +89,7 @@ class StatusViewHelper(private val itemView: View) {
 
         val mediaPreviewUnloadedId = ThemeUtils.getDrawableId(context, R.attr.media_preview_unloaded_drawable, android.R.color.black)
 
-        val n = Math.min(attachments.size, MAX_MEDIA_ATTACHMENTS)
+        val n = min(attachments.size, Status.MAX_MEDIA_ATTACHMENTS)
 
         for (i in 0 until n) {
             val previewUrl = attachments[i].previewUrl
@@ -230,7 +233,7 @@ class StatusViewHelper(private val itemView: View) {
         }
     }
 
-    fun setupPollReadonly(poll: Poll?, emojis: List<Emoji>, useAbsoluteTime: Boolean) {
+    fun setupPollReadonly(poll: PollViewData?, emojis: List<Emoji>, useAbsoluteTime: Boolean) {
         val pollResults = listOf<TextView>(
                 itemView.findViewById(R.id.status_poll_option_result_0),
                 itemView.findViewById(R.id.status_poll_option_result_1),
@@ -255,7 +258,7 @@ class StatusViewHelper(private val itemView: View) {
         }
     }
 
-    private fun getPollInfoText(timestamp: Long, poll: Poll, pollDescription: TextView, useAbsoluteTime: Boolean): CharSequence {
+    private fun getPollInfoText(timestamp: Long, poll: PollViewData, pollDescription: TextView, useAbsoluteTime: Boolean): CharSequence {
         val context = pollDescription.context
         val votes = NumberFormat.getNumberInstance().format(poll.votesCount.toLong())
         val votesText = context.resources.getQuantityString(R.plurals.poll_info_votes, poll.votesCount, votes)
@@ -275,12 +278,12 @@ class StatusViewHelper(private val itemView: View) {
     }
 
 
-    private fun setupPollResult(poll: Poll, emojis: List<Emoji>, pollResults: List<TextView>) {
+    private fun setupPollResult(poll: PollViewData, emojis: List<Emoji>, pollResults: List<TextView>) {
         val options = poll.options
 
         for (i in 0 until MAX_POLL_OPTIONS) {
             if (i < options.size) {
-                val percent = options[i].getPercent(poll.votesCount)
+                val percent = calculatePercent(options[i].votesCount, poll.votesCount)
 
                 val pollOptionText = pollResults[i].context.getString(R.string.poll_option_format, percent, options[i].title)
                 pollResults[i].text = CustomEmojiHelper.emojifyText(HtmlUtils.fromHtml(pollOptionText), emojis, pollResults[i])

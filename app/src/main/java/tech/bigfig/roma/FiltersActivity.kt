@@ -2,7 +2,6 @@ package tech.bigfig.roma
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -62,7 +61,7 @@ class FiltersActivity : BaseActivity(), Injectable {
 
     private fun deleteFilter(itemIndex: Int) {
         val filter = filters[itemIndex]
-        if (filter.context.count() == 1) {
+        if (filter.context.size == 1) {
             // This is the only context for this filter; delete it
             api.deleteFilter(filters[itemIndex].id).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -84,8 +83,8 @@ class FiltersActivity : BaseActivity(), Injectable {
         }
     }
 
-    private fun createFilter(phrase: String) {
-        api.createFilter(phrase, listOf(context), false, true, "").enqueue(object : Callback<Filter> {
+    private fun createFilter(phrase: String, wholeWord: Boolean) {
+        api.createFilter(phrase, listOf(context), false, wholeWord, "").enqueue(object : Callback<Filter> {
             override fun onResponse(call: Call<Filter>, response: Response<Filter>) {
                 response.body()?.let {
                     filters.add(it)
@@ -105,11 +104,12 @@ class FiltersActivity : BaseActivity(), Injectable {
                 .setTitle(R.string.filter_addition_dialog_title)
                 .setView(R.layout.dialog_filter)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    createFilter(dialog.phraseEditText.text.toString())
+                    createFilter(dialog.phraseEditText.text.toString(), dialog.phraseWholeWord.isChecked)
                 }
                 .setNeutralButton(android.R.string.cancel, null)
                 .create()
         dialog.show()
+        dialog.phraseWholeWord.isChecked = true
     }
 
     private fun setupEditDialogForItem(itemIndex: Int) {
@@ -119,7 +119,7 @@ class FiltersActivity : BaseActivity(), Injectable {
                 .setPositiveButton(R.string.filter_dialog_update_button) { _, _ ->
                     val oldFilter = filters[itemIndex]
                     val newFilter = Filter(oldFilter.id, dialog.phraseEditText.text.toString(), oldFilter.context,
-                            oldFilter.expiresAt, oldFilter.irreversible, oldFilter.wholeWord)
+                            oldFilter.expiresAt, oldFilter.irreversible, dialog.phraseWholeWord.isChecked)
                     updateFilter(newFilter, itemIndex)
                 }
                 .setNegativeButton(R.string.filter_dialog_remove_button) { _, _ ->
@@ -130,7 +130,9 @@ class FiltersActivity : BaseActivity(), Injectable {
         dialog.show()
 
         // Need to show the dialog before referencing any elements from its view
-        dialog.phraseEditText.setText(filters[itemIndex].phrase)
+        val filter = filters[itemIndex]
+        dialog.phraseEditText.setText(filter.phrase)
+        dialog.phraseWholeWord.isChecked = filter.wholeWord
     }
 
     private fun refreshFilterDisplay() {
@@ -160,7 +162,7 @@ class FiltersActivity : BaseActivity(), Injectable {
                     filterProgressBar.hide()
                     filterMessageView.show()
                     filterMessageView.setup(R.drawable.elephant_error,
-                            R.string.error_generic, this@FiltersActivity::reload)
+                            R.string.error_generic) { loadFilters() }
                 }
             }
 
@@ -169,17 +171,13 @@ class FiltersActivity : BaseActivity(), Injectable {
                 filterMessageView.show()
                 if (t is IOException) {
                     filterMessageView.setup(R.drawable.elephant_offline,
-                            R.string.error_network, this@FiltersActivity::reload)
+                            R.string.error_network) { loadFilters() }
                 } else {
                     filterMessageView.setup(R.drawable.elephant_error,
-                            R.string.error_generic, this@FiltersActivity::reload)
+                            R.string.error_generic) { loadFilters() }
                 }
             }
         })
-    }
-
-    private fun reload(v: View) {
-        loadFilters()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

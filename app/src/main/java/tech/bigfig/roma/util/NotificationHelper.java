@@ -69,6 +69,7 @@ import tech.bigfig.roma.service.push.UpdateFcmTokenWorker;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import tech.bigfig.roma.viewdata.PollViewDataKt;
 
 public class NotificationHelper {
 
@@ -629,7 +630,7 @@ public class NotificationHelper {
                     builder.append('\n');
                     Poll poll = notification.getStatus().getPoll();
                     for(PollOption option: poll.getOptions()) {
-                        int percent = option.getPercent(poll.getVotesCount());
+                        int percent = PollViewDataKt.calculatePercent(option.getVotesCount(), poll.getVotesCount());
                         CharSequence optionText = HtmlUtils.fromHtml(context.getString(R.string.poll_option_format, percent, option.getTitle()));
                         builder.append(optionText);
                         builder.append('\n');

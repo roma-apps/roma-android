@@ -24,19 +24,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.adapter.StatusBaseViewHolder;
-import tech.bigfig.roma.components.conversation.ConversationAccountEntity;
-import tech.bigfig.roma.components.conversation.ConversationEntity;
-import tech.bigfig.roma.components.conversation.ConversationStatusEntity;
 import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.SmartLengthInputFilter;
+import tech.bigfig.roma.viewdata.PollViewDataKt;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ConversationViewHolder extends StatusBaseViewHolder {
     private static final InputFilter[] COLLAPSE_INPUT_FILTER = new InputFilter[]{SmartLengthInputFilter.INSTANCE};
@@ -90,9 +88,11 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
                 hideSensitiveMediaWarning();
             }
             // Hide the unused label.
-            mediaLabel.setVisibility(View.GONE);
+            for (TextView mediaLabel : mediaLabels) {
+                mediaLabel.setVisibility(View.GONE);
+            }
         } else {
-            setMediaLabel(attachments, sensitive, listener);
+            setMediaLabel(attachments, sensitive, listener, status.getShowingHiddenContent());
             // Hide all unused views.
             mediaPreviews[0].setVisibility(View.GONE);
             mediaPreviews[1].setVisibility(View.GONE);
@@ -109,7 +109,7 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
 
         setAvatars(conversation.getAccounts());
 
-        setupPoll(status.getPoll(), status.getEmojis(), listener);
+        setupPoll(PollViewDataKt.toViewData(status.getPoll()), status.getEmojis(), listener);
 
     }
 
