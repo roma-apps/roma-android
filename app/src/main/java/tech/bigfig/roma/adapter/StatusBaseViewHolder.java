@@ -38,8 +38,6 @@ import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.entity.Attachment.Focus;
 import tech.bigfig.roma.entity.Attachment.MetaData;
 import tech.bigfig.roma.entity.Emoji;
-import tech.bigfig.roma.entity.Poll;
-import tech.bigfig.roma.entity.PollOption;
 import tech.bigfig.roma.entity.Status;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.util.CustomEmojiHelper;
@@ -49,6 +47,9 @@ import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.LinkHelper;
 import tech.bigfig.roma.util.ThemeUtils;
 import tech.bigfig.roma.view.MediaPreviewImageView;
+import tech.bigfig.roma.viewdata.PollOptionViewData;
+import tech.bigfig.roma.viewdata.PollViewData;
+import tech.bigfig.roma.viewdata.PollViewDataKt;
 import tech.bigfig.roma.viewdata.StatusViewData;
 
 public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {

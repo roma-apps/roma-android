@@ -27,14 +27,16 @@ import com.bumptech.glide.Glide
 import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Attachment
 import tech.bigfig.roma.entity.Emoji
-import tech.bigfig.roma.entity.Poll
 import tech.bigfig.roma.entity.Status.Companion.MAX_MEDIA_ATTACHMENTS
 import tech.bigfig.roma.entity.Status.Companion.MAX_POLL_OPTIONS
 import tech.bigfig.roma.view.MediaPreviewImageView
+import tech.bigfig.roma.viewdata.PollViewData
+import tech.bigfig.roma.viewdata.calculatePercent
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
+import tech.bigfig.roma.entity.Status
 
 class StatusViewHelper(private val itemView: View) {
     interface MediaPreviewListener {

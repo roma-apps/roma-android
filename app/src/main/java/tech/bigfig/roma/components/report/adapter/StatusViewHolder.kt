@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.bigfig.roma.components.report.model.StatusViewState
 import tech.bigfig.roma.util.StatusViewHelper.Companion.COLLAPSE_INPUT_FILTER
 import tech.bigfig.roma.util.StatusViewHelper.Companion.NO_INPUT_FILTER
-import tech.bigfig.roma..viewdata.toViewData
+import tech.bigfig.roma.viewdata.toViewData
 import kotlinx.android.synthetic.main.item_report_status.view.*
 import tech.bigfig.roma.R
 import tech.bigfig.roma.entity.Emoji

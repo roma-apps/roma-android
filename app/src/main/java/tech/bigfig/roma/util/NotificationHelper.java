@@ -69,6 +69,7 @@ import tech.bigfig.roma.service.push.UpdateFcmTokenWorker;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import tech.bigfig.roma.viewdata.PollViewDataKt;
 
 public class NotificationHelper {
 

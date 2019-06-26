@@ -26,17 +26,13 @@ import android.widget.ToggleButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.adapter.StatusBaseViewHolder;
-import tech.bigfig.roma.components.conversation.ConversationAccountEntity;
-import tech.bigfig.roma.components.conversation.ConversationEntity;
-import tech.bigfig.roma.components.conversation.ConversationStatusEntity;
 import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.util.ImageLoadingHelper;
 import tech.bigfig.roma.util.SmartLengthInputFilter;
-import tech.bigfig.roma.tusky.viewdata.PollViewDataKt;
+import tech.bigfig.roma.viewdata.PollViewDataKt;
 
 import java.util.List;
 
