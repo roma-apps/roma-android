@@ -414,7 +414,6 @@
     <string name="report_sent_success">\@%s sukcese signalita</string>
     <string name="hint_additional_info">Pliaj komentoj</string>
     <string name="report_remote_instance">Plusendi al %s</string>
-    <string name="failed_report">Signalo malsukcesis</string>
     <string name="failed_fetch_statuses">Venigo de statusoj malsukcesis</string>
     <string name="report_description_1">La signalo estos sendita al la kontrolantoj de via servilo. Vi povas doni klarigon pri kial vi signalas ĉi tiun konton sube:</string>
     <string name="report_description_remote_instance">La konto estas en alia servilo. Ĉu sendi sennomigitan kopion de la signalo ankaŭ tien\?</string>

@@ -439,7 +439,6 @@
     <string name="report_sent_success">تم الابلاغ عن @%s بنجاح</string>
     <string name="hint_additional_info">تعليقات إضافية</string>
     <string name="report_remote_instance">أعد تحويله إلى %s</string>
-    <string name="failed_report">فشل الابلاغ</string>
     <string name="failed_fetch_statuses">فشلت عملية جلب المنشورات</string>
     <string name="pref_title_show_notifications_filter">اعرض مصفاة الإشعارات</string>
 <string name="filter_dialog_whole_word">الكلمة كاملة</string>

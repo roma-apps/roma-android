@@ -425,7 +425,6 @@
     <string name="report_sent_success">Anmälan av @%s har lyckats</string>
     <string name="hint_additional_info">Ytterligare kommentarer</string>
     <string name="report_remote_instance">Vidarebefordra till %s</string>
-    <string name="failed_report">Misslyckades att anmäla</string>
     <string name="failed_fetch_statuses">Misslyckades att hämta status</string>
     <string name="report_description_1">Anmälan kommer att skickas till din serveradminastratör. Du kan beskriva varför du anmäler kontot nedan:</string>
     <string name="report_description_remote_instance">Kontot är från en annan server. Skicka en avidentifierad kopia av anmälan dit också\?</string>

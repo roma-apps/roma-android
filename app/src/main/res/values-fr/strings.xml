@@ -427,7 +427,6 @@
     <string name="report_sent_success">\@%s signalé avec succès</string>
     <string name="hint_additional_info">Commentaires additionnels</string>
     <string name="report_remote_instance">Transférer à %s</string>
-    <string name="failed_report">Échec du signalement</string>
     <string name="failed_fetch_statuses">Échec de récupération des statuts</string>
     <string name="report_description_1">Le rapport sera envoyé aux modérateur·rice·s de votre instance. Vous pouvez expliquer pourquoi vous signalez le compte ci-dessous :</string>
     <string name="mute_domain_warning">Êtes-vous sûr⋅e de vouloir bloquer %s en entier \? Vous ne verrez plus de contenu provenant de ce domaine, ni dans fils publics, ni dans vos notifications. Vos abonné·e·s utilisant ce domaine seront retiré·e·s.</string>
