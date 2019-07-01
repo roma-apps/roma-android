@@ -106,7 +106,7 @@ public class RomaApplication extends Application implements HasAndroidInjector {
 
     }
 
-    private void initWorkManager() {
+    public void initWorkManager() {
         androidx.work.Configuration config = new androidx.work.Configuration.Builder()
                 .setWorkerFactory(new DaggerWorkerFactory()) // Overrides default WorkerFactory
                 .build();
