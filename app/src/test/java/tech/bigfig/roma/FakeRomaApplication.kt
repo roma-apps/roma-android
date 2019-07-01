@@ -16,6 +16,10 @@ class FakeRomaApplication : RomaApplication() {
         // No-op
     }
 
+    override fun initWorkManager() {
+        // No-op
+    }
+
     override fun getServiceLocator(): ServiceLocator {
         return locator
     }
