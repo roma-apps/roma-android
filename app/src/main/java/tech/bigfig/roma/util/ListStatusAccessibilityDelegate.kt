@@ -19,7 +19,6 @@ import tech.bigfig.roma.adapter.StatusBaseViewHolder
 import tech.bigfig.roma.entity.Status.Companion.MAX_MEDIA_ATTACHMENTS
 import tech.bigfig.roma.interfaces.StatusActionListener
 import tech.bigfig.roma.viewdata.StatusViewData
-import java.lang.Integer.min
 
 
 // Not using lambdas because there's boxing of int then
@@ -63,7 +62,7 @@ class ListStatusAccessibilityDelegate(
                         R.id.action_open_media_2,
                         R.id.action_open_media_3,
                         R.id.action_open_media_4)
-                val attachmentCount = min(status.attachments.size, MAX_MEDIA_ATTACHMENTS)
+                val attachmentCount = minOf(status.attachments.size, MAX_MEDIA_ATTACHMENTS)
                 for (i in 0 until attachmentCount) {
                     info.addAction(AccessibilityActionCompat(
                             mediaActions[i],
