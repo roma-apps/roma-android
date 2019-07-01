@@ -13,4 +13,3 @@ Roma is an Android client for [Pleroma](https://pleroma.social/) based on [Tusky
 - Drafts - compose toots and save them for later
 - Choose between different emoji styles 
 - Optimized for all screen sizes
-- Completely open-source - no non-free dependencies like Google services
