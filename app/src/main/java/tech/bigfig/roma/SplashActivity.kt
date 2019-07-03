@@ -17,11 +17,17 @@ package tech.bigfig.roma
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import tech.bigfig.roma.db.AccountManager
 import tech.bigfig.roma.di.Injectable
 
 import tech.bigfig.roma.util.NotificationHelper
+import javax.inject.Inject
 
-class SplashActivity : BaseActivity(), Injectable {
+class SplashActivity : AppCompatActivity(), Injectable {
+
+    @Inject
+    lateinit var accountManager: AccountManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,4 +46,5 @@ class SplashActivity : BaseActivity(), Injectable {
         startActivity(intent)
         finish()
     }
+
 }

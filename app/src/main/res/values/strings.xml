@@ -54,12 +54,14 @@
     <string name="status_content_show_less">Collapse</string>
 
     <string name="message_empty">Nothing here.</string>
+    <string name="footer_empty">Nothing here. Pull down to refresh!</string>
 
     <string name="notification_reblog_format">%s reposted your post</string>
-    <string name="notification_favourite_format" translatable="false">%s favorited your post</string>
+    <string name="notification_favourite_format">%s favorited your post</string>
     <string name="notification_follow_format">%s followed you</string>
 
     <string name="report_username_format">Report @%s</string>
+    <string name="report_comment_hint">Additional comments?</string>
 
     <string name="action_quick_reply">Quick Reply</string>
     <string name="action_reply">Reply</string>
@@ -84,6 +86,7 @@
     <string name="action_send">POST</string>
     <string name="action_send_public">POST!</string>
     <string name="action_retry">Retry</string>
+    <string name="action_close">Close</string>
     <string name="action_view_profile">Profile</string>
     <string name="action_view_preferences">Preferences</string>
     <string name="action_view_account_preferences">Account Preferences</string>
@@ -139,6 +142,7 @@
     <string name="send_status_content_to">Share post to…</string>
     <string name="send_media_to">Share media to…</string>
 
+    <string name="confirmation_reported">Sent!</string>
     <string name="confirmation_unblocked">User unblocked</string>
     <string name="confirmation_unmuted">User unmuted</string>
     <string name="confirmation_domain_unmuted">%s unhidden</string>
@@ -159,8 +163,18 @@
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Header</string>
 
+    <string name="link_whats_an_instance">What\'s an instance?</string>
+
     <string name="login_connection">Connecting…</string>
 
+    <string name="dialog_whats_an_instance">The address or domain of any instance can be entered
+        here, such as pleroma.site and <a href="http://distsn.org/pleroma-instances.html">more!</a>
+        \n\nIf you don\'t yet have an account, you can enter the name of the instance you\'d like to
+        join and create an account there.\n\nAn instance is a single place where your account is
+        hosted, but you can easily communicate with and follow folks on other instances as though
+        you were on the same site.
+        \n\nMore info can be found at <a href="https://blog.soykaf.com/post/what-is-pleroma/">"What is Pleroma?"</a>.
+    </string>
     <string name="dialog_title_finishing_media_upload">Finishing Media Upload</string>
     <string name="dialog_message_uploading_media">Uploading…</string>
     <string name="dialog_download_image">Download</string>
@@ -268,8 +282,13 @@
     -->
     <string name="about_project_site">
         Project website:\n
-        https://romaapp.github.io
+        https://pleroma.com/
     </string>
+    <string name="about_bug_feature_request_site">
+        Bug reports &amp; feature requests:\n
+        https://github.com/roma-apps/roma-android/issues
+    </string>
+    <string name="about_roma_account">Roma\'s Profile</string>
 
     <string name="status_share_content">Share content of post</string>
     <string name="status_share_link">Share link to post</string>
@@ -357,7 +376,6 @@
     <string name="caption_blobmoji">The Blob emojis known from Android 4.4–7.1</string>
     <string name="caption_twemoji">Mastodon\'s standard emoji set</string>
     <string name="caption_notoemoji">Google\'s current emoji set</string>
-    <string name="emoji_shortcode_format" translatable="false">:%s:</string>
 
     <string name="download_failed">Download failed</string>
 
@@ -370,6 +388,7 @@
     <string name="license_description">Roma contains code and assets from the following open source projects:</string>
     <string name="license_apache_2">Licensed under the Apache License (copy below)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
+    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <string name="profile_metadata_label">Profile metadata</string>
     <string name="profile_metadata_add">add data</string>
@@ -490,6 +509,7 @@
     <string name="report_sent_success">Successfully reported @%s</string>
     <string name="hint_additional_info">Additional comments</string>
     <string name="report_remote_instance">Forward to %s</string>
+    <string name="failed_report">Failed to report</string>
     <string name="failed_fetch_statuses">Failed to fetch statuses</string>
     <string name="report_description_1">The report will be sent to your server moderator. You can provide an explanation of why you are reporting this account below:</string>
     <string name="report_description_remote_instance">The account is from another server. Send an anonymized copy of the report there as well?</string>
