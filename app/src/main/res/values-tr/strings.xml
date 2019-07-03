@@ -258,7 +258,7 @@
     <string name="later">Daha sonra</string>
     <string name="restart">Yeniden başlat</string>
     <string name="caption_systememoji">Cihazınızın varsayılan emoji seti</string>
-    <string name="caption_blobmoji">Android 4.4-7.1\'den bilinen baloncuk emojisi</string>
+    <string name="caption_blobmoji">Android 4.4–7.1\'den bilinen baloncuk emojisi</string>
     <string name="caption_twemoji">Mastodon\'un standart emoji seti</string>
     <string name="download_failed">İndirme başarısız</string>
     <string name="profile_badge_bot_text">Alt Metin</string>

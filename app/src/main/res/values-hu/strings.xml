@@ -259,7 +259,7 @@
     <string name="later">Később</string>
     <string name="restart">Újraindítás</string>
     <string name="caption_systememoji">Az eszközöd alap emoji készlete</string>
-    <string name="caption_blobmoji">Az Android 4.4-7.1 Blob emoji-jai</string>
+    <string name="caption_blobmoji">Az Android 4.4–7.1 Blob emoji-jai</string>
     <string name="caption_twemoji">Mastodon alap emoji készlet</string>
     <string name="download_failed">Letöltés sikertelen</string>
     <string name="profile_badge_bot_text">Bot</string>

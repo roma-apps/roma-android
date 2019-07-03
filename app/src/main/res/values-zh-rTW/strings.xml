@@ -481,7 +481,6 @@
 
     <string name="pref_title_animate_gif_avatars">GIF 動畫大頭貼</string>
 
-    <string name="about_tusky_version">Tusky %s</string>
     <string name="filter_dialog_whole_word">整個單詞</string>
     <string name="filter_dialog_whole_word_description">如果關鍵字或短語僅為字母或數字，則只有在匹配整個單詞時才會應用</string>
     <string name="caption_notoemoji">Google 正在使用的 Emoji 符號集</string>
