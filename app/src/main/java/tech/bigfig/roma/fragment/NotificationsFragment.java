@@ -51,38 +51,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-
-import tech.bigfig.roma.MainActivity;
-import tech.bigfig.roma.R;
-import tech.bigfig.roma.adapter.NotificationsAdapter;
-import tech.bigfig.roma.adapter.StatusBaseViewHolder;
-import tech.bigfig.roma.appstore.BlockEvent;
-import tech.bigfig.roma.appstore.EventHub;
-import tech.bigfig.roma.appstore.FavouriteEvent;
-import tech.bigfig.roma.appstore.PreferenceChangedEvent;
-import tech.bigfig.roma.appstore.ReblogEvent;
-import tech.bigfig.roma.db.AccountEntity;
-import tech.bigfig.roma.db.AccountManager;
-import tech.bigfig.roma.di.Injectable;
-import tech.bigfig.roma.entity.Notification;
-import tech.bigfig.roma.entity.Poll;
-import tech.bigfig.roma.entity.Status;
-import tech.bigfig.roma.interfaces.ActionButtonActivity;
-import tech.bigfig.roma.interfaces.ReselectableFragment;
-import tech.bigfig.roma.interfaces.StatusActionListener;
-import tech.bigfig.roma.util.Either;
-import tech.bigfig.roma.util.HttpHeaderLink;
-import tech.bigfig.roma.util.ListStatusAccessibilityDelegate;
-import tech.bigfig.roma.util.ListUtils;
-import tech.bigfig.roma.util.NotificationTypeConverterKt;
-import tech.bigfig.roma.util.PairedList;
-import tech.bigfig.roma.util.ThemeUtils;
-import tech.bigfig.roma.util.ViewDataUtils;
-import tech.bigfig.roma.view.BackgroundMessageView;
-import tech.bigfig.roma.view.EndlessOnScrollListener;
-import tech.bigfig.roma.viewdata.NotificationViewData;
-import tech.bigfig.roma.viewdata.StatusViewData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,10 +73,41 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tech.bigfig.roma.R;
+import tech.bigfig.roma.adapter.NotificationsAdapter;
+import tech.bigfig.roma.adapter.StatusBaseViewHolder;
+import tech.bigfig.roma.appstore.BlockEvent;
+import tech.bigfig.roma.appstore.EventHub;
+import tech.bigfig.roma.appstore.FavouriteEvent;
+import tech.bigfig.roma.appstore.PreferenceChangedEvent;
+import tech.bigfig.roma.appstore.ReblogEvent;
+import tech.bigfig.roma.appstore.StatusComposedEvent;
+import tech.bigfig.roma.appstore.StatusDeletedEvent;
+import tech.bigfig.roma.db.AccountEntity;
+import tech.bigfig.roma.db.AccountManager;
+import tech.bigfig.roma.di.Injectable;
+import tech.bigfig.roma.entity.Notification;
+import tech.bigfig.roma.entity.Poll;
+import tech.bigfig.roma.entity.Status;
+import tech.bigfig.roma.interfaces.ActionButtonActivity;
+import tech.bigfig.roma.interfaces.ReselectableFragment;
+import tech.bigfig.roma.interfaces.StatusActionListener;
+import tech.bigfig.roma.util.Either;
+import tech.bigfig.roma.util.HttpHeaderLink;
+import tech.bigfig.roma.util.ListStatusAccessibilityDelegate;
+import tech.bigfig.roma.util.ListUtils;
+import tech.bigfig.roma.util.NotificationTypeConverterKt;
+import tech.bigfig.roma.util.PairedList;
+import tech.bigfig.roma.util.ThemeUtils;
+import tech.bigfig.roma.util.ViewDataUtils;
+import tech.bigfig.roma.view.BackgroundMessageView;
+import tech.bigfig.roma.view.EndlessOnScrollListener;
+import tech.bigfig.roma.viewdata.NotificationViewData;
+import tech.bigfig.roma.viewdata.StatusViewData;
 
-import static tech.bigfig.roma.util.StringUtils.isLessThan;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 import static com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from;
+import static tech.bigfig.roma.util.StringUtils.isLessThan;
 
 public class NotificationsFragment extends SFragment implements
         SwipeRefreshLayout.OnRefreshListener,
@@ -298,12 +297,14 @@ public class NotificationsFragment extends SFragment implements
     }
 
     private void handleFavEvent(FavouriteEvent event) {
+        Log.d("EVENT", "Count N: "+(event.getStatusOld()!=null?event.getStatusOld().getFavouritesCount():0)+" ->"+(event.getStatusNew()!=null?event.getStatusNew().getFavouritesCount():0));
+
         Pair<Integer, Notification> posAndNotification =
                 findReplyPosition(event.getStatusId());
         if (posAndNotification == null) return;
         //noinspection ConstantConditions
         setFavouriteForStatus(posAndNotification.first,
-                posAndNotification.second.getStatus(),
+                posAndNotification.second.getStatus(),event.getStatusNew(),
                 event.getFavourite());
     }
 
@@ -313,7 +314,7 @@ public class NotificationsFragment extends SFragment implements
         //noinspection ConstantConditions
         setReblogForStatus(posAndNotification.first,
                 posAndNotification.second.getStatus(),
-                event.getReblog());
+                event.getReblog(),event.getStatusNew());
     }
 
     @Override
@@ -370,7 +371,23 @@ public class NotificationsFragment extends SFragment implements
                     } else if (event instanceof PreferenceChangedEvent) {
                         onPreferenceChanged(((PreferenceChangedEvent) event).getPreferenceKey());
                     }
+                    else if (event instanceof StatusComposedEvent){
+                        updateReplyCount(((StatusComposedEvent)event).getStatus().getInReplyToId(),1);
+                    }
+                    else if (event instanceof StatusDeletedEvent){
+                        updateReplyCount(((StatusDeletedEvent) event).getInReplyToId(),-1);
+                    }
+
                 });
+    }
+
+    private void updateReplyCount(String inReplyToId, int count) {
+        if (inReplyToId!=null) {
+            Pair<Integer, Notification> posAndNotification =
+                    findReplyPosition(inReplyToId);
+            if (posAndNotification == null || posAndNotification.first == null) return;
+            updateNotificationRepliesCounter(posAndNotification.first, count);
+        }
     }
 
     @Override
@@ -401,23 +418,27 @@ public class NotificationsFragment extends SFragment implements
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(autoDisposable(from(this)))
                 .subscribe(
-                        (newStatus) -> setReblogForStatus(position, status, reblog),
+                        (newStatus) -> setReblogForStatus(position, status, reblog, newStatus),
                         (t) -> Log.d(getClass().getSimpleName(),
                                 "Failed to reblog status: " + status.getId(), t)
                 );
     }
 
-    private void setReblogForStatus(int position, Status status, boolean reblog) {
+    private void setReblogForStatus(int position, Status status, boolean reblog, Status newStatus) {
         status.setReblogged(reblog);
-
+        if (newStatus!=null)
+            status.setReblogsCount(newStatus.getReblogsCount());
         if (status.getReblog() != null) {
             status.getReblog().setReblogged(reblog);
+            if (newStatus!=null)
+                status.getReblog().setReblogsCount(newStatus.getReblogsCount());
         }
 
         NotificationViewData.Concrete viewdata = (NotificationViewData.Concrete) notifications.getPairedItem(position);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder(viewdata.getStatusViewData());
         viewDataBuilder.setReblogged(reblog);
+        viewDataBuilder.setReblogsCount(status.getReblogsCount());
 
         NotificationViewData.Concrete newViewData = new NotificationViewData.Concrete(
                 viewdata.getType(), viewdata.getId(), viewdata.getAccount(),
@@ -436,23 +457,36 @@ public class NotificationsFragment extends SFragment implements
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(autoDisposable(from(this)))
                 .subscribe(
-                        (newStatus) -> setFavouriteForStatus(position, status, favourite),
+                        (newStatus) -> setFavouriteForStatus(position, status, newStatus, favourite),
                         (t) -> Log.d(getClass().getSimpleName(),
                                 "Failed to favourite status: " + status.getId(), t)
                 );
     }
 
-    private void setFavouriteForStatus(int position, Status status, boolean favourite) {
-        status.setFavourited(favourite);
+    private void setFavouriteForStatus(int position, Status status, Status newStatus, boolean favourite) {
+
+        if (newStatus!=null) {
+            status.setFavourited(newStatus.getFavourited());
+            status.setFavouritesCount(newStatus.getFavouritesCount());
+        }
+        else{
+            status.setFavourited(favourite);
+        }
 
         if (status.getReblog() != null) {
-            status.getReblog().setFavourited(favourite);
+            if (newStatus!=null) {
+                status.getReblog().setFavourited(newStatus.getFavourited());
+                status.getReblog().setFavouritesCount(newStatus.getFavouritesCount());
+            }
+            else
+                status.getReblog().setFavourited(favourite);
         }
 
         NotificationViewData.Concrete viewdata = (NotificationViewData.Concrete) notifications.getPairedItem(position);
 
         StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder(viewdata.getStatusViewData());
         viewDataBuilder.setFavourited(favourite);
+        viewDataBuilder.setFavouritesCount(status.getFavouritesCount());
 
         NotificationViewData.Concrete newViewData = new NotificationViewData.Concrete(
                 viewdata.getType(), viewdata.getId(), viewdata.getAccount(),
@@ -1174,6 +1208,21 @@ public class NotificationsFragment extends SFragment implements
                 return null;
         }
     };
+
+    private void updateNotificationRepliesCounter(int position, int repliesCounterChange) {
+        NotificationViewData.Concrete viewdata = (NotificationViewData.Concrete) notifications.getPairedItem(position);
+
+        StatusViewData.Builder viewDataBuilder = new StatusViewData.Builder(viewdata.getStatusViewData());
+        int newRepliesCount = viewdata.getStatusViewData().getRepliesCount()+repliesCounterChange;
+        viewDataBuilder.setRepliesCount(newRepliesCount>=0?newRepliesCount:0);
+
+        NotificationViewData.Concrete newViewData = new NotificationViewData.Concrete(
+                viewdata.getType(), viewdata.getId(), viewdata.getAccount(),
+                viewDataBuilder.createStatusViewData(), viewdata.isExpanded());
+        notifications.setPairedItem(position, newViewData);
+        updateAdapter();
+    }
+
 
     @Override
     public void onResume() {
