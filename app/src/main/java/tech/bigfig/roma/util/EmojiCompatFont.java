@@ -66,7 +66,7 @@ public class EmojiCompatFont {
                     "Blobmoji",
                     R.string.caption_blobmoji,
                     R.drawable.ic_blobmoji,
-                    "https://romaapp.github.io/hosted/emoji/BlobmojiCompat.ttf",
+                    "https://tusky.app/hosted/emoji/BlobmojiCompat.ttf",
                     "12.0.0"
             );
     private static final EmojiCompatFont TWEMOJI =
@@ -74,7 +74,7 @@ public class EmojiCompatFont {
                     "Twemoji",
                     R.string.caption_twemoji,
                     R.drawable.ic_twemoji,
-                    "https://romaapp.github.io/hosted/emoji/TwemojiCompat.ttf",
+                    "https://tusky.app/hosted/emoji/TwemojiCompat.ttf",
                     "12.0.0"
             );
     private static final EmojiCompatFont NOTOEMOJI =
