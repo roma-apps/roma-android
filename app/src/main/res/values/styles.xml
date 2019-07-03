@@ -36,6 +36,7 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="colorPrimary">@color/color_primary_dark_dark</item>
         <item name="colorPrimaryDark">@color/color_primary_dark_dark</item>
         <item name="android:windowNoTitle">true</item>
     </style>
@@ -121,9 +122,9 @@
         <item name="material_drawer_selected">@color/color_primary_light</item>
         <item name="material_drawer_selected_text">@color/text_color_primary_light</item>
         <item name="material_drawer_header_selection_text">@color/text_color_primary_dark
-        </item> <!--Intentionally dark so it can be overlayed over the account's header image.-->
+        </item> <!--Intentionally dark so it can be overlaid on the account's header image.-->
         <item name="material_drawer_header_selection_subtext">@color/text_color_secondary_dark
-        </item> <!--Intentionally dark so it can be overlayed over the account's header image.-->
+        </item> <!--Intentionally dark so it can be overlaid on the account's header image.-->
 
         <item name="card_background_color">@color/color_primary_light</item>
 

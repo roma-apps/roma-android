@@ -270,7 +270,7 @@
     <string name="later">後で</string>
     <string name="restart">再起動</string>
     <string name="caption_systememoji">あなたのデバイスのデフォルト絵文字セットです</string>
-    <string name="caption_blobmoji">Android 4.4-7.1で知られる、Blob絵文字です</string>
+    <string name="caption_blobmoji">Android 4.4–7.1で知られる、Blob絵文字です</string>
     <string name="caption_twemoji">Mastodonの標準絵文字セットです</string>
     <string name="download_failed">ダウンロード失敗</string>
     <string name="profile_badge_bot_text">ボット</string>
