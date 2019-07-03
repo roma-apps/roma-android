@@ -35,10 +35,12 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles 'proguard-rules.pro'
+            resValue "string", "app_name", "Roma"
         }
         debug {
             //Disable crashlytics for debug builds
             ext.enableCrashlytics = false
+            resValue "string", "app_name", "Roma 🐞"
         }
     }
 
