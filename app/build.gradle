@@ -48,12 +48,13 @@ android {
     productFlavors {
         blue {}
         green {
-            applicationIdSuffix ".test"
+            //applicationIdSuffix ".test"
             versionNameSuffix "-" + getGitSha()
         }
     }
 
     lintOptions {
+        abortOnError false
         disable 'MissingTranslation'
     }
     compileOptions {
