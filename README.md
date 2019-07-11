@@ -1,4 +1,6 @@
- ![](/app/src/main/res/mipmap-xxhdpi/launcher_icon.png)
+[![Build Status](https://app.bitrise.io/app/0051a02971f6e978/status.svg?token=wfRoQj50IE_i70SIj7jVUg&branch=develop)](https://app.bitrise.io/app/0051a02971f6e978)
+
+![](/app/src/main/res/mipmap-xxhdpi/launcher_icon.png)
 
  # Roma
 
