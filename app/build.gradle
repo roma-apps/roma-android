@@ -19,8 +19,8 @@ android {
         applicationId "tech.bigfig.roma"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 92
-        versionName "8.0 beta 2"
+        versionCode 93
+        versionName "8.0 Beta 3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -49,7 +49,7 @@ android {
         blue {}
         green {
             //applicationIdSuffix ".test"
-            versionNameSuffix "-" + getGitSha()
+            versionNameSuffix " [" + getGitSha() + "]"
         }
     }
 
