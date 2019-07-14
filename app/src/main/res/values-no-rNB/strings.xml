@@ -204,7 +204,7 @@
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="emoji_shortcode_format" translatable="false">:%s:</string>
+    <!-- string name="emoji_shortcode_format" translatable="false">:%s:</string -->
 
 <string name="pref_default_media_sensitivity">Marker alltid media som sensitivt</string>
     <string name="pref_publishing">Publisering (synkronisert med server)</string>

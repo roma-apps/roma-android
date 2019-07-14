@@ -239,7 +239,7 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, HasAndroidI
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
 
-                @AttrRes val attribute = if (titleVisibleHeight + verticalOffset < 0) {
+                val attribute = if (titleVisibleHeight + verticalOffset < 0) {
                     supportActionBar?.setDisplayShowTitleEnabled(true)
 
                     R.attr.account_toolbar_icon_tint_collapsed
