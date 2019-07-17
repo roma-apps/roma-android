@@ -20,7 +20,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 93
-        versionName "8.0 Beta 3"
+        versionName "8.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -116,8 +116,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
     implementation 'org.conscrypt:conscrypt-android:2.1.0'
     implementation 'com.github.connyduck:sparkbutton:2.0.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'

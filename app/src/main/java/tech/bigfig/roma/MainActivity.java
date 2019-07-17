@@ -100,6 +100,7 @@ import tech.bigfig.roma.entity.push.PushData;
 import tech.bigfig.roma.entity.push.PushKeys;
 import tech.bigfig.roma.entity.push.PushSubscription;
 import tech.bigfig.roma.entity.push.PushSubscriptionRequest;
+import tech.bigfig.roma.fragment.SFragment;
 import tech.bigfig.roma.interfaces.ActionButtonActivity;
 import tech.bigfig.roma.interfaces.ReselectableFragment;
 import tech.bigfig.roma.pager.MainPagerAdapter;
@@ -149,6 +150,15 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
 
     private int notificationTabPosition;
     private MainPagerAdapter adapter;
+
+    private final EmojiCompat.InitCallback emojiInitCallback = new EmojiCompat.InitCallback() {
+        @Override
+        public void onInitialized() {
+            if(!isDestroyed()) {
+                updateProfiles();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,6 +352,12 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EmojiCompat.get().unregisterInitCallback(emojiInitCallback);
+    }
+
     private void forwardShare(Intent intent) {
         Intent composeIntent = new Intent(this, ComposeActivity.class);
         composeIntent.setAction(intent.getAction());
@@ -471,12 +487,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
             drawer.addItem(debugItem);
         }
 
-        EmojiCompat.get().registerInitCallback(new EmojiCompat.InitCallback() {
-            @Override
-            public void onInitialized() {
-                updateProfiles();
-            }
-        });
+        EmojiCompat.get().registerInitCallback(emojiInitCallback);
     }
 
     private void setupTabs(boolean selectNotificationTab) {
@@ -526,6 +537,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
 
     private void changeAccount(long newSelectedId, @Nullable Intent forward) {
         cacheUpdater.stop();
+        SFragment.flushFilters();
         accountManager.setActiveAccount(newSelectedId);
 
         Intent intent = new Intent(this, MainActivity.class);
