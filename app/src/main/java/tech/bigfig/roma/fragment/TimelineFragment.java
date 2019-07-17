@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +53,6 @@ import java.util.ListIterator;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 

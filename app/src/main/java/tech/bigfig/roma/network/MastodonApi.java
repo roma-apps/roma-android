@@ -44,7 +44,6 @@ import tech.bigfig.roma.entity.AccessToken;
 import tech.bigfig.roma.entity.Account;
 import tech.bigfig.roma.entity.AppCredentials;
 import tech.bigfig.roma.entity.Attachment;
-import tech.bigfig.roma.entity.Card;
 import tech.bigfig.roma.entity.Conversation;
 import tech.bigfig.roma.entity.Emoji;
 import tech.bigfig.roma.entity.Filter;

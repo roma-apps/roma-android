@@ -44,14 +44,12 @@ import tech.bigfig.roma.di.Injectable;
 import tech.bigfig.roma.entity.*;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.network.MastodonApi;
-import tech.bigfig.roma.network.TimelineCases;
 import tech.bigfig.roma.util.ListStatusAccessibilityDelegate;
 import tech.bigfig.roma.util.PairedList;
 import tech.bigfig.roma.util.SmartLengthInputFilter;
 import tech.bigfig.roma.util.ThemeUtils;
 import tech.bigfig.roma.util.ViewDataUtils;
 import tech.bigfig.roma.view.ConversationLineItemDecoration;
-import tech.bigfig.roma.viewdata.NotificationViewData;
 import tech.bigfig.roma.viewdata.StatusViewData;
 
 import java.util.ArrayList;

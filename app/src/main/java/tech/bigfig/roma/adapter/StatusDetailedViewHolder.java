@@ -23,7 +23,6 @@ import tech.bigfig.roma.entity.Card;
 import tech.bigfig.roma.entity.Status;
 import tech.bigfig.roma.interfaces.StatusActionListener;
 import tech.bigfig.roma.util.CustomURLSpan;
-import tech.bigfig.roma.util.HtmlUtils;
 import tech.bigfig.roma.util.LinkHelper;
 import tech.bigfig.roma.viewdata.StatusViewData;
 
