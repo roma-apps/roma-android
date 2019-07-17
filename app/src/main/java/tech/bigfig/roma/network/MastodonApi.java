@@ -40,21 +40,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import tech.bigfig.roma.entity.AccessToken;
-import tech.bigfig.roma.entity.Account;
-import tech.bigfig.roma.entity.AppCredentials;
-import tech.bigfig.roma.entity.Attachment;
-import tech.bigfig.roma.entity.Conversation;
-import tech.bigfig.roma.entity.Emoji;
-import tech.bigfig.roma.entity.Filter;
-import tech.bigfig.roma.entity.Instance;
-import tech.bigfig.roma.entity.MastoList;
-import tech.bigfig.roma.entity.Notification;
-import tech.bigfig.roma.entity.Poll;
-import tech.bigfig.roma.entity.Relationship;
-import tech.bigfig.roma.entity.SearchResults;
-import tech.bigfig.roma.entity.Status;
-import tech.bigfig.roma.entity.StatusContext;
+import tech.bigfig.roma.entity.*;
 import tech.bigfig.roma.entity.push.PushSubscriptionRequest;
 import tech.bigfig.roma.entity.push.PushSubscriptionResponse;
 
@@ -472,5 +458,8 @@ public interface MastodonApi {
 
     @DELETE("api/v1/statuses/{id}")
     Single<ResponseBody> deleteStatusObservable(@Path("id") String statusId);
+
+    @GET("api/v2/search")
+    Single<SearchResults2> searchObservable(@Query("type") String type, @Query("q") String q, @Query("resolve") Boolean resolve, @Query("limit") Integer limit, @Query("offset") Integer offset, @Query("following") Boolean following);
 
 }
