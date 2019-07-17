@@ -26,6 +26,9 @@ import tech.bigfig.roma.components.instancemute.fragment.InstanceListFragment
 import tech.bigfig.roma.components.report.fragments.ReportDoneFragment
 import tech.bigfig.roma.components.report.fragments.ReportNoteFragment
 import tech.bigfig.roma.components.report.fragments.ReportStatusesFragment
+import tech.bigfig.roma.components.search.fragments.SearchAccountsFragment
+import tech.bigfig.roma.components.search.fragments.SearchHashtagsFragment
+import tech.bigfig.roma.components.search.fragments.SearchStatusesFragment
 import tech.bigfig.roma.fragment.preference.NotificationPreferencesFragment
 
 /**
@@ -50,7 +53,7 @@ abstract class FragmentBuildersModule {
     abstract fun notificationsFragment(): NotificationsFragment
 
     @ContributesAndroidInjector
-    abstract fun searchFragment(): SearchFragment
+    abstract fun searchFragment(): SearchStatusesFragment
 
     @ContributesAndroidInjector
     abstract fun notificationPreferencesFragment(): NotificationPreferencesFragment
@@ -75,4 +78,11 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun instanceListFragment(): InstanceListFragment
+
+    @ContributesAndroidInjector
+    abstract fun searchAccountFragment(): SearchAccountsFragment
+
+    @ContributesAndroidInjector
+    abstract fun searchHashtagsFragment(): SearchHashtagsFragment
+
 }

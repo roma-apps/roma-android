@@ -4,14 +4,14 @@ package tech.bigfig.roma.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import tech.bigfig.roma.viewmodel.AccountViewModel
-import tech.bigfig.roma.viewmodel.EditProfileViewModel
+import tech.bigfig.roma.viewmodel.*
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
 import tech.bigfig.roma.components.conversation.ConversationsViewModel
 import tech.bigfig.roma.components.report.ReportViewModel
+import tech.bigfig.roma.components.search.SearchViewModel
 import tech.bigfig.roma.viewmodel.AccountsInListViewModel
 import tech.bigfig.roma.viewmodel.ListsViewModel
 import javax.inject.Inject
@@ -66,6 +66,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ReportViewModel::class)
     internal abstract fun reportViewModel(viewModel: ReportViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    internal abstract fun searchViewModel(viewModel: SearchViewModel): ViewModel
 
     //Add more ViewModels here
 }

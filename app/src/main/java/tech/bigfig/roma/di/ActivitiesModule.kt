@@ -21,6 +21,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import tech.bigfig.roma.components.chat.di.ChatModule
 import tech.bigfig.roma.components.instancemute.InstanceListActivity
+import tech.bigfig.roma.components.search.SearchActivity
+import tech.bigfig.roma.components.search.fragments.SearchHashtagsFragment
 
 /**
  * Created by charlag on 3/24/18.
@@ -63,7 +65,7 @@ abstract class ActivitiesModule {
     abstract fun contributesFavouritesActivity(): FavouritesActivity
 
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
-    abstract fun contribtutesSearchAvtivity(): SearchActivity
+    abstract fun contributesSearchActivity(): SearchActivity
 
     @ContributesAndroidInjector
     abstract fun contributesAboutActivity(): AboutActivity

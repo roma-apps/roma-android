@@ -42,6 +42,7 @@ import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import tech.bigfig.roma.components.search.SearchActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -291,7 +292,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
                 return true;
             }
             case KeyEvent.KEYCODE_SEARCH: {
-                startActivityWithSlideInAnimation(new Intent(this, SearchActivity.class));
+                startActivityWithSlideInAnimation(SearchActivity.getIntent(this));
                 return true;
             }
         }
@@ -418,8 +419,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
                             Intent intent = new Intent(MainActivity.this, FavouritesActivity.class);
                             startActivityWithSlideInAnimation(intent);
                         } else if (drawerItemIdentifier == DRAWER_ITEM_SEARCH) {
-                            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                            startActivityWithSlideInAnimation(intent);
+                            startActivityWithSlideInAnimation(SearchActivity.getIntent(this));
                         } else if (drawerItemIdentifier == DRAWER_ITEM_ACCOUNT_SETTINGS) {
                             Intent intent = PreferencesActivity.newIntent(MainActivity.this, PreferencesActivity.ACCOUNT_PREFERENCES);
                             startActivityWithSlideInAnimation(intent);
