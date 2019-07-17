@@ -1032,6 +1032,7 @@ public class NotificationsFragment extends SFragment implements
 
     private void update(@Nullable List<Notification> newNotifications, @Nullable String fromId) {
         if (ListUtils.isEmpty(newNotifications)) {
+            updateAdapter();
             return;
         }
         if (fromId != null) {

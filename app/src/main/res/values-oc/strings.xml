@@ -42,10 +42,12 @@
     <string name="status_content_warning_show_less">Mostrar mens</string>
     <string name="status_content_show_more">Desplegar</string>
     <string name="status_content_show_less">Replegar</string>
+    <string name="footer_empty">I a pas res aquí. Davalatz per actualizar !</string>
     <string name="notification_reblog_format">%s a partajat vòstre tut</string>
     <string name="notification_favourite_format">%s a aimat vòstre tut</string>
     <string name="notification_follow_format">%s vos sèc</string>
     <string name="report_username_format">Denonciar @%s</string>
+    <string name="report_comment_hint">Cap comentari addicional ?</string>
     <string name="action_quick_reply">Responsa rapida</string>
     <string name="action_reply">Respondre</string>
     <string name="action_reblog">Partejar</string>
@@ -66,6 +68,7 @@
     <string name="action_send">TUT</string>
     <string name="action_send_public">TUT !</string>
     <string name="action_retry">Tornar ensajar</string>
+    <string name="action_close">Tampar</string>
     <string name="action_view_profile">Perfil</string>
     <string name="action_view_preferences">Preferéncias</string>
     <string name="action_view_favourites">Preferits</string>
@@ -98,6 +101,7 @@
     <string name="send_status_link_to">Partejar l\'URL del tut amb…</string>
     <string name="send_status_content_to">Partejar vòstre tut amb…</string>
     <string name="send_media_to">Partejar l’imatge amb…</string>
+    <string name="confirmation_reported">Enviat !</string>
     <string name="confirmation_unblocked">Utilizaire desblocat</string>
     <string name="confirmation_unmuted">Utilizaire sortit del silenci</string>
     <string name="status_sent">Enviat !</string>
@@ -111,7 +115,15 @@
     <string name="search_no_results">I a pas cap de resulat</string>
     <string name="label_quick_reply">Responsa…</string>
     <string name="label_header">Bandièra</string>
+    <string name="link_whats_an_instance">Que es una instància ?</string>
     <string name="login_connection">Connexion…</string>
+    <string name="dialog_whats_an_instance">Aquí podètz picar l\'adreça o domini de quina que siá instància,
+        coma mastodont.cat, mastodon.social, icosahedron.website o
+        <a href="https://instances.social">fòrca mai !</a>
+        \n\nSi encara non avètz cap de compte, podètz picar lo nom de l’instància ont vos agradariá
+        anar e crear un compte enlà.\n\n
+        \n\nAvètz mas d’informacins a <a href="https://joinmastodon.org">joinmastodon.org</a>.
+    </string>
     <string name="dialog_title_finishing_media_upload">Finalizacion del mandadís del mèdia</string>
     <string name="dialog_message_uploading_media">Mandadís…</string>
     <string name="dialog_download_image">Telecargar</string>
@@ -132,7 +144,7 @@
     <string name="pref_title_notification_filter_mentions">òm me menciona</string>
     <string name="pref_title_notification_filter_follows">òm me sèc</string>
     <string name="pref_title_notification_filter_reblogs">òm parteja mas publicacions</string>
-    <string name="pref_title_notification_filter_favourites">òm me met mos tuts en favourit</string>
+    <string name="pref_title_notification_filter_favourites">òm met mos tuts en favorit</string>
     <string name="pref_title_appearance_settings">Aparença</string>
     <string name="pref_title_app_theme">Tèma de l’app</string>
     <string name="app_them_dark">Escur</string>
@@ -177,7 +189,6 @@
     <string name="notification_title_summary">%d interaccions nòvas</string>
     <string name="description_account_locked">Compte blocat</string>
     <string name="about_title_activity">A prepaus</string>
-    <string name="about_roma_version">Roma %s</string>
     <string name="about_roma_license">Roma es programa gratuït, liure e de còdi dobèrt.
         Es publicat jols tèrms de la licéncia publica generala GNU version 3.
         Podeu trobar les llicència aquí: https://www.gnu.org/licenses/gpl-3.0.ca.html</string>
@@ -294,6 +305,7 @@
     <string name="pref_default_media_sensitivity">Totjorn marcar los mèdias coma sensibles</string>
     <string name="pref_failed_to_sync">Fracàs de la sincronizacion dels paramètres</string>
 
+    <string name="about_roma_version">Roma %s</string>
     <string name="abbreviated_days_ago">%dd</string>
     <string name="abbreviated_hours_ago">%dh</string>
     <string name="abbreviated_minutes_ago">%dm</string>
@@ -321,15 +333,16 @@
     <string name="hint_describe_for_visually_impaired">Descriure pels mal vesents
 \n(%d caractèrs maximum)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
+    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
 
     <plurals name="favs">
-	<item quantity="one"><b>%1$s</b> Favorit</item>
-	<item quantity="other"><b>3%1$s</b>4 Favorits</item>
+	<item quantity="one">&lt;b>%1$s&lt;/b> Favorit</item>
+	<item quantity="other">&lt;b>3%1$s&lt;/b>4 Favorits</item>
 </plurals>
 
     <plurals name="reblogs">
-	<item quantity="one"><b>%s</b> partatge</item>
-	<item quantity="other"><b>%s</b> partatges</item>
+	<item quantity="one">&lt;b>%s&lt;/b> partatge</item>
+	<item quantity="other">&lt;b>%s&lt;/b> partatges</item>
 </plurals>
 
     <string name="title_reblogged_by">Partejat per</string>
@@ -424,6 +437,7 @@
     <string name="report_sent_success">\@%s corrèctament senhalat</string>
     <string name="hint_additional_info">Comentaris suplementaris</string>
     <string name="report_remote_instance">Transferir a %s</string>
+    <string name="failed_report">Fracàs del senhalament</string>
     <string name="failed_fetch_statuses">Recuperacion dels estatuts impossibla</string>
     <string name="report_description_1">Lo senhalament serà enviat a vòstre moderator de servidor. Podètz fornir una explicacion de perque senhalatz lo compte çai-jos :</string>
     <string name="report_description_remote_instance">Aqueste compte es en un autre servidor. Enviar una còpia anonimizada del senhalament \?</string>

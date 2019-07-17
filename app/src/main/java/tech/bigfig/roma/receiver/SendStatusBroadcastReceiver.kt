@@ -30,7 +30,6 @@ import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.service.SendTootService
 import tech.bigfig.roma.util.NotificationHelper
 import dagger.android.AndroidInjection
-import java.util.*
 import javax.inject.Inject
 
 private const val TAG = "SendStatusBR"
@@ -128,7 +127,7 @@ class SendStatusBroadcastReceiver : BroadcastReceiver() {
                     .inReplyToId(citedStatusId)
                     .replyVisibility(visibility)
                     .contentWarning(spoiler)
-                    .mentionedUsernames(Arrays.asList(*mentions))
+                    .mentionedUsernames(mentions.toList())
                     .replyingStatusAuthor(localAuthorId)
                     .replyingStatusContent(citedText)
                     .build(context)

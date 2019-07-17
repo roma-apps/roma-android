@@ -33,7 +33,7 @@
     <string name="title_statuses_pinned">Fijado</string>
     <string name="title_follows">Siguiendo</string>
     <string name="title_followers">Seguidores</string>
-    <string name="title_favourites">Favouritos</string>
+    <string name="title_favourites">Favoritos</string>
     <string name="title_mutes">Silenciados</string>
     <string name="title_blocks">Bloqueados</string>
     <string name="title_follow_requests">Solicitudes</string>
@@ -51,13 +51,14 @@
     <string name="status_content_show_less">Ocultar</string>
     <string name="message_empty">Nada aquí.</string>
     <string name="notification_reblog_format">%s impulsó tu toot</string>
-    <string name="notification_favourite_format">%s marcó favourito</string>
+    <string name="notification_favourite_format">%s marcó como favorito tu post</string>
     <string name="notification_follow_format">%s te siguió</string>
     <string name="report_username_format">Reportar @%s</string>
+    <string name="report_comment_hint">¿Información adicional?</string>
     <string name="action_quick_reply">Respuesta rápida</string>
     <string name="action_reply">Responder</string>
     <string name="action_reblog">Impulsar</string>
-    <string name="action_favourite">Favourito</string>
+    <string name="action_favourite">Favorito</string>
     <string name="action_more">Más</string>
     <string name="action_compose">Redactar</string>
     <string name="action_login">Iniciar sesión</string>
@@ -74,10 +75,11 @@
     <string name="action_send">Enviar</string>
     <string name="action_send_public">PUBLICAR!</string>
     <string name="action_retry">Reintentar</string>
+    <string name="action_close">Cerrar</string>
     <string name="action_view_profile">Perfil</string>
     <string name="action_view_preferences">Ajustes</string>
     <string name="action_view_account_preferences">Preferencias de cuenta</string>
-    <string name="action_view_favourites">Favouritos</string>
+    <string name="action_view_favourites">Favoritos</string>
     <string name="action_view_mutes">Silenciados</string>
     <string name="action_view_blocks">Bloqueados</string>
     <string name="action_view_follow_requests">Solicitudes</string>
@@ -110,6 +112,7 @@
     <string name="send_status_link_to">Compartir URL…</string>
     <string name="send_status_content_to">Compartir contenido…</string>
     <string name="send_media_to">Compartir medios a…</string>
+    <string name="confirmation_reported">¡Enviado!</string>
     <string name="confirmation_unblocked">El usuario ya no está bloqueado</string>
     <string name="confirmation_unmuted">El usuario ya no está silenciado</string>
     <string name="status_sent">¡Enviada!</string>
@@ -124,7 +127,17 @@
     <string name="label_quick_reply">Respuesta…</string>
     <string name="label_avatar">Avatar</string>
     <string name="label_header">Cabecera</string>
+    <string name="link_whats_an_instance">¿Qué es una instancia?</string>
     <string name="login_connection">Conectando…</string>
+    <string name="dialog_whats_an_instance">Introduzca aquí dirección o dominio de cualquier instancia,
+        como mastodon.social, icosahedron.website, social.tchncs.de y
+        <a href="https://instances.social">más!</a>
+        \n\nSi todavia no tiene una cuenta, puede indicar el nombre de la instancia a la que quiere
+        unirse y crear una cuenta allí.\n\nUna instancia es el sitio único donde su cuenta
+        está alojada, pero puede comunicarse y seguir usuarios de otras instancias como si
+        estuvieran en la misma.
+        \n\nPuede consultar más información en <a href="https://joinmastodon.org">joinmastodon.org</a>.
+    </string>
     <string name="dialog_title_finishing_media_upload">Terminando de subir multimedia</string>
     <string name="dialog_message_uploading_media">Subiendo…</string>
     <string name="dialog_download_image">Descargar</string>
@@ -145,7 +158,7 @@
     <string name="pref_title_notification_filter_mentions">me mencionan</string>
     <string name="pref_title_notification_filter_follows">me siguen</string>
     <string name="pref_title_notification_filter_reblogs">mis posts son impulsados</string>
-    <string name="pref_title_notification_filter_favourites">me dan favourito</string>
+    <string name="pref_title_notification_filter_favourites">me dan favorito</string>
     <string name="pref_title_appearance_settings">Interfaz</string>
     <string name="pref_title_app_theme">Tema</string>
     <string name="pref_title_timelines">Cronologia</string>
@@ -274,6 +287,7 @@
     <string name="license_description">Roma contiene código y recursos de los siguientes proyectos:</string>
     <string name="license_apache_2">Licenciado bajo Apache License (texto bajo la lista)</string>
     <string name="license_cc_by_4">CC BY 4.0</string>
+    <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="profile_metadata_label">Información adicional</string>
     <string name="profile_metadata_add">añadir campo</string>
     <string name="profile_metadata_label_label">Etiqueta</string>
@@ -287,8 +301,8 @@
         <item quantity="other">&lt;b&gt;%1$s&lt;/b&gt; Favoritos</item>
     </plurals>
     <plurals name="reblogs">
-	<item quantity="one"><b>%s</b> Impulso</item>
-	<item quantity="other"><b>%s</b> Impulsos</item>
+	<item quantity="one">&lt;b>%s&lt;/b> Impulso</item>
+	<item quantity="other">&lt;b>%s&lt;/b> Impulsos</item>
 </plurals>
     <string name="title_reblogged_by">Impulsado por</string>
     <string name="title_favourited_by">Marcado como favorito por</string>

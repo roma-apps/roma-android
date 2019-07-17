@@ -26,7 +26,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,9 +41,12 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -57,10 +62,15 @@ import tech.bigfig.roma.db.AccountEntity;
 import tech.bigfig.roma.db.AccountManager;
 import tech.bigfig.roma.di.Injectable;
 import tech.bigfig.roma.entity.Attachment;
+import tech.bigfig.roma.entity.Filter;
 import tech.bigfig.roma.entity.Status;
 import tech.bigfig.roma.network.MastodonApi;
 import tech.bigfig.roma.network.TimelineCases;
 import tech.bigfig.roma.viewdata.AttachmentViewData;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /* Note from Andrew on Jan. 22, 2017: This class is a design problem for me, so I left it with an
  * awkward name. TimelineFragment and NotificationFragment have significant overlap but the nature
@@ -76,12 +86,18 @@ public abstract class SFragment extends BaseFragment implements Injectable {
 
     private BottomSheetActivity bottomSheetActivity;
 
+    private static List<Filter> filters;
+    private boolean filterRemoveRegex;
+    private Matcher filterRemoveRegexMatcher;
+
     @Inject
     public MastodonApi mastodonApi;
     @Inject
     public AccountManager accountManager;
     @Inject
     public TimelineCases timelineCases;
+
+    private static final String TAG = "SFragment";
 
     @Override
     public void startActivity(Intent intent) {
@@ -419,5 +435,70 @@ public abstract class SFragment extends BaseFragment implements Injectable {
                 Toast.makeText(getContext(), R.string.error_media_download_permission, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    void reloadFilters(boolean forceRefresh) {
+        if (filters != null && !forceRefresh) {
+            applyFilters(forceRefresh);
+            return;
+        }
+
+        mastodonApi.getFilters().enqueue(new Callback<List<Filter>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Filter>> call, @NonNull Response<List<Filter>> response) {
+                filters = response.body();
+                if (response.isSuccessful() && filters != null) {
+                    applyFilters(forceRefresh);
+                } else {
+                    Log.e(TAG, "Error getting filters from server");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Filter>> call, @NonNull Throwable t) {
+                Log.e(TAG, "Error getting filters from server", t);
+            }
+        });
+    }
+
+    protected boolean filterIsRelevant(Filter filter) {
+        // Called when building local filter expression
+        // Override to select relevant filters for your fragment
+        return false;
+    }
+
+    protected void refreshAfterApplyingFilters() {
+        // Called after filters are updated
+        // Override to refresh your fragment
+    }
+
+    boolean shouldFilterStatus(Status status) {
+        return (filterRemoveRegex && (filterRemoveRegexMatcher.reset(status.getActionableStatus().getContent()).find()
+            || (!status.getSpoilerText().isEmpty() && filterRemoveRegexMatcher.reset(status.getActionableStatus().getSpoilerText()).find())));
+    }
+
+    private void applyFilters(boolean refresh) {
+        List<String> tokens = new ArrayList<>();
+        for (Filter filter : filters) {
+            if (filterIsRelevant(filter)) {
+                tokens.add(filterToRegexToken(filter));
+            }
+        }
+        filterRemoveRegex = !tokens.isEmpty();
+        if (filterRemoveRegex) {
+            filterRemoveRegexMatcher = Pattern.compile(TextUtils.join("|", tokens), Pattern.CASE_INSENSITIVE).matcher("");
+        }
+        if (refresh) {
+            refreshAfterApplyingFilters();
+        }
+    }
+
+    private static String filterToRegexToken(Filter filter) {
+        String phrase = Pattern.quote(filter.getPhrase());
+        return filter.getWholeWord() ? String.format("(^|\\W)%s($|\\W)", phrase) : phrase;
+    }
+
+    public static void flushFilters() {
+        filters = null;
     }
 }
