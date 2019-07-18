@@ -1,6 +1,5 @@
 package tech.bigfig.roma.components.conversation
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,6 +36,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
 
     @MainThread
     fun refresh(accountId: Long, showLoadingIndicator: Boolean): LiveData<NetworkState> {
+
         val networkState = MutableLiveData<NetworkState>()
         if (showLoadingIndicator) {
             networkState.value = NetworkState.LOADING
@@ -72,25 +72,26 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
         val conversations = HashMap<String, Status>()
         val conversationsRecentFirst = HashMap<Date, Status>()
 
-        body?.reversed()?.iterator()?.forEach { it.pleroma?.conversation_id?.let { id -> conversations[id] = it } }
+        body?.reversed()?.iterator()?.forEach {
+            it.pleroma?.conversation_id?.let { id -> conversations[id] = it }
+        }
 
-        conversations.forEach { conversationsRecentFirst[it.value.createdAt] = it.value }
+        conversations.forEach {
+            conversationsRecentFirst[it.value.createdAt] = it.value
+        }
 
         val conversationList = ArrayList<Conversation>()
 
         conversationsRecentFirst.toSortedMap(reverseOrder()).forEach {
-            conversationList.add(
-                    Conversation(
-                            id = it.value.pleroma?.conversation_id!!,
-                            accounts = emptyList(),
-                            lastStatus = it.value,
-                            unread = false
-                    )
-            )
-        }
 
-        conversationList.forEach {
-            Log.v("SFG", "Conversation -> $it")
+            var convoToAdd = Conversation(
+                    id = it.value.pleroma?.conversation_id!!,
+                    accounts = getAccountObjects(it.value.mentions),
+                    lastStatus = it.value,
+                    unread = false
+            )
+
+            conversationList.add(convoToAdd)
         }
 
         return conversationList
