@@ -346,8 +346,13 @@ public interface MastodonApi {
     @GET("api/v1/instance")
     Call<Instance> getInstance();
 
-    @GET("/api/v1/conversations")
-    Call<List<Conversation>> getConversations(@Nullable @Query("max_id") String maxId, @Query("limit") int limit);
+    @GET("/api/v1/timelines/direct")
+    Call<List<Status>> getTimelineDirect(
+            @Nullable @Query("max_id") String maxId,
+            @Nullable @Query("since_id") String sinceId,
+            @Query("limit") int limit
+    );
+
     @GET("api/v1/filters")
     Call<List<Filter>> getFilters();
 

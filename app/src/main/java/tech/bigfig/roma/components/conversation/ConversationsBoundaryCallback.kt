@@ -24,6 +24,7 @@ import tech.bigfig.roma.util.createStatusLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.network.MastodonApi
 import java.util.concurrent.Executor
 
@@ -37,7 +38,7 @@ import java.util.concurrent.Executor
 class ConversationsBoundaryCallback(
         private val accountId: Long,
         private val mastodonApi: MastodonApi,
-        private val handleResponse: (Long, List<Conversation>?) -> Unit,
+        private val handleResponse: (Long, List<Status>?) -> Unit,
         private val ioExecutor: Executor,
         private val networkPageSize: Int)
     : PagedList.BoundaryCallback<ConversationEntity>() {
@@ -51,7 +52,7 @@ class ConversationsBoundaryCallback(
     @MainThread
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            mastodonApi.getConversations(null, networkPageSize)
+            mastodonApi.getTimelineDirect(null, null, networkPageSize)
                     .enqueue(createWebserviceCallback(it))
         }
     }
@@ -62,7 +63,7 @@ class ConversationsBoundaryCallback(
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: ConversationEntity) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            mastodonApi.getConversations(itemAtEnd.lastStatus.id, networkPageSize)
+            mastodonApi.getTimelineDirect(itemAtEnd.lastStatus.id, null, networkPageSize)
                     .enqueue(createWebserviceCallback(it))
         }
     }
@@ -72,7 +73,7 @@ class ConversationsBoundaryCallback(
      * paging library takes care of refreshing the list if necessary.
      */
     private fun insertItemsIntoDb(
-            response: Response<List<Conversation>>,
+            response: Response<List<Status>>,
             it: PagingRequestHelper.Request.Callback) {
         ioExecutor.execute {
             handleResponse(accountId, response.body())
@@ -84,13 +85,13 @@ class ConversationsBoundaryCallback(
         // ignored, since we only ever append to what's in the DB
     }
 
-    private fun createWebserviceCallback(it: PagingRequestHelper.Request.Callback): Callback<List<Conversation>> {
-        return object : Callback<List<Conversation>> {
-            override fun onFailure(call: Call<List<Conversation>>, t: Throwable) {
+    private fun createWebserviceCallback(it: PagingRequestHelper.Request.Callback): Callback<List<Status>> {
+        return object : Callback<List<Status>> {
+            override fun onFailure(call: Call<List<Status>>, t: Throwable) {
                 it.recordFailure(t)
             }
 
-            override fun onResponse(call: Call<List<Conversation>>, response: Response<List<Conversation>>) {
+            override fun onResponse(call: Call<List<Status>>, response: Response<List<Status>>) {
                 insertItemsIntoDb(response, it)
             }
         }

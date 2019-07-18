@@ -160,6 +160,7 @@ data class ConversationStatusEntity(
                 pinned = false,
                 poll = poll,
                 card = null,
+                pleroma = null,
                 repliesCount = 0)
     }
 }
