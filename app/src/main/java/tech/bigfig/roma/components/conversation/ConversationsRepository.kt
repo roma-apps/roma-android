@@ -6,55 +6,107 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.Config
 import androidx.paging.toLiveData
-import tech.bigfig.roma.entity.Conversation
-import tech.bigfig.roma.util.Listing
-import tech.bigfig.roma.util.NetworkState
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tech.bigfig.roma.db.AppDatabase
+import tech.bigfig.roma.entity.Account
+import tech.bigfig.roma.entity.Conversation
+import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.network.MastodonApi
+import tech.bigfig.roma.util.Listing
+import tech.bigfig.roma.util.NetworkState
+import java.util.*
 import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @Singleton
 class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, val db: AppDatabase) {
 
     private val ioExecutor = Executors.newSingleThreadExecutor()
 
+    data class ConversationHolder(var lastFetchedId: String, var conversations: List<Conversation>)
+
     companion object {
         private const val DEFAULT_PAGE_SIZE = 20
+
+        fun statusesToConversations(mastodonApi: MastodonApi, body: List<Status>?): ConversationHolder {
+
+            val conversations = HashMap<String, Status>()
+            val conversationsRecentFirst = HashMap<Date, Status>()
+            var lastFetchedId = ""
+
+            for (status in body?.reversed()!!) {
+                if (lastFetchedId.isBlank()) lastFetchedId = status.id
+                status.pleroma?.conversation_id?.let { id -> conversations[id] = status }
+            }
+
+            for (entry in conversations.entries) {
+                entry.let { entry.value.createdAt.let { it1 -> conversationsRecentFirst.put(it1, entry.value) } }
+            }
+
+            val conversationList = ArrayList<Conversation>()
+
+            for (entry in conversationsRecentFirst.toSortedMap(reverseOrder())) {
+
+                val convoToAdd = Conversation(
+                        id = entry.value.pleroma?.conversation_id!!,
+                        accounts = getAccountObjects(mastodonApi, entry.value.mentions),
+                        lastStatus = entry.value,
+                        unread = false
+                )
+
+                conversationList.add(convoToAdd)
+            }
+
+            return ConversationHolder(lastFetchedId, conversationList)
+        }
+
+        private fun getAccountObjects(mastodonApi: MastodonApi, mentions: Array<Status.Mention>): List<Account> {
+            val accounts = ArrayList<Account>()
+            for (mention in mentions) {
+                mastodonApi.account(mention.id).execute().body()?.let { it1 -> accounts.add(it1) }
+            }
+            return accounts
+        }
+
     }
 
     @MainThread
     fun refresh(accountId: Long, showLoadingIndicator: Boolean): LiveData<NetworkState> {
+
         val networkState = MutableLiveData<NetworkState>()
-        if(showLoadingIndicator) {
+        if (showLoadingIndicator) {
             networkState.value = NetworkState.LOADING
         }
 
-        mastodonApi.getConversations(null, DEFAULT_PAGE_SIZE).enqueue(
-                object : Callback<List<Conversation>> {
-                    override fun onFailure(call: Call<List<Conversation>>, t: Throwable) {
+        mastodonApi.getTimelineDirect(null, null, DEFAULT_PAGE_SIZE).enqueue(
+                object : Callback<List<Status>> {
+                    override fun onFailure(call: Call<List<Status>>, t: Throwable) {
+
                         // retrofit calls this on main thread so safe to call set value
                         networkState.value = NetworkState.error(t.message)
                     }
 
-                    override fun onResponse(call: Call<List<Conversation>>, response: Response<List<Conversation>>) {
+                    override fun onResponse(call: Call<List<Status>>, response: Response<List<Status>>) {
                         ioExecutor.execute {
                             db.runInTransaction {
                                 db.conversationDao().deleteForAccount(accountId)
-                                insertResultIntoDb(accountId, response.body())
+                                insertResultIntoDb(accountId, statusesToConversations(mastodonApi, response.body()).conversations)
                             }
+
                             // since we are in bg thread now, post the result.
                             networkState.postValue(NetworkState.LOADED)
                         }
                     }
                 }
         )
+
         return networkState
     }
 
@@ -77,7 +129,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
         }
 
         // We use toLiveData Kotlin extension function here, you could also use LivePagedListBuilder
-        val livePagedList =  db.conversationDao().conversationsForAccount(accountId).toLiveData(
+        val livePagedList = db.conversationDao().conversationsForAccount(accountId).toLiveData(
                 config = Config(pageSize = DEFAULT_PAGE_SIZE, prefetchDistance = DEFAULT_PAGE_SIZE / 2, enablePlaceholders = false),
                 boundaryCallback = boundaryCallback
         )
@@ -104,7 +156,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
 
     private fun insertResultIntoDb(accountId: Long, result: List<Conversation>?) {
         result?.filter { it.lastStatus != null }
-                ?.map{ it.toEntity(accountId) }
+                ?.map { it.toEntity(accountId) }
                 ?.let { db.conversationDao().insert(it) }
 
     }
