@@ -38,13 +38,14 @@ import java.util.concurrent.Executor
 class ConversationsBoundaryCallback(
         private val accountId: Long,
         private val mastodonApi: MastodonApi,
-        private val handleResponse: (Long, List<Status>?) -> Unit,
+        private val handleResponse: (Long, List<Conversation>?) -> Unit,
         private val ioExecutor: Executor,
         private val networkPageSize: Int)
     : PagedList.BoundaryCallback<ConversationEntity>() {
 
     val helper = PagingRequestHelper(ioExecutor)
     val networkState = helper.createStatusLiveData()
+    var lastFetchedId = ""
 
     /**
      * Database returned 0 items. We should query the backend for more items.
@@ -63,7 +64,7 @@ class ConversationsBoundaryCallback(
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: ConversationEntity) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            mastodonApi.getTimelineDirect(itemAtEnd.lastStatus.id, null, networkPageSize)
+            mastodonApi.getTimelineDirect(lastFetchedId, null, networkPageSize)
                     .enqueue(createWebserviceCallback(it))
         }
     }
@@ -76,7 +77,9 @@ class ConversationsBoundaryCallback(
             response: Response<List<Status>>,
             it: PagingRequestHelper.Request.Callback) {
         ioExecutor.execute {
-            handleResponse(accountId, response.body())
+            val convHolder = ConversationsRepository.statusesToConversations(mastodonApi, response.body())
+            lastFetchedId = convHolder.lastFetchedId
+            handleResponse(accountId, convHolder.conversations)
             it.recordSuccess()
         }
     }

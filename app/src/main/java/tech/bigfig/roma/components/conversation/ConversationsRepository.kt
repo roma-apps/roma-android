@@ -30,8 +30,51 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
 
     private val ioExecutor = Executors.newSingleThreadExecutor()
 
+    data class ConversationHolder(var lastFetchedId:String, var conversations:List<Conversation>)
+
     companion object {
         private const val DEFAULT_PAGE_SIZE = 20
+
+        fun statusesToConversations(mastodonApi: MastodonApi, body: List<Status>?): ConversationHolder {
+
+            val conversations = HashMap<String, Status>()
+            val conversationsRecentFirst = HashMap<Date, Status>()
+            var lastFetchedId = ""
+
+            for (status in body?.reversed()!!) {
+                if (lastFetchedId.isBlank()) lastFetchedId = status.id
+                status.pleroma?.conversation_id?.let { id -> conversations[id] = status }
+            }
+
+            for (entry in conversations.entries) {
+                entry.let { entry.value.createdAt.let { it1 -> conversationsRecentFirst.put(it1, entry.value) } }
+            }
+
+            val conversationList = ArrayList<Conversation>()
+
+            for (entry in conversationsRecentFirst.toSortedMap(reverseOrder())) {
+
+                val convoToAdd = Conversation(
+                        id = entry.value.pleroma?.conversation_id!!,
+                        accounts = getAccountObjects(mastodonApi, entry.value.mentions),
+                        lastStatus = entry.value,
+                        unread = false
+                )
+
+                conversationList.add(convoToAdd)
+            }
+
+            return ConversationHolder(lastFetchedId, conversationList)
+        }
+
+        private fun getAccountObjects(mastodonApi: MastodonApi, mentions: Array<Status.Mention>): List<Account> {
+            val accounts = ArrayList<Account>()
+            for (mention in mentions) {
+                mastodonApi.account(mention.id).execute().body()?.let { it1 -> accounts.add(it1) }
+            }
+            return accounts
+        }
+
     }
 
     @MainThread
@@ -54,7 +97,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
                         ioExecutor.execute {
                             db.runInTransaction {
                                 db.conversationDao().deleteForAccount(accountId)
-                                insertResultIntoDb(accountId, statusesToConversations(response.body()))
+                                insertResultIntoDb(accountId, statusesToConversations(mastodonApi, response.body()).conversations)
                             }
 
                             // since we are in bg thread now, post the result.
@@ -67,44 +110,6 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
         return networkState
     }
 
-    private fun statusesToConversations(body: List<Status>?): List<Conversation> {
-
-        val conversations = HashMap<String, Status>()
-        val conversationsRecentFirst = HashMap<Date, Status>()
-
-        body?.reversed()?.iterator()?.forEach {
-            it.pleroma?.conversation_id?.let { id -> conversations[id] = it }
-        }
-
-        conversations.forEach {
-            conversationsRecentFirst[it.value.createdAt] = it.value
-        }
-
-        val conversationList = ArrayList<Conversation>()
-
-        conversationsRecentFirst.toSortedMap(reverseOrder()).forEach {
-
-            var convoToAdd = Conversation(
-                    id = it.value.pleroma?.conversation_id!!,
-                    accounts = getAccountObjects(it.value.mentions),
-                    lastStatus = it.value,
-                    unread = false
-            )
-
-            conversationList.add(convoToAdd)
-        }
-
-        return conversationList
-    }
-
-    fun getAccountObjects(mentions: Array<Status.Mention>): List<Account> {
-        val accounts = ArrayList<Account>()
-        mentions.forEach {
-            mastodonApi.account(it.id).execute().body()?.let { it1 -> accounts.add(it1) }
-        }
-        return accounts
-    }
-
     @MainThread
     fun conversations(accountId: Long): Listing<ConversationEntity> {
         // create a boundary callback which will observe when the user reaches to the edges of
@@ -112,7 +117,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
         val boundaryCallback = ConversationsBoundaryCallback(
                 accountId = accountId,
                 mastodonApi = mastodonApi,
-                handleResponse = this::insertTimelineDirectResultIntoDb,
+                handleResponse = this::insertResultIntoDb,
                 ioExecutor = ioExecutor,
                 networkPageSize = DEFAULT_PAGE_SIZE)
         // we are using a mutable live data to trigger refresh requests which eventually calls
@@ -147,10 +152,6 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
             db.conversationDao().deleteForAccount(accountId)
         }.subscribeOn(Schedulers.io())
                 .subscribe()
-    }
-
-    private fun insertTimelineDirectResultIntoDb(accountId: Long, list: List<Status>?) {
-        insertResultIntoDb(accountId, statusesToConversations(list))
     }
 
     private fun insertResultIntoDb(accountId: Long, result: List<Conversation>?) {
