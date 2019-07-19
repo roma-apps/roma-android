@@ -47,10 +47,7 @@ android {
     flavorDimensions "color"
     productFlavors {
         blue {}
-        green {
-            //applicationIdSuffix ".test"
-            versionNameSuffix " [" + getGitSha() + "]"
-        }
+        green {}
     }
 
     lintOptions {

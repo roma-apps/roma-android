@@ -30,7 +30,7 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
 
     private val ioExecutor = Executors.newSingleThreadExecutor()
 
-    data class ConversationHolder(var lastFetchedId:String, var conversations:List<Conversation>)
+    data class ConversationHolder(var lastFetchedId: String, var conversations: List<Conversation>)
 
     companion object {
         private const val DEFAULT_PAGE_SIZE = 20

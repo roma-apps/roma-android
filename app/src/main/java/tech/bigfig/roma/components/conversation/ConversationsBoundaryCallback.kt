@@ -18,14 +18,14 @@ package tech.bigfig.roma.components.conversation
 
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
-import tech.bigfig.roma.entity.Conversation
-import tech.bigfig.roma.util.PagingRequestHelper
-import tech.bigfig.roma.util.createStatusLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tech.bigfig.roma.entity.Conversation
 import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.network.MastodonApi
+import tech.bigfig.roma.util.PagingRequestHelper
+import tech.bigfig.roma.util.createStatusLiveData
 import java.util.concurrent.Executor
 
 /**
