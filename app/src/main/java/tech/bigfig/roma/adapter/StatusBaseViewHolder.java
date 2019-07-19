@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -160,8 +159,14 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
     protected abstract int getMediaPreviewHeight(Context context);
 
-    protected void setDisplayName(String name, List<Emoji> customEmojis) {
-        CharSequence emojifiedName = CustomEmojiHelper.emojifyString(name, customEmojis, displayName);
+    protected void setDisplayName(Context context, String name, List<Emoji> customEmojis) {
+
+        CharSequence emojifiedName =
+                CustomEmojiHelper.emojifyString(
+                        (name == null) ? context.getString(R.string.null_display_name_placeholder) : name,
+                        customEmojis,
+                        displayName);
+
         displayName.setText(emojifiedName);
     }
 
@@ -616,7 +621,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(viewThreadListener);
     }
 
-    protected void setupWithStatus(StatusViewData.Concrete status, final StatusActionListener listener,
+    public void setupWithStatus(StatusViewData.Concrete status, final StatusActionListener listener,
                                    boolean mediaPreviewEnabled, boolean showBotOverlay, boolean animateAvatar) {
         this.setupWithStatus(status, listener, mediaPreviewEnabled, showBotOverlay, animateAvatar, null);
     }
@@ -628,7 +633,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
                                    boolean animateAvatar,
                                    @Nullable Object payloads) {
         if (payloads == null) {
-            setDisplayName(status.getUserFullName(), status.getAccountEmojis());
+            setDisplayName(itemView.getContext(), status.getUserFullName(), status.getAccountEmojis());
             setUsername(status.getNickname());
             setCreatedAt(status.getCreatedAt());
             setIsReply(status.getInReplyToId() != null);

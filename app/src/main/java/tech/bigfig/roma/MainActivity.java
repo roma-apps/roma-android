@@ -42,11 +42,7 @@ import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import tech.bigfig.roma.components.search.SearchActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -62,32 +58,15 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
-import androidx.emoji.text.EmojiCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.viewpager.widget.ViewPager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import tech.bigfig.roma.appstore.CacheUpdater;
 import tech.bigfig.roma.appstore.EventHub;
 import tech.bigfig.roma.appstore.MainTabsChangedEvent;
@@ -95,19 +74,13 @@ import tech.bigfig.roma.appstore.ProfileEditedEvent;
 import tech.bigfig.roma.components.conversation.ConversationsRepository;
 import tech.bigfig.roma.db.AccountEntity;
 import tech.bigfig.roma.entity.Account;
-import tech.bigfig.roma.entity.push.PushAlerts;
-import tech.bigfig.roma.entity.push.PushData;
-import tech.bigfig.roma.entity.push.PushKeys;
-import tech.bigfig.roma.entity.push.PushSubscription;
-import tech.bigfig.roma.entity.push.PushSubscriptionRequest;
+import tech.bigfig.roma.fragment.SFragment;
 import tech.bigfig.roma.interfaces.ActionButtonActivity;
 import tech.bigfig.roma.interfaces.ReselectableFragment;
 import tech.bigfig.roma.pager.MainPagerAdapter;
 import tech.bigfig.roma.service.push.DeleteFcmTokenWorker;
-import tech.bigfig.roma.service.push.UpdateFcmTokenWorker;
 import tech.bigfig.roma.util.CustomEmojiHelper;
 import tech.bigfig.roma.util.NotificationHelper;
-import tech.bigfig.roma.util.PushHelperKt;
 import tech.bigfig.roma.util.ThemeUtils;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -149,6 +122,15 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
 
     private int notificationTabPosition;
     private MainPagerAdapter adapter;
+
+    private final EmojiCompat.InitCallback emojiInitCallback = new EmojiCompat.InitCallback() {
+        @Override
+        public void onInitialized() {
+            if(!isDestroyed()) {
+                updateProfiles();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,7 +292,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
                 return true;
             }
             case KeyEvent.KEYCODE_SEARCH: {
-                startActivityWithSlideInAnimation(new Intent(this, SearchActivity.class));
+                startActivityWithSlideInAnimation(SearchActivity.getIntent(this));
                 return true;
             }
         }
@@ -340,6 +322,12 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
                 viewUrl(statusUrl);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EmojiCompat.get().unregisterInitCallback(emojiInitCallback);
     }
 
     private void forwardShare(Intent intent) {
@@ -431,8 +419,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
                             Intent intent = new Intent(MainActivity.this, FavouritesActivity.class);
                             startActivityWithSlideInAnimation(intent);
                         } else if (drawerItemIdentifier == DRAWER_ITEM_SEARCH) {
-                            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                            startActivityWithSlideInAnimation(intent);
+                            startActivityWithSlideInAnimation(SearchActivity.getIntent(this));
                         } else if (drawerItemIdentifier == DRAWER_ITEM_ACCOUNT_SETTINGS) {
                             Intent intent = PreferencesActivity.newIntent(MainActivity.this, PreferencesActivity.ACCOUNT_PREFERENCES);
                             startActivityWithSlideInAnimation(intent);
@@ -471,12 +458,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
             drawer.addItem(debugItem);
         }
 
-        EmojiCompat.get().registerInitCallback(new EmojiCompat.InitCallback() {
-            @Override
-            public void onInitialized() {
-                updateProfiles();
-            }
-        });
+        EmojiCompat.get().registerInitCallback(emojiInitCallback);
     }
 
     private void setupTabs(boolean selectNotificationTab) {
@@ -526,6 +508,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
 
     private void changeAccount(long newSelectedId, @Nullable Intent forward) {
         cacheUpdater.stop();
+        SFragment.flushFilters();
         accountManager.setActiveAccount(newSelectedId);
 
         Intent intent = new Intent(this, MainActivity.class);

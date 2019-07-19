@@ -17,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import tech.bigfig.roma.BuildConfig
 import tech.bigfig.roma.ComposeActivity
@@ -347,7 +348,7 @@ class ChatViewModel @Inject constructor(
 
         uploadingProgress.set(0)
 
-        val fileBody = ProgressRequestBody(stream, getMediaSize(context.contentResolver, uri), MediaType.parse(mimeType),
+        val fileBody = ProgressRequestBody(stream, getMediaSize(context.contentResolver, uri), mimeType.toMediaTypeOrNull(),
                 ProgressRequestBody.UploadCallback { percentage ->
                     uploadingProgress.set(percentage)
                 })

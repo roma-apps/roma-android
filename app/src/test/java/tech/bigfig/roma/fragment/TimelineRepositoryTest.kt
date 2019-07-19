@@ -308,6 +308,7 @@ class TimelineRepositoryTest {
                 reblogged = true,
                 favourited = false,
                 attachments = ArrayList(),
+                pleroma = null,
                 mentions = arrayOf(),
                 application = null,
                 inReplyToAccountId = null,

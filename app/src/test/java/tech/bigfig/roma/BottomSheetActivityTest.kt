@@ -83,6 +83,7 @@ class BottomSheetActivityTest {
             "",
             Status.Visibility.PUBLIC,
             ArrayList(),
+            null,
             arrayOf(),
             null,
             pinned = false,

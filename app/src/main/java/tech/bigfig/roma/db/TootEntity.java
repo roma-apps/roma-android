@@ -23,9 +23,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
-import androidx.annotation.Nullable;
-
-import tech.bigfig.roma.entity.Status;
 
 /**
  * Toot model.

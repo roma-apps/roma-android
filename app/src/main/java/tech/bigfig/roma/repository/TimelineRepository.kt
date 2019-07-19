@@ -231,6 +231,7 @@ class TimelineRepositoryImpl(
                     pinned = false,
                     poll = poll,
                     card = null,
+                    pleroma = null,
                     repliesCount = status.repliesCount
             )
         }
@@ -258,6 +259,7 @@ class TimelineRepositoryImpl(
                     pinned = false,
                     poll = null,
                     card = null,
+                    pleroma = null,
                     repliesCount = 0
             )
         } else {
@@ -284,6 +286,7 @@ class TimelineRepositoryImpl(
                     pinned = false,
                     poll = poll,
                     card = null,
+                    pleroma = null,
                     repliesCount = status.repliesCount
             )
         }

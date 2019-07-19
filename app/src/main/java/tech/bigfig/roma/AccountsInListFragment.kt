@@ -17,6 +17,7 @@
 package tech.bigfig.roma
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,9 +40,7 @@ import kotlinx.android.synthetic.main.item_follow_request.*
 import tech.bigfig.roma.di.Injectable
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.entity.Account
-import tech.bigfig.roma.util.Either
-import tech.bigfig.roma.util.hide
-import tech.bigfig.roma.util.show
+import tech.bigfig.roma.util.*
 import java.io.IOException
 import javax.inject.Inject
 
@@ -71,6 +70,9 @@ class AccountsInListFragment : DialogFragment(), Injectable {
     private lateinit var listName: String
     private val adapter = Adapter()
     private val searchAdapter = SearchAdapter()
+
+    private val radius by lazy { resources.getDimensionPixelSize(R.dimen.avatar_radius_48dp) }
+    private val animateAvatar by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean("animateGifAvatars", false) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,12 +208,9 @@ class AccountsInListFragment : DialogFragment(), Injectable {
             }
 
             fun bind(account: Account) {
+                displayNameTextView.text = CustomEmojiHelper.emojifyString(account.name, account.emojis, displayNameTextView)
                 usernameTextView.text = account.username
-                displayNameTextView.text = account.displayName
-                Glide.with(this@AccountsInListFragment)
-                        .load(account.avatar)
-                        .placeholder(R.drawable.avatar_default)
-                        .into(avatar)
+                loadAvatar(account.avatar, avatar, radius, animateAvatar)
             }
 
             override fun onClick(v: View?) {
@@ -252,12 +251,10 @@ class AccountsInListFragment : DialogFragment(), Injectable {
             override val containerView = itemView
 
             fun bind(account: Account, inAList: Boolean) {
+                displayNameTextView.text = CustomEmojiHelper.emojifyString(account.name, account.emojis, displayNameTextView)
                 usernameTextView.text = account.username
-                displayNameTextView.text = account.displayName
-                Glide.with(this@AccountsInListFragment)
-                        .load(account.avatar)
-                        .placeholder(R.drawable.avatar_default)
-                        .into(avatar)
+                loadAvatar(account.avatar, avatar, radius, animateAvatar)
+
                 rejectButton.apply {
                     if (inAList) {
                         setImageResource(R.drawable.ic_reject_24dp)

@@ -16,17 +16,13 @@
 package tech.bigfig.roma;
 
 import android.app.Application;
-import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.emoji.text.EmojiCompat;
 import androidx.room.Room;
-import androidx.work.RxWorker;
 import androidx.work.WorkManager;
 
 import com.crashlytics.android.Crashlytics;

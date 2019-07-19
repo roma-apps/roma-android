@@ -30,7 +30,6 @@ import tech.bigfig.roma.db.TootDao;
 import tech.bigfig.roma.db.TootEntity;
 import tech.bigfig.roma.di.Injectable;
 import tech.bigfig.roma.util.SaveTootHelper;
-import tech.bigfig.roma.util.ThemeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

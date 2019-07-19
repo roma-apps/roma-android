@@ -38,6 +38,7 @@ interface TimelineCases {
     fun mute(id: String)
     fun block(id: String)
     fun delete(id: String, inReplyTo: String?)
+    fun delete(id: String)
     fun pin(status: Status, pin: Boolean)
     fun voteInPoll(status: Status, choices: List<Int>): Single<Poll>
 
@@ -99,6 +100,10 @@ class TimelineCasesImpl(
         })
         eventHub.dispatch(BlockEvent(id))
 
+    }
+
+    override fun delete(id: String) {
+        delete(id, null)
     }
 
     override fun delete(id: String, inReplyTo: String?) {

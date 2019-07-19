@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +53,6 @@ import java.util.ListIterator;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -306,20 +304,21 @@ public class TimelineFragment extends SFragment implements
                             if (!statuses.isEmpty()) {
                                 filterStatuses(statuses);
 
-
                                 if (!this.statuses.isEmpty() && topId != null) {
                                     // clear old cached statuses
-                                    Iterator<Either<Placeholder, Status>> iterator = statuses.iterator();
+                                    Iterator<Either<Placeholder, Status>> iterator = this.statuses.iterator();
                                     while (iterator.hasNext()) {
                                         Either<Placeholder, Status> item = iterator.next();
                                         if(item.isRight()) {
                                             Status status = item.asRight();
-                                            if (status.getId().length() < topId.length() || status.getId().compareTo(topId) <= 0) {
+                                            if (status.getId().length() < topId.length() || status.getId().compareTo(topId) < 0) {
+
                                                 iterator.remove();
                                             }
                                         } else {
                                             Placeholder placeholder = item.asLeft();
-                                            if (placeholder.getId().length() < topId.length() || placeholder.getId().compareTo(topId) <= 0) {
+                                            if (placeholder.getId().length() < topId.length() || placeholder.getId().compareTo(topId) < 0) {
+
                                                 iterator.remove();
                                             }
                                         }
@@ -339,25 +338,6 @@ public class TimelineFragment extends SFragment implements
                             this.progressBar.setVisibility(View.GONE);
                             this.swipeRefreshLayout.setRefreshing(false);
                         });
-    }
-
-    private void reloadFilters(boolean refresh) {
-        mastodonApi.getFilters().enqueue(new Callback<List<Filter>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Filter>> call, @NonNull Response<List<Filter>> response) {
-                List<Filter> filterList = response.body();
-                if (response.isSuccessful() && filterList != null) {
-                    applyFilters(filterList, refresh);
-                } else {
-                    Log.e(TAG, "Error getting filters from server");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Filter>> call, @NonNull Throwable t) {
-                Log.e(TAG, "Error getting filters from server", t);
-            }
-        });
     }
 
     private void setupTimelinePreferences() {
@@ -396,25 +376,14 @@ public class TimelineFragment extends SFragment implements
         }
     }
 
-    private static String filterToRegexToken(Filter filter) {
-        String phrase = Pattern.quote(filter.getPhrase());
-        return filter.getWholeWord() ? String.format("(^|\\W)%s($|\\W)", phrase) : phrase;
+    @Override
+    protected boolean filterIsRelevant(Filter filter) {
+        return filterContextMatchesKind(kind, filter.getContext());
     }
 
-    private void applyFilters(List<Filter> filters, boolean refresh) {
-        List<String> tokens = new ArrayList<>();
-        for (Filter filter : filters) {
-            if (filterContextMatchesKind(kind, filter.getContext())) {
-                tokens.add(filterToRegexToken(filter));
-            }
-        }
-        filterRemoveRegex = !tokens.isEmpty();
-        if (filterRemoveRegex) {
-            filterRemoveRegexMatcher = Pattern.compile(TextUtils.join("|", tokens), Pattern.CASE_INSENSITIVE).matcher("");
-        }
-        if (refresh) {
-            fullyRefresh();
-        }
+    @Override
+    protected void refreshAfterApplyingFilters() {
+        fullyRefresh();
     }
 
     private void setupSwipeRefreshLayout() {
@@ -528,7 +497,6 @@ public class TimelineFragment extends SFragment implements
                         if (event instanceof FavouriteEvent) {
                             FavouriteEvent favEvent = ((FavouriteEvent) event);
                             handleFavEvent(favEvent);
-                            Log.d("EVENT", "Count T: " + (favEvent.getStatusOld() != null ? favEvent.getStatusOld().getFavouritesCount() : 0) + " ->" + (favEvent.getStatusNew() != null ? favEvent.getStatusNew().getFavouritesCount() : 0));
                         } else if (event instanceof ReblogEvent) {
                             ReblogEvent reblogEvent = (ReblogEvent) event;
                             handleReblogEvent(reblogEvent);
@@ -1163,8 +1131,7 @@ public class TimelineFragment extends SFragment implements
             if (status != null
                     && ((status.getInReplyToId() != null && filterRemoveReplies)
                     || (status.getReblog() != null && filterRemoveReblogs)
-                    || (filterRemoveRegex && (filterRemoveRegexMatcher.reset(status.getActionableStatus().getContent()).find()
-                    || (!status.getSpoilerText().isEmpty() && filterRemoveRegexMatcher.reset(status.getActionableStatus().getSpoilerText()).find()))))) {
+                    || shouldFilterStatus(status))) {
                 it.remove();
             }
         }
@@ -1172,6 +1139,7 @@ public class TimelineFragment extends SFragment implements
 
     private void updateStatuses(List<Either<Placeholder, Status>> newStatuses, boolean fullFetch) {
         if (ListUtils.isEmpty(newStatuses)) {
+            updateAdapter();
             return;
         }
 
