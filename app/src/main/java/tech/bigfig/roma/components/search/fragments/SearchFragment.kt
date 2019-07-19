@@ -61,6 +61,7 @@ abstract class SearchFragment<T> : Fragment(),
     }
 
     private fun setupSwipeRefreshLayout() {
+        swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setOnRefreshListener(this)
         swipeRefreshLayout.setColorSchemeResources(R.color.roma_blue)
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(
@@ -70,6 +71,7 @@ abstract class SearchFragment<T> : Fragment(),
 
     private fun subscribeObservables() {
         data.observe(viewLifecycleOwner, Observer {
+            if (!swipeRefreshLayout.isEnabled) swipeRefreshLayout.isEnabled = true
             adapter.submitList(it)
         })
 
