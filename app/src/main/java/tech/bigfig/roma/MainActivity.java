@@ -26,6 +26,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -42,6 +43,11 @@ import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import org.jetbrains.annotations.NotNull;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.bigfig.roma.components.search.SearchActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -74,6 +80,7 @@ import tech.bigfig.roma.appstore.ProfileEditedEvent;
 import tech.bigfig.roma.components.conversation.ConversationsRepository;
 import tech.bigfig.roma.db.AccountEntity;
 import tech.bigfig.roma.entity.Account;
+import tech.bigfig.roma.entity.Instance;
 import tech.bigfig.roma.fragment.SFragment;
 import tech.bigfig.roma.interfaces.ActionButtonActivity;
 import tech.bigfig.roma.interfaces.ReselectableFragment;
@@ -131,10 +138,13 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
             }
         }
     };
+    private FirebaseAnalytics analyticsInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        analyticsInstance = FirebaseAnalytics.getInstance(getApplicationContext());
 
         if (accountManager.getActiveAccount() == null) {
             // will be redirected to LoginActivity by BaseActivity
@@ -143,6 +153,36 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
 
         Intent intent = getIntent();
         boolean showNotificationTab = false;
+
+        // Log version details to aid bug diagnosis
+        mastodonApi.getInstance().enqueue(new Callback<Instance>() {
+
+            @Override
+            public void onResponse(@NotNull Call<Instance> call, @NotNull Response<Instance> response) {
+                if (response.body() != null) {
+                    String fullVersionString = response.body().getVersion();
+                    String versionString;
+                    if (fullVersionString.length() > 36) {
+                        versionString = fullVersionString.substring(0, 35);
+                    }
+                    else {
+                        versionString = fullVersionString;
+                    }
+                    analyticsInstance.setUserProperty("instance_version", versionString);
+                    analyticsInstance.setUserProperty("instance_uri", response.body().getUri());
+                    Crashlytics.log(Log.INFO, "instance_version", versionString);
+                    Log.v("STG", "Instance Version: " + versionString);
+                }
+                else {
+                    Crashlytics.log(Log.WARN, "instance_version_error", "Server returned 'null'");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Instance> call, @NotNull Throwable t) {
+                Crashlytics.log(Log.ERROR, "instance_version_error", "'/version' call to server failed");
+            }
+        });
 
         if (intent != null) {
             long accountId = intent.getLongExtra(NotificationHelper.ACCOUNT_ID, -1);
