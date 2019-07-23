@@ -217,7 +217,8 @@ class TimelineDAOTest {
                 application = "application$accountId",
                 reblogServerId = if (reblog) (statusId * 100).toString() else null,
                 reblogAccountId = reblogAuthor?.serverId,
-                poll = null
+                poll = null,
+                repliesCount = 0
         )
         return Triple(status, author, reblogAuthor)
     }
@@ -245,7 +246,8 @@ class TimelineDAOTest {
                 application = null,
                 reblogServerId = null,
                 reblogAccountId = null,
-                poll = null
+                poll = null,
+                repliesCount = 0
         )
     }
 

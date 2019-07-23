@@ -8,3 +8,4 @@
 .externalNativeBuild
 app/release
 google-services.json
+strings-test.xml

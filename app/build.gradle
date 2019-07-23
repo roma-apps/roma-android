@@ -176,5 +176,11 @@ dependencies {
     //WorkManager
     implementation "androidx.work:work-runtime:2.0.1"
     implementation "androidx.work:work-rxjava2:2.0.1"
+
+    //Functional tests
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test:core:1.2.1-alpha02'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2-alpha02'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
 }
 apply plugin: 'com.google.gms.google-services'
