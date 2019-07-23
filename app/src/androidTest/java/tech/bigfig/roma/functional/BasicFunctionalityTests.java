@@ -39,9 +39,10 @@ public class BasicFunctionalityTests {
     private static final int DEFAULT_TEST_TIMEOUT = 10000;
 
     private UiDevice mDevice;
+    private boolean stayLoggedIn = false; // Arm-based emulators use inbuilt, inaccessible WebView
 
     @Before
-    public void startMainActivityFromHomeScreen() throws UiObjectNotFoundException {
+    public void startMainActivityFromHomeScreen() throws UiObjectNotFoundException, InterruptedException {
 
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
@@ -66,12 +67,12 @@ public class BasicFunctionalityTests {
         mDevice.wait(Until.hasObject(By.pkg(TEST_PACKAGE).depth(0)), LAUNCH_TIMEOUT);
 
         // Login
-        login();
+        if (!stayLoggedIn) login();
     }
 
     @After
     public void resetState() throws UiObjectNotFoundException, InterruptedException {
-        logoutFromMainActivity();
+        if (!stayLoggedIn) logoutFromMainActivity();
     }
 
     @Test
@@ -108,6 +109,7 @@ public class BasicFunctionalityTests {
         notificationsTabSelector.click();
 
         // Switch to home tab
+        @SuppressWarnings("deprecation")
         UiObject homeTabSelector = mDevice.findObject(new UiSelector()
                 .instance(0)
                 .className(ActionBar.Tab.class));
@@ -130,68 +132,44 @@ public class BasicFunctionalityTests {
     }
 
     @Test
-    public void showEditProfileTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showEditProfileTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(1)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_edit_profile);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showFavoritesTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showFavoritesTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(2)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_view_favourites);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showListsTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showListsTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(3)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_lists);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showSearchTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showSearchTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(4)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_search);
 
         // Dismiss the keyboard
         mDevice.pressBack();
@@ -201,71 +179,60 @@ public class BasicFunctionalityTests {
     }
 
     @Test
-    public void showDraftsTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showDraftsTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(5)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_access_saved_toot);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showAccountPreferencesTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showAccountPreferencesTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(6)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_view_account_preferences);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showPreferencesTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showPreferencesTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(7)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.action_view_preferences);
 
         // Go back to main
         mDevice.pressBack();
     }
 
     @Test
-    public void showAboutTest() throws UiObjectNotFoundException, InterruptedException {
+    public void showAboutTest() {
 
         toggleDrawer();
-
-        UiObject logoutButton = mDevice.findObject(new UiSelector()
-                .instance(8)
-                .className(ViewGroup.class));
-        logoutButton.waitForExists(SHORT_WAIT);
-        logoutButton.click();
-
-        Thread.sleep(SHORT_WAIT);
+        flingDrawerRecyclerViewDown();
+        clickDrawerActionWithText(R.string.about_title_activity);
 
         // Go back to main
         mDevice.pressBack();
+    }
+
+    private void clickDrawerActionWithText(int actionTextInt) {
+        UiObject2 actionButton = mDevice.wait(
+                Until.findObject(By.text(getApplicationContext().getString(actionTextInt))), SHORT_WAIT);
+        actionButton.click();
+    }
+
+    private void flingDrawerRecyclerViewDown() {
+
+        UiObject2 drawerRecyclerView = mDevice.wait(Until.findObject(By.res(TEST_PACKAGE, "material_drawer_recycler_view")),
+                DEFAULT_TEST_TIMEOUT);
+        drawerRecyclerView.fling(Direction.DOWN);
     }
 
     @Test
@@ -323,7 +290,7 @@ public class BasicFunctionalityTests {
         assertThat(domainEditText, notNullValue());
     }
 
-    private void login() throws UiObjectNotFoundException {
+    private void login() throws UiObjectNotFoundException, InterruptedException {
 
         // Click on instance entry EditText
         UiObject2 domainEditText = mDevice.wait(Until.findObject(By.res(TEST_PACKAGE, "domainEditText")),
@@ -336,10 +303,10 @@ public class BasicFunctionalityTests {
         // Click on instance entry EditText
         mDevice.findObject(By.res(TEST_PACKAGE, "loginButton")).click();
 
+        Thread.sleep(2000);
+
         // Open with Chrome dialog
-        UiObject2 openWithBrowser = mDevice
-                .wait(Until.findObject(By.res("android", "button_once")),
-                        SHORT_WAIT);
+        UiObject2 openWithBrowser = mDevice.findObject(By.res("android", "button_once"));
         openWithBrowser.click();
 
         mDevice.wait(Until.findObject(By.clazz(WebView.class)), SHORT_WAIT);
