@@ -40,28 +40,33 @@ class ConversationsRepository @Inject constructor(val mastodonApi: MastodonApi, 
             val conversations = HashMap<String, Status>()
             val conversationsRecentFirst = HashMap<Date, Status>()
             var lastFetchedId = ""
-
-            for (status in body?.reversed()!!) {
-                if (lastFetchedId.isBlank()) lastFetchedId = status.id
-                status.pleroma?.conversation_id?.let { id -> conversations[id] = status }
-            }
-
-            for (entry in conversations.entries) {
-                entry.let { entry.value.createdAt.let { it1 -> conversationsRecentFirst.put(it1, entry.value) } }
-            }
-
             val conversationList = ArrayList<Conversation>()
 
-            for (entry in conversationsRecentFirst.toSortedMap(reverseOrder())) {
+            body?.let {
+                for (status in body.reversed()) {
+                    if (lastFetchedId.isBlank()) lastFetchedId = status.id
+                    status.pleroma?.conversation_id?.let { id -> conversations[id] = status }
+                }
 
-                val convoToAdd = Conversation(
-                        id = entry.value.pleroma?.conversation_id!!,
-                        accounts = getAccountObjects(mastodonApi, entry.value.mentions),
-                        lastStatus = entry.value,
-                        unread = false
-                )
+                for (entry in conversations.entries) {
+                    entry.let { entry.value.createdAt.let { it1 -> conversationsRecentFirst.put(it1, entry.value) } }
+                }
 
-                conversationList.add(convoToAdd)
+                for (entry in conversationsRecentFirst.toSortedMap(reverseOrder())) {
+
+                    entry.value.pleroma?.conversation_id.let {
+
+                        entry.value.pleroma?.conversation_id?.let { it1 ->
+
+                            conversationList.add(Conversation(
+                                    id = it1,
+                                    accounts = getAccountObjects(mastodonApi, entry.value.mentions),
+                                    lastStatus = entry.value,
+                                    unread = false)
+                            )
+                        }
+                    }
+                }
             }
 
             return ConversationHolder(lastFetchedId, conversationList)
