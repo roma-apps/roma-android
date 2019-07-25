@@ -23,6 +23,10 @@ import tech.bigfig.roma.di.Injectable
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.interfaces.LinkListener
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import tech.bigfig.roma.util.*
 import java.util.*
 import javax.inject.Inject
@@ -138,7 +142,9 @@ abstract class SearchFragment<T> : Fragment(),
 
         // Dismissed here because the RecyclerView bottomProgressBar is shown as soon as the retry begins.
         Timer("DelayDismiss", false).schedule(200) {
-            swipeRefreshLayout.isRefreshing = false
+            MainScope().launch {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
 
         viewModel.retryAllSearches()
