@@ -141,12 +141,10 @@ abstract class SearchFragment<T> : Fragment(),
     override fun onRefresh() {
 
         // Dismissed here because the RecyclerView bottomProgressBar is shown as soon as the retry begins.
-        Timer("DelayDismiss", false).schedule(200) {
-            MainScope().launch {
-                swipeRefreshLayout.isRefreshing = false
-            }
-        }
+        swipeRefreshLayout.post {
 
+            swipeRefreshLayout.isRefreshing = false
+        }
         viewModel.retryAllSearches()
     }
 }
