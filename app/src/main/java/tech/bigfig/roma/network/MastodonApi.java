@@ -344,7 +344,7 @@ public interface MastodonApi {
     Call<List<Emoji>> getCustomEmojis();
 
     @GET("api/v1/instance")
-    Call<Instance> getInstance();
+    Single<Instance> getInstance();
 
     @GET("/api/v1/timelines/direct")
     Call<List<Status>> getTimelineDirect(

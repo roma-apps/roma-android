@@ -27,6 +27,7 @@ import tech.bigfig.roma.EditProfileActivity.Companion.HEADER_WIDTH
 import tech.bigfig.roma.appstore.EventHub
 import tech.bigfig.roma.appstore.ProfileEditedEvent
 import tech.bigfig.roma.entity.Account
+import tech.bigfig.roma.entity.Instance
 import tech.bigfig.roma.entity.StringField
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.util.*
@@ -64,6 +65,7 @@ class EditProfileViewModel  @Inject constructor(
     val avatarData = MutableLiveData<Resource<Bitmap>>()
     val headerData = MutableLiveData<Resource<Bitmap>>()
     val saveData = MutableLiveData<Resource<Nothing>>()
+    val instanceData = MutableLiveData<Resource<Instance>>()
 
     private var oldProfileData: Account? = null
 
@@ -265,6 +267,21 @@ class EditProfileViewModel  @Inject constructor(
 
     override fun onCleared() {
         disposeables.dispose()
+    }
+
+    fun obtainInstance() {
+        if(instanceData.value == null || instanceData.value is Error) {
+            instanceData.postValue(Loading())
+
+            mastodonApi.instance.subscribe(
+                            {instance ->
+                                instanceData.postValue(Success(instance))
+                            },
+                            {
+                                instanceData.postValue(Error())
+                            })
+                    .addTo(disposeables)
+        }
     }
 
 
