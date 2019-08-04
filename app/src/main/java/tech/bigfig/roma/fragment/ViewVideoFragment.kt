@@ -56,7 +56,7 @@ class ViewVideoFragment : ViewMediaFragment() {
         }
 
         if (isVisibleToUser) {
-            if (mediaActivity.isToolbarVisible()) {
+            if (mediaActivity.isToolbarVisible) {
                 handler.postDelayed(hideToolbar, TOOLBAR_HIDE_DELAY_MS)
             }
             videoPlayer.start()
@@ -68,7 +68,7 @@ class ViewVideoFragment : ViewMediaFragment() {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun setupMediaView(url: String) {
+    override fun setupMediaView(url: String, previewUrl: String?) {
         descriptionView = mediaDescription
         val videoView = videoPlayer
         videoView.transitionName = url
@@ -114,7 +114,7 @@ class ViewVideoFragment : ViewMediaFragment() {
             throw IllegalArgumentException("attachment has to be set")
         }
         url = attachment.url
-        finalizeViewSetup(url, attachment.description)
+        finalizeViewSetup(url, attachment.previewUrl, attachment.description)
     }
 
     override fun onToolbarVisibilityChange(visible: Boolean) {
@@ -138,5 +138,8 @@ class ViewVideoFragment : ViewMediaFragment() {
         } else {
             handler.removeCallbacks(hideToolbar)
         }
+    }
+
+    override fun onTransitionEnd() {
     }
 }
