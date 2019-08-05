@@ -104,7 +104,7 @@ class SpanUtilsTest {
             val matching = if (type == null) {
                 ArrayList<T>()
             } else {
-                spans.filter { it.start >= start && it.end <= end && type.isAssignableFrom(it.span?.javaClass) }
+                spans.filter { it.start >= start && it.end <= end && type.isAssignableFrom(it.span?.javaClass!!) }
                         .map { it.span }
                         .let { ArrayList(it) }
             }
