@@ -183,7 +183,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service android:name=".service.push.RomaFirebaseMessagingService">
+        <!-- FirebaseMessagingService performs security checks at runtime, no need for explicit permissions despite
+        exported="true" -->
+        <service android:name=".service.push.RomaFirebaseMessagingService" tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
