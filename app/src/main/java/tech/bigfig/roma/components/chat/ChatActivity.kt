@@ -33,9 +33,8 @@ import tech.bigfig.roma.components.report.ReportActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -52,10 +51,11 @@ import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
-class ChatActivity : BaseActivity(), HasSupportFragmentInjector, ClickHandler, AdapterListener {
+class ChatActivity : BaseActivity(), HasAndroidInjector, ClickHandler, AdapterListener {
     private var downsizeDisposable: Disposable? = null
+
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -550,5 +550,5 @@ class ChatActivity : BaseActivity(), HasSupportFragmentInjector, ClickHandler, A
         }
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
+    override fun androidInjector() = androidInjector
 }
