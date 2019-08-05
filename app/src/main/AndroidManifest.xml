@@ -18,7 +18,9 @@
         android:icon="@mipmap/launcher_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/RomaTheme">
+        android:theme="@style/RomaTheme"
+        android:usesCleartextTraffic="false"
+        tools:targetApi="m"> <!-- Only here to suppress lint warning for 'usesCleartextTraffic' -->
         <activity android:name="tech.bigfig.roma.components.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".PrivacyPolicyActivity" />
@@ -181,7 +183,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service android:name=".service.push.RomaFirebaseMessagingService">
+        <!-- FirebaseMessagingService performs security checks at runtime, no need for explicit permissions despite
+        exported="true" -->
+        <service android:name=".service.push.RomaFirebaseMessagingService" tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
