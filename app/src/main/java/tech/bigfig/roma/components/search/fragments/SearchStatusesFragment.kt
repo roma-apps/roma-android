@@ -277,7 +277,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
                 R.id.status_copy_link -> {
                     val clipboard = activity!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText(null, statusUrl)
-                    clipboard.primaryClip = clip
+                    clipboard.setPrimaryClip(clip)
                     return@setOnMenuItemClickListener true
                 }
                 R.id.status_open_as -> {
