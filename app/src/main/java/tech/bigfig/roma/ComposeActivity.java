@@ -324,6 +324,7 @@ public final class ComposeActivity
                             activeAccount.getFullName()));
 
             mastodonApi.getInstance()
+                    .observeOn(AndroidSchedulers.mainThread())
                     .as(autoDisposable(from(this, Lifecycle.Event.ON_DESTROY)))
                     .subscribe(this::onFetchInstanceSuccess, this::onFetchInstanceFailure);
 
