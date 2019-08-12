@@ -5,11 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 28
     defaultConfig {
         applicationId "tech.bigfig.roma"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 98
         versionName "8.1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
