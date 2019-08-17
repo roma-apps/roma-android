@@ -515,7 +515,7 @@ class ChatActivity : BaseActivity(), HasAndroidInjector, ClickHandler, AdapterLi
                     setOnMenuItemClickListener {
                         when {
                             it.itemId == R.id.actionStatusReport -> {
-                                ContextCompat.startActivity(this@ChatActivity, ReportActivity.getIntent(this@ChatActivity, status.account.id, status.account.username, status.id, status.content),
+                                ContextCompat.startActivity(this@ChatActivity, ReportActivity.getIntent(this@ChatActivity, status.account.id, status.account.username, status.id),
                                         ActivityOptionsCompat.makeCustomAnimation(this@ChatActivity, R.anim.slide_from_right, R.anim.slide_to_left).toBundle())
 
                                 true
