@@ -28,7 +28,6 @@ import tech.bigfig.roma.entity.Instance
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.util.ThemeUtils
 import okhttp3.Request
-import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
@@ -258,6 +257,7 @@ class ComposeActivityTest {
                         emptyList()
                 ),
                 maximumTootCharacters,
+                null,
                 null
         )
     }
