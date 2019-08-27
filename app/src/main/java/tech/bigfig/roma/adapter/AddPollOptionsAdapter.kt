@@ -30,7 +30,7 @@ import tech.bigfig.roma.util.visible
 class AddPollOptionsAdapter(
         private var options: MutableList<String>,
         private val maxOptionLength: Int,
-        private val onOptionRemoved: () -> Unit,
+        private val onOptionRemoved: (Boolean) -> Unit,
         private val onOptionChanged: (Boolean) -> Unit
 ): RecyclerView.Adapter<ViewHolder>() {
 
@@ -71,7 +71,7 @@ class AddPollOptionsAdapter(
             holder.editText.clearFocus()
             options.removeAt(holder.adapterPosition)
             notifyItemRemoved(holder.adapterPosition)
-            onOptionRemoved()
+            onOptionRemoved(validateInput())
         }
     }
 

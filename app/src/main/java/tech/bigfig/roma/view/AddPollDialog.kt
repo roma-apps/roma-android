@@ -46,14 +46,15 @@ fun showAddPollDialog(
             .create()
 
     val adapter = AddPollOptionsAdapter(
-      options = poll?.options?.toMutableList() ?: mutableListOf("", ""),
-      maxOptionLength = maxOptionLength ?: DEFAULT_MAX_OPTION_LENGTH,
-      onOptionRemoved = {
-        view.addChoiceButton.isEnabled = true
-      },
-      onOptionChanged = { valid ->
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = valid
-      }
+            options = poll?.options?.toMutableList() ?: mutableListOf("", ""),
+            maxOptionLength = maxOptionLength ?: DEFAULT_MAX_OPTION_LENGTH,
+            onOptionRemoved = { valid ->
+                view.addChoiceButton.isEnabled = true
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = valid
+            },
+            onOptionChanged = { valid ->
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = valid
+            }
     )
 
     view.pollChoices.adapter = adapter
