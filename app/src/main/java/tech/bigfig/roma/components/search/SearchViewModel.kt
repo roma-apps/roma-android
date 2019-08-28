@@ -13,12 +13,14 @@ import tech.bigfig.roma.entity.Account
 import tech.bigfig.roma.entity.HashTag
 import tech.bigfig.roma.entity.Poll
 import tech.bigfig.roma.entity.Status
+import tech.bigfig.roma.entity.DeletedStatus
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.network.TimelineCases
 import tech.bigfig.roma.util.Listing
 import tech.bigfig.roma.util.NetworkState
 import tech.bigfig.roma.util.ViewDataUtils
 import tech.bigfig.roma.viewdata.StatusViewData
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -89,6 +91,7 @@ class SearchViewModel @Inject constructor(
 
     fun removeItem(status: Pair<Status, StatusViewData.Concrete>) {
         timelineCases.delete(status.first.id)
+                .subscribe()
         if (loadedStatuses.remove(status))
             repoResultStatus.value?.refresh?.invoke()
     }
@@ -196,8 +199,8 @@ class SearchViewModel @Inject constructor(
         timelineCases.block(accountId)
     }
 
-    fun deleteStatus(id: String) {
-        timelineCases.delete(id)
+    fun deleteStatus(id: String): Single<DeletedStatus> {
+        return timelineCases.delete(id)
     }
 
     fun retryAllSearches() {

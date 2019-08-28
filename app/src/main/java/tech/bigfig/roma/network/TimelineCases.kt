@@ -16,16 +16,16 @@
 package tech.bigfig.roma.network
 
 import io.reactivex.Single
-import tech.bigfig.roma.entity.Relationship
-import tech.bigfig.roma.entity.Status
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tech.bigfig.roma.appstore.*
+import tech.bigfig.roma.entity.DeletedStatus
 import tech.bigfig.roma.entity.Poll
+import tech.bigfig.roma.entity.Relationship
+import tech.bigfig.roma.entity.Status
 import java.lang.IllegalStateException
 
 /**
@@ -37,8 +37,7 @@ interface TimelineCases {
     fun favourite(status: Status, favourite: Boolean): Single<Status>
     fun mute(id: String)
     fun block(id: String)
-    fun delete(id: String, inReplyTo: String?)
-    fun delete(id: String)
+    fun delete(id: String): Single<DeletedStatus>
     fun pin(status: Status, pin: Boolean)
     fun voteInPoll(status: Status, choices: List<Int>): Single<Poll>
 
@@ -102,18 +101,11 @@ class TimelineCasesImpl(
 
     }
 
-    override fun delete(id: String) {
-        delete(id, null)
-    }
-
-    override fun delete(id: String, inReplyTo: String?) {
-        val call = mastodonApi.deleteStatus(id)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {}
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {}
-        })
-        eventHub.dispatch(StatusDeletedEvent(id, inReplyTo))
+    override fun delete(id: String): Single<DeletedStatus> {
+        return mastodonApi.deleteStatus(id)
+                .doAfterSuccess {
+                    eventHub.dispatch(StatusDeletedEvent(id, null))
+                }
     }
 
     override fun pin(status: Status, pin: Boolean) {
