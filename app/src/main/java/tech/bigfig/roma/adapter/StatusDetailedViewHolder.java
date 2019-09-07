@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Card;
 import tech.bigfig.roma.entity.Status;
@@ -145,7 +146,7 @@ class StatusDetailedViewHolder extends StatusBaseViewHolder {
                 ClipData clip = ClipData.newPlainText("toot", textView.getText());
                 clipboard.setPrimaryClip(clip);
 
-                Toast.makeText(view.getContext(), R.string.copy_to_clipboard_success, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(view.getContext(), R.string.copy_to_clipboard_success, Toast.LENGTH_SHORT).show();
 
                 return true;
             };

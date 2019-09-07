@@ -55,6 +55,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 import kotlinx.android.synthetic.main.activity_view_media.*
+import me.drakeet.support.toast.ToastCompat
 
 import java.io.File
 import java.io.FileNotFoundException
@@ -206,7 +207,7 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
     private fun downloadMedia() {
         val url = attachments!![viewPager.currentItem].attachment.url
         val filename = Uri.parse(url).lastPathSegment
-        Toast.makeText(applicationContext, resources.getString(R.string.download_image, filename), Toast.LENGTH_SHORT).show()
+        ToastCompat.makeText(applicationContext, resources.getString(R.string.download_image, filename), Toast.LENGTH_SHORT).show()
 
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(url))

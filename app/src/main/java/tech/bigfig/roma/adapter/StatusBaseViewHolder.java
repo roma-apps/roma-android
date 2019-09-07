@@ -33,6 +33,7 @@ import java.util.Objects;
 import at.connyduck.sparkbutton.SparkButton;
 import at.connyduck.sparkbutton.SparkEventListener;
 import kotlin.collections.CollectionsKt;
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.R;
 import tech.bigfig.roma.entity.Attachment;
 import tech.bigfig.roma.entity.Attachment.Focus;
@@ -534,7 +535,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         });
         view.setOnLongClickListener(v -> {
             CharSequence description = getAttachmentDescription(view.getContext(), attachment);
-            Toast.makeText(view.getContext(), description, Toast.LENGTH_LONG).show();
+            ToastCompat.makeText(view.getContext(), description, Toast.LENGTH_LONG).show();
             return true;
         });
     }
