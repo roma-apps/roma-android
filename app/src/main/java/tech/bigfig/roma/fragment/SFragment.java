@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.BaseActivity;
 import tech.bigfig.roma.BottomSheetActivity;
 import tech.bigfig.roma.ComposeActivity;
@@ -413,7 +414,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
     }
 
     private void downloadAllMedia(Status status) {
-        Toast.makeText(getContext(), R.string.downloading_media, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(getContext(), R.string.downloading_media, Toast.LENGTH_SHORT).show();
         for (Attachment attachment : status.getAttachments()) {
             String url = attachment.getUrl();
             Uri uri = Uri.parse(url);
@@ -432,7 +433,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadAllMedia(status);
             } else {
-                Toast.makeText(getContext(), R.string.error_media_download_permission, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(getContext(), R.string.error_media_download_permission, Toast.LENGTH_SHORT).show();
             }
         });
     }

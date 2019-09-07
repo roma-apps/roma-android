@@ -50,6 +50,7 @@ import tech.bigfig.roma.util.NetworkState
 import tech.bigfig.roma.viewdata.AttachmentViewData
 import tech.bigfig.roma.viewdata.StatusViewData
 import kotlinx.android.synthetic.main.fragment_search.*
+import me.drakeet.support.toast.ToastCompat
 import tech.bigfig.roma.*
 import java.util.*
 
@@ -344,7 +345,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
     }
 
     private fun downloadAllMedia(status: Status) {
-        Toast.makeText(context, R.string.downloading_media, Toast.LENGTH_SHORT).show()
+        ToastCompat.makeText(context, R.string.downloading_media, Toast.LENGTH_SHORT).show()
         for ((_, url) in status.attachments) {
             val uri = Uri.parse(url)
             val filename = uri.lastPathSegment
@@ -362,7 +363,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadAllMedia(status)
             } else {
-                Toast.makeText(context, R.string.error_media_download_permission, Toast.LENGTH_SHORT).show()
+                ToastCompat.makeText(context, R.string.error_media_download_permission, Toast.LENGTH_SHORT).show()
             }
         }
     }

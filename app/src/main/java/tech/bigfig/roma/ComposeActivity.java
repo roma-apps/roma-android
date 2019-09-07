@@ -69,6 +69,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.adapter.EmojiAdapter;
 import tech.bigfig.roma.adapter.ComposeAutoCompleteAdapter;
 import tech.bigfig.roma.adapter.OnEmojiSelectedListener;
@@ -896,7 +897,7 @@ public final class ComposeActivity
         if (emojiView.getAdapter() != null) {
             if (emojiView.getAdapter().getItemCount() == 0) {
                 String errorMessage = getString(R.string.error_no_custom_emojis, accountManager.getActiveAccount().getDomain());
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 if (emojiBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || emojiBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     emojiBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -1440,7 +1441,7 @@ public final class ComposeActivity
     }
 
     private void showFailedCaptionMessage() {
-        Toast.makeText(this, R.string.error_failed_set_caption, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(this, R.string.error_failed_set_caption, Toast.LENGTH_SHORT).show();
     }
 
     private void removeMediaFromQueue(QueuedMedia item) {

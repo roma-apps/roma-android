@@ -39,6 +39,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import me.drakeet.support.toast.ToastCompat
 import tech.bigfig.roma.*
 import tech.bigfig.roma.components.chat.adapter.ChatAdapter
 import tech.bigfig.roma.databinding.ActivityChatBinding
@@ -208,7 +209,7 @@ class ChatActivity : BaseActivity(), HasAndroidInjector, ClickHandler, AdapterLi
     }
 
     private fun showToast(errorId: Int) {
-        Toast.makeText(this, errorId, Toast.LENGTH_LONG).show()
+        ToastCompat.makeText(this, errorId, Toast.LENGTH_LONG).show()
     }
 
     override fun onSendClick() {
