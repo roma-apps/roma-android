@@ -323,22 +323,10 @@ public final class ComposeActivity
                     getString(R.string.compose_active_account_description,
                             activeAccount.getFullName()));
 
-            mastodonApi.getInstance().enqueue(new Callback<Instance>() {
-                @Override
-                public void onResponse(@NonNull Call<Instance> call, @NonNull Response<Instance> response) {
-                    if (response.isSuccessful() && response.body().getMaxTootChars() != null) {
-                        maximumTootCharacters = response.body().getMaxTootChars();
-                        updateVisibleCharactersLeft();
-                        cacheInstanceMetadata(activeAccount);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Instance> call, @NonNull Throwable t) {
-                    Log.w(TAG, "error loading instance data", t);
-                    loadCachedInstanceMetadata(activeAccount);
-                }
-            });
+            mastodonApi.getInstance()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .as(autoDisposable(from(this, Lifecycle.Event.ON_DESTROY)))
+                    .subscribe(this::onFetchInstanceSuccess, this::onFetchInstanceFailure);
 
             mastodonApi.getCustomEmojis().enqueue(new Callback<List<Emoji>>() {
                 @Override
@@ -1944,6 +1932,19 @@ public final class ComposeActivity
     static boolean canHandleMimeType(@Nullable String mimeType) {
         return (mimeType != null &&
                 (mimeType.startsWith("image/") || mimeType.startsWith("video/") || mimeType.equals("text/plain")));
+    }
+
+    private void onFetchInstanceSuccess(Instance instance) {
+        if (instance != null && instance.getMaxTootChars() != null) {
+            maximumTootCharacters = instance.getMaxTootChars();
+            updateVisibleCharactersLeft();
+            cacheInstanceMetadata(accountManager.getActiveAccount());
+        }
+    }
+
+    private void onFetchInstanceFailure(Throwable throwable) {
+        Log.w(TAG, "error loading instance data", throwable);
+        loadCachedInstanceMetadata(accountManager.getActiveAccount());
     }
 
     public static final class QueuedMedia {

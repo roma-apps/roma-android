@@ -75,7 +75,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
     private ImageView avatarInset;
 
     public ImageView avatar;
-    public TextView timestampInfo;
+    TextView timestampInfo;
     public TextView content;
     public TextView contentWarningDescription;
 
@@ -98,6 +98,8 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
     protected int avatarRadius48dp;
     private int avatarRadius36dp;
     private int avatarRadius24dp;
+
+    private final int mediaPreviewUnloadedId;
 
     protected StatusBaseViewHolder(View itemView,
                                    boolean useAbsoluteTime) {
@@ -156,6 +158,9 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         this.avatarRadius48dp = itemView.getContext().getResources().getDimensionPixelSize(R.dimen.avatar_radius_48dp);
         this.avatarRadius36dp = itemView.getContext().getResources().getDimensionPixelSize(R.dimen.avatar_radius_36dp);
         this.avatarRadius24dp = itemView.getContext().getResources().getDimensionPixelSize(R.dimen.avatar_radius_24dp);
+
+        mediaPreviewUnloadedId = ThemeUtils.getDrawableId(itemView.getContext(),
+                R.attr.media_preview_unloaded_drawable, android.R.color.black);
     }
 
     protected abstract int getMediaPreviewHeight(Context context);
@@ -234,10 +239,10 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
                            boolean animateAvatar) {
 
         int avatarRadius;
-        if(TextUtils.isEmpty(rebloggedUrl)) {
+        if (TextUtils.isEmpty(rebloggedUrl)) {
             avatar.setPaddingRelative(0, 0, 0, 0);
 
-            if(showBotOverlay && isBot) {
+            if (showBotOverlay && isBot) {
                 avatarInset.setVisibility(View.VISIBLE);
                 avatarInset.setBackgroundColor(0x50ffffff);
                 Glide.with(avatarInset)
@@ -377,60 +382,64 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         favouriteButton.setChecked(favourited);
     }
 
+    private void loadImage(MediaPreviewImageView imageView, String previewUrl, String description,
+                           MetaData meta) {
+        if (TextUtils.isEmpty(previewUrl)) {
+            Glide.with(imageView)
+                    .load(mediaPreviewUnloadedId)
+                    .centerInside()
+                    .into(imageView);
+        } else {
+            Focus focus = meta != null ? meta.getFocus() : null;
+
+            if (focus != null) { // If there is a focal point for this attachment:
+                imageView.setFocalPoint(focus);
+
+                Glide.with(imageView)
+                        .load(previewUrl)
+                        .placeholder(mediaPreviewUnloadedId)
+                        .centerInside()
+                        .addListener(imageView)
+                        .into(imageView);
+            } else {
+                imageView.removeFocalPoint();
+
+                Glide.with(imageView)
+                        .load(previewUrl)
+                        .placeholder(mediaPreviewUnloadedId)
+                        .centerInside()
+                        .into(imageView);
+            }
+        }
+    }
+
     protected void setMediaPreviews(final List<Attachment> attachments, boolean sensitive,
                                     final StatusActionListener listener, boolean showingContent) {
-
         Context context = itemView.getContext();
-
-        int mediaPreviewUnloadedId =
-                ThemeUtils.getDrawableId(itemView.getContext(), R.attr.media_preview_unloaded_drawable,
-                        android.R.color.black);
-
         final int n = Math.min(attachments.size(), Status.MAX_MEDIA_ATTACHMENTS);
 
         for (int i = 0; i < n; i++) {
             String previewUrl = attachments.get(i).getPreviewUrl();
             String description = attachments.get(i).getDescription();
+            MediaPreviewImageView imageView = mediaPreviews[i];
+
+            imageView.setVisibility(View.VISIBLE);
 
             if (TextUtils.isEmpty(description)) {
-                mediaPreviews[i].setContentDescription(context.getString(R.string.action_view_media));
+                imageView.setContentDescription(imageView.getContext()
+                        .getString(R.string.action_view_media));
             } else {
-                mediaPreviews[i].setContentDescription(description);
+                imageView.setContentDescription(description);
             }
 
-            mediaPreviews[i].setVisibility(View.VISIBLE);
-
-            if (TextUtils.isEmpty(previewUrl)) {
-                Glide.with(mediaPreviews[i])
-                        .load(mediaPreviewUnloadedId)
-                        .centerInside()
-                        .into(mediaPreviews[i]);
+            if (!sensitive || showingContent) {
+                loadImage(imageView, previewUrl, description, attachments.get(i).getMeta());
             } else {
-                MetaData meta = attachments.get(i).getMeta();
-                Focus focus = meta != null ? meta.getFocus() : null;
-
-                if (focus != null) { // If there is a focal point for this attachment:
-                    mediaPreviews[i].setFocalPoint(focus);
-
-                    Glide.with(mediaPreviews[i])
-                            .load(previewUrl)
-                            .placeholder(mediaPreviewUnloadedId)
-                            .centerInside()
-                            .addListener(mediaPreviews[i])
-                            .into(mediaPreviews[i]);
-                } else {
-                    mediaPreviews[i].removeFocalPoint();
-
-                    Glide.with(mediaPreviews[i])
-                            .load(previewUrl)
-                            .placeholder(mediaPreviewUnloadedId)
-                            .centerInside()
-                            .into(mediaPreviews[i]);
-                }
+                imageView.setImageResource(mediaPreviewUnloadedId);
             }
 
             final Attachment.Type type = attachments.get(i).getType();
-            if (type == Attachment.Type.VIDEO | type == Attachment.Type.GIFV) {
+            if (type == Attachment.Type.VIDEO || type == Attachment.Type.GIFV) {
                 mediaOverlays[i].setVisibility(View.VISIBLE);
             } else {
                 mediaOverlays[i].setVisibility(View.GONE);
@@ -670,7 +679,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
             setContentDescription(status);
 
-            setupPoll(status.getPoll(),status.getStatusEmojis(), listener);
+            setupPoll(status.getPoll(), status.getStatusEmojis(), listener);
 
             // Workaround for RecyclerView 1.0.0 / androidx.core 1.0.0
             // RecyclerView tries to set AccessibilityDelegateCompat to null
@@ -882,7 +891,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
                         List<Integer> pollResult = pollAdapter.getSelected();
 
-                        if(!pollResult.isEmpty()) {
+                        if (!pollResult.isEmpty()) {
                             listener.onVoteInPoll(position, pollResult);
                         }
                     }
