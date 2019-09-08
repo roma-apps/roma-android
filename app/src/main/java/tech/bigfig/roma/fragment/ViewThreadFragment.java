@@ -318,7 +318,7 @@ public final class ViewThreadFragment extends SFragment implements
                         .setIsShowingSensitiveContent(isShowing)
                         .createStatusViewData();
         statuses.setPairedItem(position, newViewData);
-        adapter.setItem(position, newViewData, false);
+        adapter.setItem(position, newViewData, true);
     }
 
     @Override
