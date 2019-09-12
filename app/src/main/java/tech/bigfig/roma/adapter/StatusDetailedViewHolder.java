@@ -229,6 +229,10 @@ class StatusDetailedViewHolder extends StatusBaseViewHolder {
             return;
         }
 
+        if(visibility == null) {
+            return;
+        }
+
         int visibilityIcon;
         switch (visibility) {
             case PUBLIC:
