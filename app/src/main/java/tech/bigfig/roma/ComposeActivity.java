@@ -101,6 +101,7 @@ import tech.bigfig.roma.view.AddPollDialog;
 import tech.bigfig.roma.view.ComposeOptionsListener;
 import tech.bigfig.roma.view.ComposeOptionsView;
 import tech.bigfig.roma.view.EditTextTyped;
+import tech.bigfig.roma.view.PollPreviewView;
 import tech.bigfig.roma.view.ProgressImageView;
 import tech.bigfig.roma.view.TootButton;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;

@@ -43,7 +43,7 @@
     <string name="title_licenses">라이선스</string>
 
     <string name="status_username_format">\@%s</string>
-    <string name="status_boosted_format">%s님이 부스트 했습니다</string>
+    <string name="status_reposted_format">%s님이 부스트 했습니다</string>
     <string name="status_sensitive_media_title">민감한 미디어</string>
     <string name="status_media_hidden_title">미디어 숨겨짐</string>
     <string name="status_sensitive_media_directions">클릭하여 보기</string>
@@ -212,7 +212,7 @@
 
     <string name="pref_title_status_filter">타임라인 필터링</string>
     <string name="pref_title_status_tabs">탭</string>
-    <string name="pref_title_show_boosts">부스트 보이기</string>
+    <string name="pref_title_show_reposts">부스트 보이기</string>
     <string name="pref_title_show_replies">답장 보이기</string>
     <string name="pref_title_show_media_preview">미디어 미리보기 다운로드</string>
     <string name="pref_title_proxy_settings">프록시</string>
@@ -242,8 +242,8 @@
     <string name="notification_mention_descriptions">누군가 나를 멘션할 때 알림</string>
     <string name="notification_follow_name">팔로우</string>
     <string name="notification_follow_description">누군가 나를 팔로우할 때 알림</string>
-    <string name="notification_boost_name">부스트</string>
-    <string name="notification_boost_description">누군가 내 게시물을 부스트할 때 알림</string>
+    <string name="notification_repost_name">부스트</string>
+    <string name="notification_repost_description">누군가 내 게시물을 부스트할 때 알림</string>
     <string name="notification_favourite_name">즐겨찾기</string>
     <string name="notification_favourite_description">누군가 내 게시물을 즐겨찾기할 때 알림</string>
     <string name="notification_poll_name">투표</string>
@@ -469,9 +469,8 @@ https://pleroma.com/</string>
     <string name="report_description_remote_instance">이 유저는 다른 인스턴스에 속해 있습니다. 그 인스턴스에도 익명으로 신고 내용을 보내시겠습니까\?</string>
 
     <string name="pref_title_show_notifications_filter">알림 필터 보이기</string>
-<string name="action_open_as">%s(으)로 열기</string>
+    <string name="action_open_as">%s(으)로 열기</string>
     <string name="title_accounts">계정</string>
     <string name="failed_search">검색하지 못했습니다</string>
 
-    <string name="pref_title_alway_open_spoiler">열람주의로 설정된 툿을 항상 펼치기</string>
     </resources>

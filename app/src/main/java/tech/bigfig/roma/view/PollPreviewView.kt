@@ -13,15 +13,15 @@
  * You should have received a copy of the GNU General Public License along with Tusky; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package com.keylesspalace.tusky.view
+package tech.bigfig.roma.view
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.adapter.PreviewPollOptionsAdapter
-import com.keylesspalace.tusky.entity.NewPoll
+import tech.bigfig.roma.adapter.PreviewPollOptionsAdapter
+import tech.bigfig.roma.entity.NewPoll
 import kotlinx.android.synthetic.main.view_poll_preview.view.*
+import tech.bigfig.roma.R
 
 class PollPreviewView @JvmOverloads constructor(
         context: Context?,

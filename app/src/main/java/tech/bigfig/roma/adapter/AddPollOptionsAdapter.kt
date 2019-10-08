@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with Tusky; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package com.keylesspalace.tusky.adapter
+package tech.bigfig.roma.adapter
 
 import android.text.InputFilter
 import android.view.LayoutInflater
@@ -23,9 +23,9 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.util.onTextChanged
-import com.keylesspalace.tusky.util.visible
+import tech.bigfig.roma.R
+import tech.bigfig.roma.util.onTextChanged
+import tech.bigfig.roma.util.visible
 
 class AddPollOptionsAdapter(
         private var options: MutableList<String>,
@@ -43,7 +43,8 @@ class AddPollOptionsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val holder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_add_poll_option, parent, false))
+        val holder = ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_add_poll_option, parent, false))
         holder.editText.filters = arrayOf(InputFilter.LengthFilter(maxOptionLength))
 
         holder.editText.onTextChanged { s, _, _, _ ->

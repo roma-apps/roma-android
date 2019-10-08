@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 
 @Database(entities = {TootEntity.class, AccountEntity.class, InstanceEntity.class, TimelineStatusEntity.class,
                 TimelineAccountEntity.class,  ConversationEntity.class
-        }, version = 19)
+        }, version = 20)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract TootDao tootDao();
@@ -307,7 +307,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    public static final Migration MIGRATION_18_19 = new Migration(18, 19) {
+    public static final Migration MIGRATION_19_20 = new Migration(19, 20) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE `InstanceEntity` ADD COLUMN `maxPollOptions` INTEGER");

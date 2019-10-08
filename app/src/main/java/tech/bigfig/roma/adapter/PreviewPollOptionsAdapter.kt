@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with Tusky; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package com.keylesspalace.tusky.adapter
+package tech.bigfig.roma.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +21,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.util.ThemeUtils
+import tech.bigfig.roma.R
+import tech.bigfig.roma.util.ThemeUtils
 
 class PreviewPollOptionsAdapter: RecyclerView.Adapter<PreviewViewHolder>() {
 
@@ -41,7 +41,8 @@ class PreviewPollOptionsAdapter: RecyclerView.Adapter<PreviewViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PreviewViewHolder {
-        return PreviewViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_poll_preview_option, parent, false))
+        return PreviewViewHolder(
+          LayoutInflater.from(parent.context).inflate(R.layout.item_poll_preview_option, parent, false))
     }
 
     override fun getItemCount() = options.size

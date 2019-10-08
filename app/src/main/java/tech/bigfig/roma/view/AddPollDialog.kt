@@ -15,15 +15,15 @@
 
 @file:JvmName("AddPollDialog")
 
-package com.keylesspalace.tusky.view
+package tech.bigfig.roma.view
 
 import androidx.appcompat.app.AlertDialog
-import com.keylesspalace.tusky.ComposeActivity
-import com.keylesspalace.tusky.adapter.AddPollOptionsAdapter
-import com.keylesspalace.tusky.entity.NewPoll
-import kotlinx.android.synthetic.main.dialog_add_poll.view.*
+import tech.bigfig.roma.adapter.AddPollOptionsAdapter
+import tech.bigfig.roma.entity.NewPoll
 import android.view.WindowManager
-import com.keylesspalace.tusky.R
+import kotlinx.android.synthetic.main.dialog_add_poll.view.*
+import tech.bigfig.roma.ComposeActivity
+import tech.bigfig.roma.R
 
 private const val DEFAULT_MAX_OPTION_COUNT = 4
 private const val DEFAULT_MAX_OPTION_LENGTH = 25
@@ -46,14 +46,14 @@ fun showAddPollDialog(
             .create()
 
     val adapter = AddPollOptionsAdapter(
-            options = poll?.options?.toMutableList() ?: mutableListOf("", ""),
-            maxOptionLength = maxOptionLength ?: DEFAULT_MAX_OPTION_LENGTH,
-            onOptionRemoved = {
-                view.addChoiceButton.isEnabled = true
-            },
-            onOptionChanged = { valid ->
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = valid
-            }
+      options = poll?.options?.toMutableList() ?: mutableListOf("", ""),
+      maxOptionLength = maxOptionLength ?: DEFAULT_MAX_OPTION_LENGTH,
+      onOptionRemoved = {
+        view.addChoiceButton.isEnabled = true
+      },
+      onOptionChanged = { valid ->
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = valid
+      }
     )
 
     view.pollChoices.adapter = adapter
@@ -83,11 +83,11 @@ fun showAddPollDialog(
             val pollDuration = activity.resources.getIntArray(R.array.poll_duration_values)[selectedPollDurationId]
 
             activity.updatePoll(
-                    NewPoll(
-                            options = adapter.pollOptions,
-                            expiresIn = pollDuration,
-                            multiple = view.multipleChoicesCheckBox.isChecked
-                    )
+              NewPoll(
+                options = adapter.pollOptions,
+                expiresIn = pollDuration,
+                multiple = view.multipleChoicesCheckBox.isChecked
+              )
             )
 
             dialog.dismiss()
