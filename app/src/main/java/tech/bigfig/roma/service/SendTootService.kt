@@ -22,15 +22,17 @@ import tech.bigfig.roma.db.AccountEntity
 import tech.bigfig.roma.db.AccountManager
 import tech.bigfig.roma.db.AppDatabase
 import tech.bigfig.roma.di.Injectable
+import tech.bigfig.roma.entity.NewPoll
+import tech.bigfig.roma.entity.NewStatus
 import tech.bigfig.roma.entity.Status
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.util.SaveTootHelper
+import tech.bigfig.roma.util.randomAlphanumericString
 import dagger.android.AndroidInjection
 import kotlinx.android.parcel.Parcelize
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tech.bigfig.roma.util.randomAlphanumericString
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
@@ -131,16 +133,21 @@ class SendTootService : Service(), Injectable {
 
         tootToSend.retries++
 
-        val sendCall = mastodonApi.createStatus(
-                "Bearer " + account.accessToken,
-                account.domain,
+        val newStatus = NewStatus(
                 tootToSend.text,
-                tootToSend.inReplyToId,
                 tootToSend.warningText,
+                tootToSend.inReplyToId,
                 tootToSend.visibility,
                 tootToSend.sensitive,
                 tootToSend.mediaIds,
-                tootToSend.idempotencyKey
+                tootToSend.poll
+        )
+
+        val sendCall = mastodonApi.createStatus(
+                "Bearer " + account.accessToken,
+                account.domain,
+                tootToSend.idempotencyKey,
+                newStatus
         )
 
 
@@ -243,7 +250,8 @@ class SendTootService : Service(), Injectable {
                 toot.inReplyToId,
                 toot.replyingStatusContent,
                 toot.replyingStatusAuthorUsername,
-                Status.Visibility.byString(toot.visibility))
+                Status.Visibility.byString(toot.visibility),
+                toot.poll)
     }
 
     private fun cancelSendingIntent(tootId: Int): PendingIntent {
@@ -277,6 +285,7 @@ class SendTootService : Service(), Injectable {
                            mediaUris: List<Uri>,
                            mediaDescriptions: List<String>,
                            inReplyToId: String?,
+                           poll: NewPoll?,
                            replyingStatusContent: String?,
                            replyingStatusAuthorUsername: String?,
                            savedJsonUrls: String?,
@@ -295,6 +304,7 @@ class SendTootService : Service(), Injectable {
                     mediaUris.map { it.toString() },
                     mediaDescriptions,
                     inReplyToId,
+                    poll,
                     replyingStatusContent,
                     replyingStatusAuthorUsername,
                     savedJsonUrls,
@@ -337,6 +347,7 @@ data class TootToSend(val text: String,
                       val mediaUris: List<String>,
                       val mediaDescriptions: List<String>,
                       val inReplyToId: String?,
+                      val poll: NewPoll?,
                       val replyingStatusContent: String?,
                       val replyingStatusAuthorUsername: String?,
                       val savedJsonUrls: String?,
