@@ -23,14 +23,14 @@ class RomaFirebaseMessagingService : FirebaseMessagingService(), Injectable {
         super.onCreate()
     }
 
-    override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String) {
         Log.d(TAG,"New token: $token")
         token?.let {
             UpdateFcmTokenWorker.updateTokens(token)
         }
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         val data = remoteMessage?.data
         data?.let {
