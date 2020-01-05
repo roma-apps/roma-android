@@ -49,7 +49,10 @@ public class CustomEmojiHelper {
      * @param view a reference to the a view the emojis will be shown in (should be the TextView, but parents of the TextView are also acceptable)
      * @return the text with the shortcodes replaced by EmojiSpans
      */
-    public static Spanned emojifyText(@NonNull Spanned text, @Nullable List<Emoji> emojis, @NonNull final View view) {
+    public static Spanned emojifyText(Spanned text, @Nullable List<Emoji> emojis, @NonNull final View view) {
+
+        // Failsafe to catch null Spanned parameter (see Pleroma issue #1104)
+        text = text == null ? new SpannedString("") : text;
 
         if (emojis != null && !emojis.isEmpty()) {
 
@@ -74,8 +77,8 @@ public class CustomEmojiHelper {
         return text;
     }
 
-    public static Spanned emojifyString(@NonNull String string, @Nullable List<Emoji> emojis, @NonNull final View ciew) {
-        return emojifyText(new SpannedString(string), emojis, ciew);
+    public static Spanned emojifyString(String string, @Nullable List<Emoji> emojis, @NonNull final View ciew) {
+        return emojifyText(new SpannedString(string == null ? "" : string), emojis, ciew);
     }
 
 
