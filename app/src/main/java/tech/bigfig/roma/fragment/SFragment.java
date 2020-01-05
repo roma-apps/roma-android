@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.BaseActivity;
 import tech.bigfig.roma.BottomSheetActivity;
 import tech.bigfig.roma.ComposeActivity;
@@ -166,7 +167,6 @@ public abstract class SFragment extends BaseFragment implements Injectable {
         final String inReplyToId = status.getActionableStatus().getInReplyToId();
         final String accountId = status.getActionableStatus().getAccount().getId();
         final String accountUsername = status.getActionableStatus().getAccount().getUsername();
-        final Spanned content = status.getActionableStatus().getContent();
         final String statusUrl = status.getActionableStatus().getUrl();
         List<AccountEntity> accounts = accountManager.getAllAccountsOrderedByActive();
         String openAsTitle = null;
@@ -275,7 +275,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
                     return true;
                 }
                 case R.id.status_report: {
-                    openReportPage(accountId, accountUsername, id, content);
+                    openReportPage(accountId, accountUsername, id);
                     return true;
                 }
                 case R.id.status_unreblog_private: {
@@ -342,9 +342,8 @@ public abstract class SFragment extends BaseFragment implements Injectable {
         startActivity(intent);
     }
 
-    protected void openReportPage(String accountId, String accountUsername, String statusId,
-                                  Spanned statusContent) {
-        startActivity(ReportActivity.getIntent(requireContext(), accountId, accountUsername, statusId, statusContent));
+    protected void openReportPage(String accountId, String accountUsername, String statusId) {
+        startActivity(ReportActivity.getIntent(requireContext(), accountId, accountUsername, statusId));
     }
 
     protected void showConfirmDeleteDialog(final String id, final String inReplyToId, final int position) {
@@ -413,7 +412,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
     }
 
     private void downloadAllMedia(Status status) {
-        Toast.makeText(getContext(), R.string.downloading_media, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(getContext(), R.string.downloading_media, Toast.LENGTH_SHORT).show();
         for (Attachment attachment : status.getAttachments()) {
             String url = attachment.getUrl();
             Uri uri = Uri.parse(url);
@@ -432,7 +431,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadAllMedia(status);
             } else {
-                Toast.makeText(getContext(), R.string.error_media_download_permission, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(getContext(), R.string.error_media_download_permission, Toast.LENGTH_SHORT).show();
             }
         });
     }

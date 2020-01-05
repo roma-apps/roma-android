@@ -69,6 +69,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.adapter.EmojiAdapter;
 import tech.bigfig.roma.adapter.ComposeAutoCompleteAdapter;
 import tech.bigfig.roma.adapter.OnEmojiSelectedListener;
@@ -322,22 +323,10 @@ public final class ComposeActivity
                     getString(R.string.compose_active_account_description,
                             activeAccount.getFullName()));
 
-            mastodonApi.getInstance().enqueue(new Callback<Instance>() {
-                @Override
-                public void onResponse(@NonNull Call<Instance> call, @NonNull Response<Instance> response) {
-                    if (response.isSuccessful() && response.body().getMaxTootChars() != null) {
-                        maximumTootCharacters = response.body().getMaxTootChars();
-                        updateVisibleCharactersLeft();
-                        cacheInstanceMetadata(activeAccount);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Instance> call, @NonNull Throwable t) {
-                    Log.w(TAG, "error loading instance data", t);
-                    loadCachedInstanceMetadata(activeAccount);
-                }
-            });
+            mastodonApi.getInstance()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .as(autoDisposable(from(this, Lifecycle.Event.ON_DESTROY)))
+                    .subscribe(this::onFetchInstanceSuccess, this::onFetchInstanceFailure);
 
             mastodonApi.getCustomEmojis().enqueue(new Callback<List<Emoji>>() {
                 @Override
@@ -896,7 +885,7 @@ public final class ComposeActivity
         if (emojiView.getAdapter() != null) {
             if (emojiView.getAdapter().getItemCount() == 0) {
                 String errorMessage = getString(R.string.error_no_custom_emojis, accountManager.getActiveAccount().getDomain());
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 if (emojiBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || emojiBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     emojiBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -1440,7 +1429,7 @@ public final class ComposeActivity
     }
 
     private void showFailedCaptionMessage() {
-        Toast.makeText(this, R.string.error_failed_set_caption, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(this, R.string.error_failed_set_caption, Toast.LENGTH_SHORT).show();
     }
 
     private void removeMediaFromQueue(QueuedMedia item) {
@@ -1943,6 +1932,19 @@ public final class ComposeActivity
     static boolean canHandleMimeType(@Nullable String mimeType) {
         return (mimeType != null &&
                 (mimeType.startsWith("image/") || mimeType.startsWith("video/") || mimeType.equals("text/plain")));
+    }
+
+    private void onFetchInstanceSuccess(Instance instance) {
+        if (instance != null && instance.getMaxTootChars() != null) {
+            maximumTootCharacters = instance.getMaxTootChars();
+            updateVisibleCharactersLeft();
+            cacheInstanceMetadata(accountManager.getActiveAccount());
+        }
+    }
+
+    private void onFetchInstanceFailure(Throwable throwable) {
+        Log.w(TAG, "error loading instance data", throwable);
+        loadCachedInstanceMetadata(accountManager.getActiveAccount());
     }
 
     public static final class QueuedMedia {

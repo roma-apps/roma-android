@@ -41,6 +41,7 @@ import tech.bigfig.roma.adapter.AccountFieldEditAdapter
 import tech.bigfig.roma.di.Injectable
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.entity.Account
+import tech.bigfig.roma.entity.Instance
 import tech.bigfig.roma.util.*
 import tech.bigfig.roma.viewmodel.EditProfileViewModel
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -160,6 +161,18 @@ class EditProfileActivity : BaseActivity(), Injectable {
                     }
                     snackbar.show()
 
+                }
+            }
+        })
+
+        viewModel.obtainInstance()
+        viewModel.instanceData.observe(this, Observer<Resource<Instance>> { result ->
+            when (result) {
+                is Success -> {
+                    val instance = result.data
+                    if (instance?.maxBioChars != null && instance.maxBioChars > 0) {
+                        noteEditTextLayout.counterMaxLength = instance.maxBioChars
+                    }
                 }
             }
         })

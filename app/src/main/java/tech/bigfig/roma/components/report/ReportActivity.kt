@@ -18,7 +18,6 @@ package tech.bigfig.roma.components.report
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Spanned
 import android.view.MenuItem
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
@@ -55,8 +54,7 @@ class ReportActivity : BottomSheetActivity(), HasAndroidInjector {
             throw IllegalStateException("accountId ($accountId) or accountUserName ($accountUserName) is null")
         }
 
-        viewModel.init(accountId, accountUserName,
-                intent?.getStringExtra(STATUS_ID), intent?.getStringExtra(STATUS_CONTENT))
+        viewModel.init(accountId, accountUserName, intent?.getStringExtra(STATUS_ID))
 
 
         setContentView(R.layout.activity_report)
@@ -143,16 +141,14 @@ class ReportActivity : BottomSheetActivity(), HasAndroidInjector {
         private const val ACCOUNT_ID = "account_id"
         private const val ACCOUNT_USERNAME = "account_username"
         private const val STATUS_ID = "status_id"
-        private const val STATUS_CONTENT = "status_content"
 
         @JvmStatic
-        fun getIntent(context: Context, accountId: String, userName: String, statusId: String, statusContent: Spanned) =
+        fun getIntent(context: Context, accountId: String, userName: String, statusId: String? = null) =
                 Intent(context, ReportActivity::class.java)
                         .apply {
                             putExtra(ACCOUNT_ID, accountId)
                             putExtra(ACCOUNT_USERNAME, userName)
                             putExtra(STATUS_ID, statusId)
-                            putExtra(STATUS_CONTENT, HtmlUtils.toHtml(statusContent))
                         }
     }
 

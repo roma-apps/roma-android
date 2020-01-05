@@ -10,6 +10,7 @@ import tech.bigfig.roma.entity.Filter
 import kotlinx.android.synthetic.main.activity_filters.*
 import kotlinx.android.synthetic.main.dialog_filter.*
 import kotlinx.android.synthetic.main.toolbar_basic.*
+import me.drakeet.support.toast.ToastCompat
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,7 @@ class FiltersActivity : BaseActivity(), Injectable {
         api.updateFilter(filter.id, filter.phrase, filter.context, filter.irreversible, filter.wholeWord, filter.expiresAt)
                 .enqueue(object : Callback<Filter> {
                     override fun onFailure(call: Call<Filter>, t: Throwable) {
-                        Toast.makeText(this@FiltersActivity, "Error updating filter '${filter.phrase}'", Toast.LENGTH_SHORT).show()
+                        ToastCompat.makeText(this@FiltersActivity, "Error updating filter '${filter.phrase}'", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onResponse(call: Call<Filter>, response: Response<Filter>) {
@@ -65,7 +66,7 @@ class FiltersActivity : BaseActivity(), Injectable {
             // This is the only context for this filter; delete it
             api.deleteFilter(filters[itemIndex].id).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Toast.makeText(this@FiltersActivity, "Error updating filter '${filters[itemIndex].phrase}'", Toast.LENGTH_SHORT).show()
+                    ToastCompat.makeText(this@FiltersActivity, "Error updating filter '${filters[itemIndex].phrase}'", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -94,7 +95,7 @@ class FiltersActivity : BaseActivity(), Injectable {
             }
 
             override fun onFailure(call: Call<Filter>, t: Throwable) {
-                Toast.makeText(this@FiltersActivity, "Error creating filter '$phrase'", Toast.LENGTH_SHORT).show()
+                ToastCompat.makeText(this@FiltersActivity, "Error creating filter '$phrase'", Toast.LENGTH_SHORT).show()
             }
         })
     }

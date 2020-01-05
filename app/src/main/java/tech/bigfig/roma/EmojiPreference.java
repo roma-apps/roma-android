@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import me.drakeet.support.toast.ToastCompat;
 import tech.bigfig.roma.util.EmojiCompatFont;
 
 import java.util.ArrayList;
@@ -144,7 +145,7 @@ public class EmojiPreference extends Preference {
 
             @Override
             public void onFailed() {
-                Toast.makeText(getContext(), R.string.download_failed, Toast.LENGTH_SHORT).show();
+                ToastCompat.makeText(getContext(), R.string.download_failed, Toast.LENGTH_SHORT).show();
                 updateItem(font, container);
             }
         });

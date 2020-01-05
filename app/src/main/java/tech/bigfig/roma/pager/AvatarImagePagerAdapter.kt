@@ -4,10 +4,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-import tech.bigfig.roma.fragment.ViewMediaFragment
 import java.lang.IllegalStateException
 
-class AvatarImagePagerAdapter(fragmentManager: FragmentManager, private val avatarUrl: String) : FragmentPagerAdapter(fragmentManager) {
+import tech.bigfig.roma.fragment.ViewMediaFragment
+import tech.bigfig.roma.SharedElementTransitionListener
+
+class AvatarImagePagerAdapter(fragmentManager: FragmentManager, private val avatarUrl: String) : FragmentPagerAdapter(fragmentManager), SharedElementTransitionListener {
 
     override fun getItem(position: Int): Fragment {
         return if (position == 0) {
@@ -19,4 +21,6 @@ class AvatarImagePagerAdapter(fragmentManager: FragmentManager, private val avat
 
     override fun getCount() = 1
 
+    override fun onTransitionEnd() {
+    }
 }

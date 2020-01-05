@@ -50,6 +50,7 @@ import tech.bigfig.roma.util.NetworkState
 import tech.bigfig.roma.viewdata.AttachmentViewData
 import tech.bigfig.roma.viewdata.StatusViewData
 import kotlinx.android.synthetic.main.fragment_search.*
+import me.drakeet.support.toast.ToastCompat
 import tech.bigfig.roma.*
 import java.util.*
 
@@ -202,7 +203,6 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
         val id = status.actionableId
         val accountId = status.actionableStatus.account.id
         val accountUsername = status.actionableStatus.account.username
-        val content = status.actionableStatus.content
         val statusUrl = status.actionableStatus.url
         val accounts = viewModel.getAllAccountsOrderedByActive()
         var openAsTitle: String? = null
@@ -297,7 +297,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
                     return@setOnMenuItemClickListener true
                 }
                 R.id.status_report -> {
-                    openReportPage(accountId, accountUsername, id, content)
+                    openReportPage(accountId, accountUsername, id)
                     return@setOnMenuItemClickListener true
                 }
                 R.id.status_unreblog_private -> {
@@ -344,7 +344,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
     }
 
     private fun downloadAllMedia(status: Status) {
-        Toast.makeText(context, R.string.downloading_media, Toast.LENGTH_SHORT).show()
+        ToastCompat.makeText(context, R.string.downloading_media, Toast.LENGTH_SHORT).show()
         for ((_, url) in status.attachments) {
             val uri = Uri.parse(url)
             val filename = uri.lastPathSegment
@@ -362,14 +362,13 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 downloadAllMedia(status)
             } else {
-                Toast.makeText(context, R.string.error_media_download_permission, Toast.LENGTH_SHORT).show()
+                ToastCompat.makeText(context, R.string.error_media_download_permission, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun openReportPage(accountId: String, accountUsername: String, statusId: String,
-                               statusContent: Spanned) {
-        startActivity(ReportActivity.getIntent(requireContext(), accountId, accountUsername, statusId, statusContent))
+    private fun openReportPage(accountId: String, accountUsername: String, statusId: String) {
+        startActivity(ReportActivity.getIntent(requireContext(), accountId, accountUsername, statusId))
     }
 
     private fun showConfirmDeleteDialog(id: String, position: Int) {
