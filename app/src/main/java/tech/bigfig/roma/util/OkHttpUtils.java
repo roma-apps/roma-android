@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.logging.HttpLoggingInterceptor.Level;
 import tech.bigfig.roma.BuildConfig;
 
 import java.net.InetSocketAddress;
@@ -33,6 +35,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 public class OkHttpUtils {
+
+    private static HttpLoggingInterceptor getLoggingInterceptor() {
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
+        if (BuildConfig.DEBUG) {
+            loggingInterceptor.level(Level.BODY);
+        }
+        else {
+            loggingInterceptor.level(Level.NONE);
+        }
+
+        return loggingInterceptor;
+    }
 
     @NonNull
     public static OkHttpClient.Builder getCompatibleClientBuilder(@NonNull Context context) {
@@ -53,6 +69,7 @@ public class OkHttpUtils {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(getUserAgentInterceptor())
+                .addInterceptor(getLoggingInterceptor())
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .cache(new Cache(context.getCacheDir(), cacheSize));
