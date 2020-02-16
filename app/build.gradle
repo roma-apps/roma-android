@@ -96,6 +96,8 @@ android {
         // Exclude unneeded files added by libraries
         exclude 'LICENSE_OFL'
         exclude 'LICENSE_UNICODE'
+        // Exclude ARMEABI native files
+        exclude "lib/armeabi/**"
     }
     bundle {
         language {
