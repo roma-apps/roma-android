@@ -33,6 +33,7 @@ import tech.bigfig.roma.components.report.ReportActivity
 import com.theartofdev.edmodo.cropper.CropImage
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import io.reactivex.Single
@@ -435,7 +436,7 @@ class ChatActivity : BaseActivity(), HasAndroidInjector, ClickHandler, AdapterLi
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorReturnItem(Optional.empty())
-                .autoDisposable(from(this, Lifecycle.Event.ON_DESTROY))
+                .autoDispose(from(this, Lifecycle.Event.ON_DESTROY))
                 .subscribe { optionalBitmap ->
                     if (!optionalBitmap.isEmpty()) {
                         viewModel.uploadMedia(ComposeActivity.QueuedMedia.Type.IMAGE, optionalBitmap.value, uri, mediaSize)
@@ -458,7 +459,7 @@ class ChatActivity : BaseActivity(), HasAndroidInjector, ClickHandler, AdapterLi
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .onErrorReturnItem(Optional.empty())
-                .autoDisposable(from(this, Lifecycle.Event.ON_DESTROY))
+                .autoDispose(from(this, Lifecycle.Event.ON_DESTROY))
                 .subscribe { optionalBitmap ->
                     if (!optionalBitmap.isEmpty()) {
                         viewModel.uploadMedia(ComposeActivity.QueuedMedia.Type.VIDEO, optionalBitmap.value, uri, mediaSize)

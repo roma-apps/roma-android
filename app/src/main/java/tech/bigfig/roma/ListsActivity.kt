@@ -47,6 +47,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.*
 import at.connyduck.sparkbutton.helpers.Utils
 import com.google.android.material.snackbar.Snackbar
+import com.uber.autodispose.autoDispose
 import tech.bigfig.roma.viewmodel.ListsViewModel
 import tech.bigfig.roma.di.ViewModelFactory
 import tech.bigfig.roma.entity.MastoList
@@ -94,7 +95,7 @@ class ListsActivity : BaseActivity(), Injectable, HasAndroidInjector {
         viewModel = viewModelFactory.create(ListsViewModel::class.java)
         viewModel.state
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(from(this))
+                .autoDispose(from(this))
                 .subscribe(this::update)
         viewModel.retryLoading()
 
@@ -103,7 +104,7 @@ class ListsActivity : BaseActivity(), Injectable, HasAndroidInjector {
         }
 
         viewModel.events.observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(from(this))
+                .autoDispose(from(this))
                 .subscribe { event ->
                     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
                     when (event) {

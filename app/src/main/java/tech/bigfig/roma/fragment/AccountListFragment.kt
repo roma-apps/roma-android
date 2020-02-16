@@ -45,6 +45,7 @@ import tech.bigfig.roma.interfaces.AccountActionListener
 import tech.bigfig.roma.network.MastodonApi
 import tech.bigfig.roma.util.HttpHeaderLink
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
+import com.uber.autodispose.autoDispose
 import tech.bigfig.roma.view.EndlessOnScrollListener
 import kotlinx.android.synthetic.main.fragment_account_list.*
 import retrofit2.Call
@@ -280,7 +281,7 @@ class AccountListFragment : BaseFragment(), AccountActionListener, Injectable {
 
         getFetchCallByListType(type, id)
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(from(this, Lifecycle.Event.ON_DESTROY))
+                .autoDispose(from(this, Lifecycle.Event.ON_DESTROY))
                 .subscribe({ response ->
                     val accountList = response.body()
 

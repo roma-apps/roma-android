@@ -39,6 +39,7 @@ import javax.inject.Inject
 
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
 import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import tech.bigfig.roma.util.onTextChanged
 
 class TabPreferenceActivity : BaseActivity(), Injectable, ItemInteractionListener {
@@ -253,7 +254,7 @@ class TabPreferenceActivity : BaseActivity(), Injectable, ItemInteractionListene
                 accountManager.saveAccount(it)
             }
                     .subscribeOn(Schedulers.io())
-                    .autoDisposable(from(this, Lifecycle.Event.ON_DESTROY))
+                    .autoDispose(from(this, Lifecycle.Event.ON_DESTROY))
                     .subscribe()
 
         }
