@@ -182,6 +182,7 @@ dependencies {
     implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.4.0'
     implementation 'com.uber.autodispose:autodispose:1.4.0'
     implementation 'androidx.paging:paging-runtime-ktx:2.1.1'
+    implementation "com.jakewharton.timber:timber:4.7.1"
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'

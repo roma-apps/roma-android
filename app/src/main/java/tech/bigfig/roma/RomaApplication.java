@@ -47,6 +47,8 @@ import tech.bigfig.roma.util.EmojiCompatFont;
 import tech.bigfig.roma.util.LocaleManager;
 import tech.bigfig.roma.util.NotificationPullJobCreator;
 import tech.bigfig.roma.util.binding.BindingComponent;
+import timber.log.Timber;
+import timber.log.Timber.DebugTree;
 
 public class RomaApplication extends Application implements HasAndroidInjector {
     @Inject
@@ -98,6 +100,7 @@ public class RomaApplication extends Application implements HasAndroidInjector {
         initAppInjector();
         initWorkManager();
         initEmojiCompat();
+        initLog();
 
         JobManager.create(this).addJobCreator(notificationPullJobCreator);
 
@@ -108,6 +111,12 @@ public class RomaApplication extends Application implements HasAndroidInjector {
                 .setWorkerFactory(new DaggerWorkerFactory()) // Overrides default WorkerFactory
                 .build();
         WorkManager.initialize(this, config);
+    }
+
+    private void initLog() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new DebugTree());
+        }
     }
 
     /**
