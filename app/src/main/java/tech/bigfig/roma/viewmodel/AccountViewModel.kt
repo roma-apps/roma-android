@@ -1,6 +1,6 @@
 package tech.bigfig.roma.viewmodel
 
-import android.util.Log
+import timber.log.Timber
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tech.bigfig.roma.appstore.*
@@ -129,12 +129,12 @@ class AccountViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     eventHub.dispatch(DomainMuteEvent(instance))
                 } else {
-                    Log.e(TAG, String.format("Error muting %s", instance))
+                    Timber.e(String.format("Error muting %s", instance))
                 }
             }
 
             override fun onFailure(call: Call<Any>, t: Throwable) {
-                Log.e(TAG, String.format("Error muting %s", instance), t)
+                Timber.e(String.format("Error muting %s", instance), t)
             }
         })
     }

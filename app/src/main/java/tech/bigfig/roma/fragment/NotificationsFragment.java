@@ -21,7 +21,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import timber.log.Timber;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -298,7 +298,7 @@ public class NotificationsFragment extends SFragment implements
     }
 
     private void handleFavEvent(FavouriteEvent event) {
-        Log.d("EVENT", "Count N: "+(event.getStatusOld()!=null?event.getStatusOld().getFavouritesCount():0)+" ->"+(event.getStatusNew()!=null?event.getStatusNew().getFavouritesCount():0));
+        Timber.d("EVENT", "Count N: "+(event.getStatusOld()!=null?event.getStatusOld().getFavouritesCount():0)+" ->"+(event.getStatusNew()!=null?event.getStatusNew().getFavouritesCount():0));
 
         Pair<Integer, Notification> posAndNotification =
                 findReplyPosition(event.getStatusId());
@@ -419,7 +419,7 @@ public class NotificationsFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> setReblogForStatus(position, status, reblog, newStatus),
-                        (t) -> Log.d(getClass().getSimpleName(),
+                        (t) -> Timber.d(getClass().getSimpleName(),
                                 "Failed to reblog status: " + status.getId(), t)
                 );
     }
@@ -458,7 +458,7 @@ public class NotificationsFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> setFavouriteForStatus(position, status, newStatus, favourite),
-                        (t) -> Log.d(getClass().getSimpleName(),
+                        (t) -> Timber.d(getClass().getSimpleName(),
                                 "Failed to favourite status: " + status.getId(), t)
                 );
     }
@@ -505,7 +505,7 @@ public class NotificationsFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newPoll) -> setVoteForPoll(position, newPoll),
-                        (t) -> Log.d(TAG,
+                        (t) -> Timber.d(TAG,
                                 "Failed to vote in poll: " + status.getId(), t)
                 );
     }
@@ -585,7 +585,7 @@ public class NotificationsFragment extends SFragment implements
             Notification previous = notifications.get(position - 1).asRightOrNull();
             Notification next = notifications.get(position + 1).asRightOrNull();
             if (previous == null || next == null) {
-                Log.e(TAG, "Failed to load more, invalid placeholder position: " + position);
+                Timber.e("Failed to load more, invalid placeholder position: " + position);
                 return;
             }
             sendFetchNotificationsRequest(previous.getId(), next.getId(), FetchEnd.MIDDLE, position);
@@ -595,20 +595,20 @@ public class NotificationsFragment extends SFragment implements
             notifications.setPairedItem(position, notificationViewData);
             updateAdapter();
         } else {
-            Log.d(TAG, "error loading more");
+            Timber.d(TAG, "error loading more");
         }
     }
 
     @Override
     public void onContentCollapsedChange(boolean isCollapsed, int position) {
         if (position < 0 || position >= notifications.size()) {
-            Log.e(TAG, String.format("Tried to access out of bounds status position: %d of %d", position, notifications.size() - 1));
+            Timber.e(String.format("Tried to access out of bounds status position: %d of %d", position, notifications.size() - 1));
             return;
         }
 
         NotificationViewData notification = notifications.getPairedItem(position);
         if (!(notification instanceof NotificationViewData.Concrete)) {
-            Log.e(TAG, String.format(
+            Timber.e(String.format(
                     "Expected NotificationViewData.Concrete, got %s instead at position: %d of %d",
                     notification == null ? "null" : notification.getClass().getSimpleName(),
                     position,
@@ -804,7 +804,7 @@ public class NotificationsFragment extends SFragment implements
                 return;
             }
         }
-        Log.w(TAG, "Didn't find a notification for ID: " + notificationId);
+        Timber.w("Didn't find a notification for ID: " + notificationId);
     }
 
     private void onPreferenceChanged(String key) {
@@ -1007,7 +1007,7 @@ public class NotificationsFragment extends SFragment implements
                 });
             }
         }
-        Log.e(TAG, "Fetch failure: " + exception.getMessage());
+        Timber.e("Fetch failure: " + exception.getMessage());
         progressBar.setVisibility(View.GONE);
     }
 
@@ -1024,7 +1024,7 @@ public class NotificationsFragment extends SFragment implements
             }
 
             if (!account.getLastNotificationId().equals(lastNotificationId)) {
-                Log.d(TAG, "saving newest noti id: " + lastNotificationId);
+                Timber.d(TAG, "saving newest noti id: " + lastNotificationId);
                 account.setLastNotificationId(lastNotificationId);
                 accountManager.saveAccount(account);
             }

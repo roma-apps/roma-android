@@ -21,7 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -235,7 +235,7 @@ public final class ViewThreadFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> updateStatus(position, newStatus),
-                        (t) -> Log.d(getClass().getSimpleName(),
+                        (t) -> Timber.d(getClass().getSimpleName(),
                                 "Failed to reblog status: " + status.getId(), t)
                 );
     }
@@ -249,7 +249,7 @@ public final class ViewThreadFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newStatus) -> updateStatus(position, newStatus),
-                        (t) -> Log.d(getClass().getSimpleName(),
+                        (t) -> Timber.d(getClass().getSimpleName(),
                                 "Failed to favourite status: " + status.getId(), t)
                 );
     }
@@ -343,7 +343,7 @@ public final class ViewThreadFragment extends SFragment implements
     @Override
     public void onContentCollapsedChange(boolean isCollapsed, int position) {
         if (position < 0 || position >= statuses.size()) {
-            Log.e(TAG, String.format("Tried to access out of bounds status position: %d of %d", position, statuses.size() - 1));
+            Timber.e(String.format("Tried to access out of bounds status position: %d of %d", position, statuses.size() - 1));
             return;
         }
 
@@ -351,7 +351,7 @@ public final class ViewThreadFragment extends SFragment implements
         if (status == null) {
             // Statuses PairedList contains a base type of StatusViewData.Concrete and also doesn't
             // check for null values when adding values to it although this doesn't seem to be an issue.
-            Log.e(TAG, String.format(
+            Timber.e(String.format(
                     "Expected StatusViewData.Concrete, got null instead at position: %d of %d",
                     position,
                     statuses.size() - 1
@@ -403,7 +403,7 @@ public final class ViewThreadFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newPoll) -> setVoteForPoll(position, newPoll),
-                        (t) -> Log.d(TAG,
+                        (t) -> Timber.d(TAG,
                                 "Failed to vote in poll: " + status.getId(), t)
                 );
 
@@ -497,7 +497,7 @@ public final class ViewThreadFragment extends SFragment implements
                     })
                     .show();
         } else {
-            Log.e(TAG, "Couldn't display thread fetch error message");
+            Timber.e("Couldn't display thread fetch error message");
         }
     }
 
@@ -582,7 +582,7 @@ public final class ViewThreadFragment extends SFragment implements
     }
 
     private void handleFavEvent(FavouriteEvent event) {
-        Log.d("EVENT", "Count V: " + (event.getStatusOld() != null ? event.getStatusOld().getFavouritesCount() : 0) + " ->" + (event.getStatusNew() != null ? event.getStatusNew().getFavouritesCount() : 0));
+        Timber.d("EVENT", "Count V: " + (event.getStatusOld() != null ? event.getStatusOld().getFavouritesCount() : 0) + " ->" + (event.getStatusNew() != null ? event.getStatusNew().getFavouritesCount() : 0));
 
         Pair<Integer, Status> posAndStatus = findStatusAndPos(event.getStatusId());
         if (posAndStatus == null) return;

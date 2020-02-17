@@ -16,7 +16,7 @@
 package tech.bigfig.roma.util;
 
 import android.content.Context;
-import android.util.Log;
+import timber.log.Timber;
 
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
@@ -88,7 +88,7 @@ public final class NotificationPullJobCreator implements JobCreator {
             for (AccountEntity account : accountList) {
                 if (account.getNotificationsEnabled()) {
                     try {
-                        Log.d(TAG, "getting Notifications for " + account.getFullName());
+                        Timber.d(TAG, "getting Notifications for " + account.getFullName());
                         Response<List<Notification>> notifications =
                                 mastodonApi.notificationsWithAuth(
                                         String.format("Bearer %s", account.getAccessToken()),
@@ -98,10 +98,10 @@ public final class NotificationPullJobCreator implements JobCreator {
                         if (notifications.isSuccessful()) {
                             onNotificationsReceived(account, notifications.body());
                         } else {
-                            Log.w(TAG, "error receiving notifications");
+                            Timber.w("error receiving notifications");
                         }
                     } catch (IOException e) {
-                        Log.w(TAG, "error receiving notifications", e);
+                        Timber.w("error receiving notifications", e);
                     }
                 }
 

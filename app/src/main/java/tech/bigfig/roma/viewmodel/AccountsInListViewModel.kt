@@ -16,7 +16,7 @@
 
 package tech.bigfig.roma.viewmodel
 
-import android.util.Log
+import timber.log.Timber
 import androidx.lifecycle.ViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -54,7 +54,7 @@ class AccountsInListViewModel @Inject constructor(private val api: MastodonApi) 
                         copy(accounts = accounts.map { it + account })
                     }
                 }, {
-                    Log.i(javaClass.simpleName,
+                    Timber.i(javaClass.simpleName,
                             "Failed to add account to the list: ${account.username}")
                 })
                 .addTo(disposable)
@@ -69,7 +69,7 @@ class AccountsInListViewModel @Inject constructor(private val api: MastodonApi) 
                         })
                     }
                 }, {
-                    Log.i(javaClass.simpleName, "Failed to remove account from thelist: $accountId")
+                    Timber.i(javaClass.simpleName, "Failed to remove account from thelist: $accountId")
                 })
                 .addTo(disposable)
     }

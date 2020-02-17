@@ -30,7 +30,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.transition.Transition
-import android.util.Log
+import timber.log.Timber
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -236,7 +236,7 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
     private fun shareMedia() {
         val directory = applicationContext.getExternalFilesDir("Roma")
         if (directory == null || !(directory.exists())) {
-            Log.e(TAG, "Error obtaining directory to save temporary media.")
+            Timber.e("Error obtaining directory to save temporary media.")
             return
         }
 
@@ -245,7 +245,7 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
             Attachment.Type.IMAGE -> shareImage(directory, attachment.url)
             Attachment.Type.VIDEO,
             Attachment.Type.GIFV -> shareVideo(directory, attachment.url)
-            else -> Log.e(TAG, "Unknown media format for sharing.")
+            else -> Timber.e("Unknown media format for sharing.")
         }
     }
 
@@ -275,9 +275,9 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
                 stream.close()
                 return@fromCallable true
             } catch (fnfe: FileNotFoundException) {
-                Log.e(TAG, "Error writing temporary media.")
+                Timber.e("Error writing temporary media.")
             } catch (ioe: IOException) {
-                Log.e(TAG, "Error writing temporary media.")
+                Timber.e("Error writing temporary media.")
             }
             return@fromCallable false
 
@@ -291,7 +291,7 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
                 .autoDispose(AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY))
                 .subscribe(
                         { result ->
-                            Log.d(TAG, "Download image result: $result")
+                            Timber.d(TAG, "Download image result: $result")
                             isCreating = false
                             invalidateOptionsMenu()
                             progressBarShare.visibility = View.GONE
@@ -302,7 +302,7 @@ class ViewMediaActivity : BaseActivity(), ViewImageFragment.PhotoActionsListener
                             isCreating = false
                             invalidateOptionsMenu()
                             progressBarShare.visibility = View.GONE
-                            Log.e(TAG, "Failed to download image", error)
+                            Timber.e("Failed to download image", error)
                         }
                 )
 

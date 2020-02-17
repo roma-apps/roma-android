@@ -17,7 +17,7 @@ package tech.bigfig.roma.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import timber.log.Timber
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -105,7 +105,7 @@ class AccountMediaFragment : BaseFragment(), RefreshableFragment, Injectable {
                 }
             }
 
-            Log.d(TAG, "Failed to fetch account media", t)
+            Timber.d(TAG, "Failed to fetch account media", t)
         }
 
         override fun onResponse(call: Call<List<Status>>, response: Response<List<Status>>) {
@@ -141,17 +141,17 @@ class AccountMediaFragment : BaseFragment(), RefreshableFragment, Injectable {
         override fun onFailure(call: Call<List<Status>>?, t: Throwable?) {
             fetchingStatus = FetchingStatus.NOT_FETCHING
 
-            Log.d(TAG, "Failed to fetch account media", t)
+            Timber.d(TAG, "Failed to fetch account media", t)
         }
 
         override fun onResponse(call: Call<List<Status>>, response: Response<List<Status>>) {
             fetchingStatus = FetchingStatus.NOT_FETCHING
             val body = response.body()
             body?.let { fetched ->
-                Log.d(TAG, "fetched ${fetched.size} statuses")
-                if (fetched.isNotEmpty()) Log.d(TAG, "first: ${fetched.first().id}, last: ${fetched.last().id}")
+                Timber.d(TAG, "fetched ${fetched.size} statuses")
+                if (fetched.isNotEmpty()) Timber.d(TAG, "first: ${fetched.first().id}, last: ${fetched.last().id}")
                 statuses.addAll(fetched)
-                Log.d(TAG, "now there are ${statuses.size} statuses")
+                Timber.d(TAG, "now there are ${statuses.size} statuses")
                 // flatMap requires iterable but I don't want to box each array into list
                 val result = mutableListOf<AttachmentViewData>()
                 for (status in fetched) {
@@ -206,7 +206,7 @@ class AccountMediaFragment : BaseFragment(), RefreshableFragment, Injectable {
                     val lastItem = layoutManager.findLastCompletelyVisibleItemPosition()
                     if (itemCount <= lastItem + 3 && fetchingStatus == FetchingStatus.NOT_FETCHING) {
                         statuses.lastOrNull()?.let { last ->
-                            Log.d(TAG, "Requesting statuses with max_id: ${last.id}, (bottom)")
+                            Timber.d(TAG, "Requesting statuses with max_id: ${last.id}, (bottom)")
                             fetchingStatus = FetchingStatus.FETCHING_BOTTOM
                             currentCall = api.accountStatuses(accountId, last.id, null, null, null, true, null)
                             currentCall?.enqueue(bottomCallback)

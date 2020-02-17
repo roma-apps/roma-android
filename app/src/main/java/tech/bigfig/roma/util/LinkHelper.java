@@ -27,7 +27,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.View;
 import android.widget.TextView;
 
@@ -206,7 +206,7 @@ public class LinkHelper {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Log.w("LinkHelper", "Actvity was not found for intent, " + intent.toString());
+            Timber.w("LinkHelper", "Actvity was not found for intent, " + intent.toString());
         }
     }
 
@@ -227,7 +227,7 @@ public class LinkHelper {
         try {
             customTabsIntent.launchUrl(context, uri);
         } catch (ActivityNotFoundException e) {
-            Log.w("LinkHelper", "Activity was not found for intent " + customTabsIntent.toString());
+            Timber.w("LinkHelper", "Activity was not found for intent " + customTabsIntent.toString());
             openLinkInBrowser(uri, context);
         }
 

@@ -25,7 +25,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -359,7 +359,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
                             .subscribe(
                                     deletedStatus -> {},
                                     error -> {
-                                        Log.w("SFragment", "error deleting status", error);
+                                        Timber.w("SFragment", "error deleting status", error);
                                         Toast.makeText(getContext(), R.string.error_generic, Toast.LENGTH_SHORT).show();
                                     });
                     removeItem(position);
@@ -400,7 +400,7 @@ public abstract class SFragment extends BaseFragment implements Injectable {
                                         startActivity(intent);
                                     },
                                     error -> {
-                                        Log.w("SFragment", "error deleting status", error);
+                                        Timber.w("SFragment", "error deleting status", error);
                                         Toast.makeText(getContext(), R.string.error_generic, Toast.LENGTH_SHORT).show();
                                     });
 
@@ -461,13 +461,13 @@ public abstract class SFragment extends BaseFragment implements Injectable {
                 if (response.isSuccessful() && filters != null) {
                     applyFilters(forceRefresh);
                 } else {
-                    Log.e(TAG, "Error getting filters from server");
+                    Timber.e("Error getting filters from server");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Filter>> call, @NonNull Throwable t) {
-                Log.e(TAG, "Error getting filters from server", t);
+                Timber.e("Error getting filters from server", t);
             }
         });
     }

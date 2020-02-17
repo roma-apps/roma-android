@@ -2,7 +2,7 @@ package tech.bigfig.roma.util.binding
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Log
+import timber.log.Timber
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

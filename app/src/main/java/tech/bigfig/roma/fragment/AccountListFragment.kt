@@ -16,7 +16,7 @@
 package tech.bigfig.roma.fragment
 
 import android.os.Bundle
-import android.util.Log
+import timber.log.Timber
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -164,7 +164,7 @@ class AccountListFragment : BaseFragment(), AccountActionListener, Injectable {
         } else {
             "unmute"
         }
-        Log.e(TAG, "Failed to $verb account id $accountId")
+        Timber.e("Failed to $verb account id $accountId")
     }
 
     override fun onBlock(block: Boolean, id: String, position: Int) {
@@ -214,7 +214,7 @@ class AccountListFragment : BaseFragment(), AccountActionListener, Injectable {
         } else {
             "unblock"
         }
-        Log.e(TAG, "Failed to $verb account accountId $accountId")
+        Timber.e("Failed to $verb account accountId $accountId")
     }
 
     override fun onRespondToFollowRequest(accept: Boolean, accountId: String,
@@ -254,7 +254,7 @@ class AccountListFragment : BaseFragment(), AccountActionListener, Injectable {
         } else {
             "reject"
         }
-        Log.e(TAG, "Failed to $verb account id $accountId.")
+        Timber.e("Failed to $verb account id $accountId.")
     }
 
     private fun getFetchCallByListType(type: Type, fromId: String?): Single<Response<List<Account>>> {
@@ -328,7 +328,7 @@ class AccountListFragment : BaseFragment(), AccountActionListener, Injectable {
 
     private fun onFetchAccountsFailure(throwable: Throwable) {
         fetching = false
-        Log.e(TAG, "Fetch failure", throwable)
+        Timber.e("Fetch failure", throwable)
 
         if (adapter.itemCount == 0) {
             messageView.show()

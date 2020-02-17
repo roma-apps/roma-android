@@ -25,7 +25,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
-import android.util.Log
+import timber.log.Timber
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -415,7 +415,7 @@ class SearchStatusesFragment : SearchFragment<Pair<Status, StatusViewData.Concre
                                             .build(context)
                                     startActivity(intent)
                                 }, { error ->
-                                    Log.w("SearchStatusesFragment", "error deleting status", error)
+                                    Timber.w("SearchStatusesFragment", "error deleting status", error)
                                     Toast.makeText(context, R.string.error_generic, Toast.LENGTH_SHORT).show()
                                 })
 

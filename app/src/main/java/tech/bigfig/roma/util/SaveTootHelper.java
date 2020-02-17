@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
+import timber.log.Timber;
 import android.webkit.MimeTypeMap;
 
 import com.google.gson.Gson;
@@ -116,7 +116,7 @@ public final class SaveTootHelper {
             for (String uriString : uris) {
                 Uri uri = Uri.parse(uriString);
                 if (context.getContentResolver().delete(uri, null, null) == 0) {
-                    Log.e(TAG, String.format("Did not delete file %s.", uriString));
+                    Timber.e(String.format("Did not delete file %s.", uriString));
                 }
             }
         }
@@ -131,7 +131,7 @@ public final class SaveTootHelper {
         File directory = context.getExternalFilesDir("Roma");
 
         if (directory == null || !(directory.exists())) {
-            Log.e(TAG, "Error obtaining directory to save media.");
+            Timber.e("Error obtaining directory to save media.");
             return null;
         }
 
@@ -167,7 +167,7 @@ public final class SaveTootHelper {
                 for (File earlierFile : filesSoFar) {
                     boolean deleted = earlierFile.delete();
                     if (!deleted) {
-                        Log.i(TAG, "Could not delete the file " + earlierFile.toString());
+                        Timber.i(TAG, "Could not delete the file " + earlierFile.toString());
                     }
                 }
                 return null;
@@ -182,7 +182,7 @@ public final class SaveTootHelper {
         for (String uriString : mediaUris) {
             Uri uri = Uri.parse(uriString);
             if (context.getContentResolver().delete(uri, null, null) == 0) {
-                Log.e(TAG, String.format("Did not delete file %s.", uriString));
+                Timber.e(String.format("Did not delete file %s.", uriString));
             }
         }
     }

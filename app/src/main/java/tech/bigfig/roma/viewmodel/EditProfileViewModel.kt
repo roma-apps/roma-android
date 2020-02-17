@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
+import timber.log.Timber
 import tech.bigfig.roma.EditProfileActivity.Companion.AVATAR_SIZE
 import tech.bigfig.roma.EditProfileActivity.Companion.HEADER_HEIGHT
 import tech.bigfig.roma.EditProfileActivity.Companion.HEADER_WIDTH
@@ -255,7 +255,7 @@ class EditProfileViewModel  @Inject constructor(
         try {
             outputStream = FileOutputStream(file)
         } catch (e: FileNotFoundException) {
-            Log.w(TAG, Log.getStackTraceString(e))
+            Timber.w(e)
             return false
         }
 

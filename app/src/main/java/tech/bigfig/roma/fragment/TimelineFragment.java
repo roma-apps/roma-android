@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -583,7 +583,7 @@ public class TimelineFragment extends SFragment implements
                 .as(autoDisposable(from(this, Lifecycle.Event.ON_DESTROY)))
                 .subscribe(
                         (newStatus) -> setRebloggedForStatus(position, status, reblog, newStatus),
-                        (err) -> Log.d(TAG, "Failed to reblog status " + status.getId(), err)
+                        (err) -> Timber.d(TAG, "Failed to reblog status " + status.getId(), err)
                 );
     }
 
@@ -623,7 +623,7 @@ public class TimelineFragment extends SFragment implements
                 .as(autoDisposable(from(this, Lifecycle.Event.ON_DESTROY)))
                 .subscribe(
                         (newStatus) -> setFavouriteForStatus(position, newStatus, newStatus, favourite),
-                        (err) -> Log.d(TAG, "Failed to favourite status " + status.getId(), err)
+                        (err) -> Timber.d(TAG, "Failed to favourite status " + status.getId(), err)
                 );
     }
 
@@ -664,7 +664,7 @@ public class TimelineFragment extends SFragment implements
                 .as(autoDisposable(from(this)))
                 .subscribe(
                         (newPoll) -> setVoteForPoll(position, status, newPoll),
-                        (t) -> Log.d(TAG,
+                        (t) -> Timber.d(TAG,
                                 "Failed to vote in poll: " + status.getId(), t)
                 );
     }
@@ -736,7 +736,7 @@ public class TimelineFragment extends SFragment implements
                             ? statuses.get(position + 1).asRight().getId()
                             : null;
             if (fromStatus == null || toStatus == null) {
-                Log.e(TAG, "Failed to load more at " + position + ", wrong placeholder position");
+                Timber.e("Failed to load more at " + position + ", wrong placeholder position");
                 return;
             }
             sendFetchTimelineRequest(fromStatus.getId(), toStatus.getId(), maxMinusOne,
@@ -747,14 +747,14 @@ public class TimelineFragment extends SFragment implements
             statuses.setPairedItem(position, newViewData);
             updateAdapter();
         } else {
-            Log.e(TAG, "error loading more");
+            Timber.e("error loading more");
         }
     }
 
     @Override
     public void onContentCollapsedChange(boolean isCollapsed, int position) {
         if (position < 0 || position >= statuses.size()) {
-            Log.e(TAG, String.format("Tried to access out of bounds status position: %d of %d", position, statuses.size() - 1));
+            Timber.e(String.format("Tried to access out of bounds status position: %d of %d", position, statuses.size() - 1));
             return;
         }
 
@@ -762,7 +762,7 @@ public class TimelineFragment extends SFragment implements
         if (!(status instanceof StatusViewData.Concrete)) {
             // Statuses PairedList contains a base type of StatusViewData.Concrete and also doesn't
             // check for null values when adding values to it although this doesn't seem to be an issue.
-            Log.e(TAG, String.format(
+            Timber.e(String.format(
                     "Expected StatusViewData.Concrete, got %s instead at position: %d of %d",
                     status == null ? "<null>" : status.getClass().getSimpleName(),
                     position,
@@ -1109,7 +1109,7 @@ public class TimelineFragment extends SFragment implements
                 }
             }
 
-            Log.e(TAG, "Fetch Failure: " + exception.getMessage());
+            Timber.e("Fetch Failure: " + exception.getMessage());
             updateBottomLoadingState(fetchEnd);
             progressBar.setVisibility(View.GONE);
         }

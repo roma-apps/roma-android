@@ -1,6 +1,6 @@
 package tech.bigfig.roma.components.conversation
 
-import android.util.Log
+import timber.log.Timber
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -59,7 +59,7 @@ class ConversationsViewModel @Inject constructor(
                         database.conversationDao().insert(newConversation)
                     }
                     .subscribeOn(Schedulers.io())
-                    .doOnError { t -> Log.w("ConversationViewModel", "Failed to favourite conversation", t) }
+                    .doOnError { t -> Timber.w("ConversationViewModel", "Failed to favourite conversation", t) }
                     .subscribe()
                     .addTo(disposables)
         }
@@ -77,7 +77,7 @@ class ConversationsViewModel @Inject constructor(
                         database.conversationDao().insert(newConversation)
                     }
                     .subscribeOn(Schedulers.io())
-                    .doOnError { t -> Log.w("ConversationViewModel", "Failed to favourite conversation", t) }
+                    .doOnError { t -> Timber.w("ConversationViewModel", "Failed to favourite conversation", t) }
                     .subscribe()
                     .addTo(disposables)
         }
@@ -117,7 +117,7 @@ class ConversationsViewModel @Inject constructor(
                should not delete the conversation but show another toot of the conversation */
             timelineCases.delete(conversation.lastStatus.id)
                     .subscribeOn(Schedulers.io())
-                    .doOnError { t -> Log.w("ConversationViewModel", "Failed to delete conversation", t) }
+                    .doOnError { t -> Timber.w("ConversationViewModel", "Failed to delete conversation", t) }
                     .subscribe()
             database.conversationDao().delete(conversation)
                     .subscribeOn(Schedulers.io())

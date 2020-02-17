@@ -22,7 +22,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
-import android.util.Log
+import timber.log.Timber
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -135,7 +135,7 @@ class LoginActivity : BaseActivity(), Injectable {
                     loginButton.isEnabled = true
                     domainTextInputLayout.error = getString(R.string.error_failed_app_registration)
                     setLoading(false)
-                    Log.e(TAG, "App authentication failed. " + response.message())
+                    Timber.e("App authentication failed. " + response.message())
                     return
                 }
                 val credentials = response.body()
@@ -149,7 +149,7 @@ class LoginActivity : BaseActivity(), Injectable {
                 loginButton.isEnabled = true
                 domainTextInputLayout.error = getString(R.string.error_failed_app_registration)
                 setLoading(false)
-                Log.e(TAG, Log.getStackTraceString(t))
+                Timber.e(t)
             }
         }
 
@@ -224,7 +224,7 @@ class LoginActivity : BaseActivity(), Injectable {
                         } else {
                             setLoading(false)
                             domainTextInputLayout.error = getString(R.string.error_retrieving_oauth_token)
-                            Log.e(TAG, String.format("%s %s",
+                            Timber.e(String.format("%s %s",
                                     getString(R.string.error_retrieving_oauth_token),
                                     response.message()))
                         }
@@ -233,7 +233,7 @@ class LoginActivity : BaseActivity(), Injectable {
                     override fun onFailure(call: Call<AccessToken>, t: Throwable) {
                         setLoading(false)
                         domainTextInputLayout.error = getString(R.string.error_retrieving_oauth_token)
-                        Log.e(TAG, String.format("%s %s",
+                        Timber.e(String.format("%s %s",
                                 getString(R.string.error_retrieving_oauth_token),
                                 t.message))
                     }
@@ -246,7 +246,7 @@ class LoginActivity : BaseActivity(), Injectable {
                  * can try again. */
                 setLoading(false)
                 domainTextInputLayout.error = getString(R.string.error_authorization_denied)
-                Log.e(TAG, String.format("%s %s",
+                Timber.e(String.format("%s %s",
                         getString(R.string.error_authorization_denied),
                         error))
             } else {
@@ -342,7 +342,7 @@ class LoginActivity : BaseActivity(), Injectable {
             try {
                  customTabsIntent.launchUrl(context, uri)
             } catch (e: ActivityNotFoundException) {
-                Log.w(TAG, "Activity was not found for intent $customTabsIntent")
+                Timber.w("Activity was not found for intent $customTabsIntent")
                 return false
             }
 

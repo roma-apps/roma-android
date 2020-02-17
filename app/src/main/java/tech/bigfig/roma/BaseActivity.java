@@ -24,7 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -75,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
          * runtime, just individual activities. So, each activity has to set its theme before any
          * views are created. */
         String theme = preferences.getString("appTheme", ThemeUtils.APP_THEME_DEFAULT);
-        Log.d("activeTheme", theme);
+        Timber.d("activeTheme", theme);
         if (theme.equals("black")) {
             setTheme(R.style.RomaBlackTheme);
         }

@@ -37,7 +37,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -636,7 +636,7 @@ public final class MainActivity extends BottomSheetActivity implements ActionBut
     }
 
     private static void onFetchUserInfoFailure(Throwable throwable) {
-        Log.e(TAG, "Failed to fetch user info. " + throwable.getMessage());
+        Timber.e("Failed to fetch user info. " + throwable.getMessage());
     }
 
     @Nullable

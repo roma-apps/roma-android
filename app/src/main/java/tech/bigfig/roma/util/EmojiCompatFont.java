@@ -3,7 +3,7 @@ package tech.bigfig.roma.util;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.util.Log;
+import timber.log.Timber;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
@@ -231,14 +231,14 @@ public class EmojiCompatFont {
      */
     private void deleteOldVersions(Context context) {
         loadExistingFontFiles(context);
-        Log.d(TAG, "deleting old versions...");
+        Timber.d(TAG, "deleting old versions...");
 
-        Log.d(TAG, String.format("deleteOldVersions: Found %d other font files", existingFontFiles.size()));
+        Timber.d(TAG, String.format("deleteOldVersions: Found %d other font files", existingFontFiles.size()));
         for (Pair<File, int[]> fileExists : existingFontFiles) {
             if (compareVersions(fileExists.second, getVersionCode()) < 0) {
                     File file = fileExists.first;
                     // Uses side effects!
-                    Log.d(TAG, String.format("Deleted %s successfully: %s", file.getAbsolutePath(),
+                    Timber.d(TAG, String.format("Deleted %s successfully: %s", file.getAbsolutePath(),
                             file.delete()));
                 }
         }
@@ -268,7 +268,7 @@ public class EmojiCompatFont {
 
             FilenameFilter ttfFilter = (dir, name) -> name.endsWith(".ttf");
             File[] existingFontFiles = directory.isDirectory() ? directory.listFiles(ttfFilter) : new File[0];
-            Log.d(TAG, String.format("loadExistingFontFiles: %d other font files found",
+            Timber.d(TAG, String.format("loadExistingFontFiles: %d other font files found",
                     existingFontFiles.length));
             // This is actually the upper bound
             this.existingFontFiles = new ArrayList<>(existingFontFiles.length);
@@ -444,8 +444,8 @@ public class EmojiCompatFont {
                             */
                         }
                     } else {
-                        Log.e(TAG, "downloading " + font.getUrl() + " failed. No content to download.");
-                        Log.e(TAG, "Status code: " + response.code());
+                        Timber.e("downloading " + font.getUrl() + " failed. No content to download.");
+                        Timber.e("Status code: " + response.code());
                         failed = true;
                     }
                 }
@@ -456,7 +456,7 @@ public class EmojiCompatFont {
                     sink.close();
                     // This 'if' uses side effects to delete the File.
                     if(isCancelled() && !downloadFile.delete()) {
-                        Log.e(TAG, "Could not delete file " + downloadFile);
+                        Timber.e("Could not delete file " + downloadFile);
                     }
                 }
             } catch (IOException ex) {
@@ -487,7 +487,7 @@ public class EmojiCompatFont {
 
         private void fail(File failedFile) {
             if(failedFile.exists() && !failedFile.delete()) {
-                Log.e(TAG, "Could not delete file " + failedFile);
+                Timber.e("Could not delete file " + failedFile);
             }
             for(EmojiDownloadListener listener : listeners) {
                 listener.onFailed();

@@ -17,7 +17,7 @@ package tech.bigfig.roma
 
 import android.os.Bundle
 import androidx.annotation.RawRes
-import android.util.Log
+import timber.log.Timber
 import android.view.MenuItem
 import android.widget.TextView
 import tech.bigfig.roma.util.IOUtils
@@ -72,7 +72,7 @@ class LicenseActivity : BaseActivity() {
                 line = br.readLine()
             }
         } catch (e: IOException) {
-            Log.w("LicenseActivity", e)
+            Timber.w("LicenseActivity", e)
         }
 
         IOUtils.closeQuietly(br)

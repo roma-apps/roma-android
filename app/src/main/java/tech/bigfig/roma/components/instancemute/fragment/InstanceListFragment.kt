@@ -1,7 +1,7 @@
 package tech.bigfig.roma.components.instancemute.fragment
 
 import android.os.Bundle
-import android.util.Log
+import timber.log.Timber
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,21 +70,21 @@ class InstanceListFragment: BaseFragment(), Injectable, InstanceActionListener {
         if (mute) {
             api.blockDomain(instance).enqueue(object: Callback<Any> {
                 override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Log.e(TAG, "Error muting domain $instance")
+                    Timber.e("Error muting domain $instance")
                 }
 
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     if (response.isSuccessful) {
                         adapter.addItem(instance)
                     } else {
-                        Log.e(TAG, "Error muting domain $instance")
+                        Timber.e("Error muting domain $instance")
                     }
                 }
             })
         } else {
             api.unblockDomain(instance).enqueue(object: Callback<Any> {
                 override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Log.e(TAG, "Error unmuting domain $instance")
+                    Timber.e("Error unmuting domain $instance")
                 }
 
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
@@ -96,7 +96,7 @@ class InstanceListFragment: BaseFragment(), Injectable, InstanceActionListener {
                                 }
                                 .show()
                     } else {
-                        Log.e(TAG, "Error unmuting domain $instance")
+                        Timber.e("Error unmuting domain $instance")
                     }
                 }
             })
@@ -156,7 +156,7 @@ class InstanceListFragment: BaseFragment(), Injectable, InstanceActionListener {
     private fun onFetchInstancesFailure(throwable: Throwable) {
         fetching = false
         instanceProgressBar.hide()
-        Log.e(TAG, "Fetch failure", throwable)
+        Timber.e("Fetch failure", throwable)
 
         if (adapter.itemCount == 0) {
             messageView.show()

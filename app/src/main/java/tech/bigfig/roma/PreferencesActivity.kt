@@ -21,7 +21,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
-import android.util.Log
+import timber.log.Timber
 import android.view.MenuItem
 import tech.bigfig.roma.appstore.EventHub
 import tech.bigfig.roma.appstore.PreferenceChangedEvent
@@ -123,7 +123,7 @@ class PreferencesActivity : BaseActivity(), SharedPreferences.OnSharedPreference
         when (key) {
             "appTheme" -> {
                 val theme = sharedPreferences.getNonNullString("appTheme", ThemeUtils.APP_THEME_DEFAULT)
-                Log.d("activeTheme", theme)
+                Timber.d("activeTheme", theme)
                 themeUtils.setAppNightMode(theme, this)
 
                 restartActivitiesOnExit = true

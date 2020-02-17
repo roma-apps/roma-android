@@ -1,6 +1,6 @@
 package tech.bigfig.roma.components.search
 
-import android.util.Log
+import timber.log.Timber
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -110,7 +110,7 @@ class SearchViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { setRebloggedForStatus(status, reblog) },
-                        { err -> Log.d(TAG, "Failed to reblog status ${status.first.id}", err) }
+                        { err -> Timber.d(TAG, "Failed to reblog status ${status.first.id}", err) }
                 )
         )
     }
@@ -153,7 +153,7 @@ class SearchViewModel @Inject constructor(
                 .subscribe(
                         { newPoll -> updateStatus(status, newPoll) },
                         { t ->
-                            Log.d(TAG,
+                            Timber.d(TAG,
                                     "Failed to vote in poll: ${status.first.id}", t)
                         }
                 ))

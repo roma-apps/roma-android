@@ -1,7 +1,7 @@
 package tech.bigfig.roma.service.push
 
 import android.content.Context
-import android.util.Log
+import timber.log.Timber
 import androidx.work.*
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -33,14 +33,14 @@ class DeleteFcmTokenWorker(context:Context, workerParameters: WorkerParameters):
                try {
                    val subscription = mastodonApi.unsubscribePush("Bearer $auth", domain).execute()
                    if (subscription.isSuccessful) {
-                       Log.i(TAG, "Token removed success")
+                       Timber.i(TAG, "Token removed success")
                        emitter.onSuccess(Result.success())
                    } else {
-                       Log.w(TAG, "Token remove failed: ${subscription.message()}")
+                       Timber.w("Token remove failed: ${subscription.message()}")
                        emitter.onSuccess(Result.failure())
                    }
                } catch (e: IOException) {
-                   Log.w(TAG, "Token update failed", e)
+                   Timber.w("Token update failed", e)
                    emitter.onSuccess(Result.retry())
                }
            }

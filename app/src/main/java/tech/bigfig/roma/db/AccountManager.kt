@@ -15,7 +15,7 @@
 
 package tech.bigfig.roma.db
 
-import android.util.Log
+import timber.log.Timber
 import tech.bigfig.roma.entity.Account
 import tech.bigfig.roma.entity.Status
 
@@ -53,7 +53,7 @@ class AccountManager(db: AppDatabase) {
 
         activeAccount?.let {
             it.isActive = false
-            Log.d(TAG, "addAccount: saving account with id " + it.id)
+            Timber.d(TAG, "addAccount: saving account with id " + it.id)
 
             accountDao.insertOrReplace(it)
         }
@@ -71,7 +71,7 @@ class AccountManager(db: AppDatabase) {
      */
     fun saveAccount(account: AccountEntity) {
         if (account.id != 0L) {
-            Log.d(TAG, "saveAccount: saving account with id " + account.id)
+            Timber.d(TAG, "saveAccount: saving account with id " + account.id)
             accountDao.insertOrReplace(account)
         }
 
@@ -92,7 +92,7 @@ class AccountManager(db: AppDatabase) {
             if (accounts.size > 0) {
                 accounts[0].isActive = true
                 activeAccount = accounts[0]
-                Log.d(TAG, "logActiveAccountOut: saving account with id " + accounts[0].id)
+                Timber.d(TAG, "logActiveAccountOut: saving account with id " + accounts[0].id)
                 accountDao.insertOrReplace(accounts[0])
             } else {
                 activeAccount = null
@@ -118,7 +118,7 @@ class AccountManager(db: AppDatabase) {
             it.defaultMediaSensitivity = account.source?.sensitive ?: false
             it.emojis = account.emojis ?: emptyList()
 
-            Log.d(TAG, "updateActiveAccount: saving account with id " + it.id)
+            Timber.d(TAG, "updateActiveAccount: saving account with id " + it.id)
             it.id = accountDao.insertOrReplace(it)
 
             val accountIndex = accounts.indexOf(it)
@@ -141,7 +141,7 @@ class AccountManager(db: AppDatabase) {
     fun setActiveAccount(accountId: Long) {
 
         activeAccount?.let {
-            Log.d(TAG, "setActiveAccount: saving account with id " + it.id)
+            Timber.d(TAG, "setActiveAccount: saving account with id " + it.id)
             it.isActive = false
             saveAccount(it)
         }

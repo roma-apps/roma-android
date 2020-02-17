@@ -28,7 +28,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
+import timber.log.Timber;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -156,7 +156,7 @@ public class NotificationHelper {
                     break;
                 }
             } catch (JSONException e) {
-                Log.d(TAG, Log.getStackTraceString(e));
+                Timber.d(e);
             }
         }
 
@@ -189,7 +189,7 @@ public class NotificationHelper {
 
             accountAvatar = target.get();
         } catch (ExecutionException | InterruptedException e) {
-            Log.d(TAG, "error loading account avatar", e);
+            Timber.d(TAG, "error loading account avatar", e);
             accountAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.avatar_default);
         }
 
@@ -243,7 +243,7 @@ public class NotificationHelper {
                 summaryBuilder.setContentTitle(title)
                         .setContentText(text);
             } catch (JSONException e) {
-                Log.d(TAG, Log.getStackTraceString(e));
+                Timber.d(e);
             }
         }
 
@@ -434,12 +434,12 @@ public class NotificationHelper {
             if (notificationManager.areNotificationsEnabled()) {
                 for (NotificationChannel channel : notificationManager.getNotificationChannels()) {
                     if (channel.getImportance() > NotificationManager.IMPORTANCE_NONE) {
-                        Log.d(TAG, "NotificationsEnabled");
+                        Timber.d(TAG, "NotificationsEnabled");
                         return true;
                     }
                 }
             }
-            Log.d(TAG, "NotificationsDisabled");
+            Timber.d(TAG, "NotificationsDisabled");
 
             return false;
 
@@ -666,7 +666,7 @@ public class NotificationHelper {
                         break;
                     }
                 } catch (JSONException e) {
-                    Log.d(TAG, Log.getStackTraceString(e));
+                    Timber.d(e);
                 }
             }
         }
@@ -700,7 +700,7 @@ public class NotificationHelper {
 
             accountAvatar = target.get();
         } catch (ExecutionException | InterruptedException e) {
-            Log.d(TAG, "error loading account avatar", e);
+            Timber.d(TAG, "error loading account avatar", e);
             accountAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.avatar_default);
         }
 

@@ -22,7 +22,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
-import android.util.Log
+import timber.log.Timber
 import tech.bigfig.roma.ComposeActivity
 import tech.bigfig.roma.R
 import tech.bigfig.roma.db.AccountManager
@@ -63,7 +63,7 @@ class SendStatusBroadcastReceiver : BroadcastReceiver() {
             val message = getReplyMessage(intent)
 
             if (account == null) {
-                Log.w(TAG, "Account \"$senderId\" not found in database. Aborting quick reply!")
+                Timber.w("Account \"$senderId\" not found in database. Aborting quick reply!")
 
                 val builder = NotificationCompat.Builder(context, NotificationHelper.CHANNEL_MENTION + senderIdentifier)
                         .setSmallIcon(R.drawable.ic_notify)

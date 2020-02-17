@@ -1,6 +1,6 @@
 package tech.bigfig.roma.service.push
 
-import android.util.Log
+import timber.log.Timber
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.android.AndroidInjection
@@ -24,7 +24,7 @@ class RomaFirebaseMessagingService : FirebaseMessagingService(), Injectable {
     }
 
     override fun onNewToken(token: String) {
-        Log.d(TAG,"New token: $token")
+        Timber.d(TAG,"New token: $token")
         token?.let {
             UpdateFcmTokenWorker.updateTokens(token)
         }

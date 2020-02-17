@@ -1,7 +1,7 @@
 package tech.bigfig.roma.service.push
 
 import android.content.Context
-import android.util.Log
+import timber.log.Timber
 import androidx.work.*
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -35,19 +35,19 @@ class UpdateFcmTokenWorker(context:Context, workerParameters: WorkerParameters):
                accountManager.getAllAccountsOrderedByActive().forEach { account ->
                    if (accountForUpdate == null || accountForUpdate == account.username) {
                        try {
-                           Log.d(TAG, "update token ${account.fullName}")
+                           Timber.d(TAG, "update token ${account.fullName}")
                            val subscription = mastodonApi.subscribePush(
                                    "Bearer ${account.accessToken}",
                                    account.domain, getPushSubscriptionBody(token,account))
                                    .execute()
                            if (subscription.isSuccessful) {
-                               Log.i(TAG, "Token updated success for ${account.fullName}")
+                               Timber.i(TAG, "Token updated success for ${account.fullName}")
                            } else {
-                               Log.w(TAG, "Token update failed: ${subscription.message()}")
+                               Timber.w("Token update failed: ${subscription.message()}")
                            }
                        } catch (e: IOException) {
                            retResult = Result.retry()
-                           Log.w(TAG, "Token update failed", e)
+                           Timber.w("Token update failed", e)
                        }
                    }
                }

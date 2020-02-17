@@ -25,7 +25,7 @@ import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.provider.OpenableColumns
-import android.util.Log
+import timber.log.Timber
 import android.webkit.MimeTypeMap
 import androidx.annotation.Px
 import androidx.exifinterface.media.ExifInterface
@@ -101,7 +101,7 @@ fun getSampledBitmap(contentResolver: ContentResolver, uri: Uri, @Px reqWidth: I
     try {
         stream = contentResolver.openInputStream(uri)
     } catch (e: FileNotFoundException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         return null
     }
 
@@ -120,10 +120,10 @@ fun getSampledBitmap(contentResolver: ContentResolver, uri: Uri, @Px reqWidth: I
         val orientation = getImageOrientation(uri, contentResolver)
         reorientBitmap(bitmap, orientation)
     } catch (e: FileNotFoundException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         null
     } catch (e: OutOfMemoryError) {
-        Log.e(TAG, "OutOfMemoryError while trying to get sampled Bitmap", e)
+        Timber.e("OutOfMemoryError while trying to get sampled Bitmap", e)
         null
     } finally {
         IOUtils.closeQuietly(stream)
@@ -140,10 +140,10 @@ fun getVideoThumbnail(context: Context, uri: Uri, @Px thumbnailSize: Int): Bitma
     try {
         retriever.setDataSource(context, uri)
     } catch (e: IllegalArgumentException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         return null
     } catch (e: SecurityException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         return null
     }
     val source = retriever.frameAtTime ?: return null
@@ -228,7 +228,7 @@ fun getImageOrientation(uri: Uri, contentResolver: ContentResolver): Int {
     try {
         inputStream = contentResolver.openInputStream(uri)
     } catch (e: FileNotFoundException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         return ExifInterface.ORIENTATION_UNDEFINED
     }
     if (inputStream == null) {
@@ -238,7 +238,7 @@ fun getImageOrientation(uri: Uri, contentResolver: ContentResolver): Int {
     try {
         exifInterface = ExifInterface(inputStream)
     } catch (e: IOException) {
-        Log.w(TAG, e)
+        Timber.w(e)
         IOUtils.closeQuietly(inputStream)
         return ExifInterface.ORIENTATION_UNDEFINED
     }
@@ -267,7 +267,7 @@ fun deleteStaleCachedMedia(mediaDirectory: File?) {
         try {
             file.delete()
         } catch (se: SecurityException) {
-            Log.e(TAG, "Error removing stale cached media")
+            Timber.e("Error removing stale cached media")
         }
     }
 }

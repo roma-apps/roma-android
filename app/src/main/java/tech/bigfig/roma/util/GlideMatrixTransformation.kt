@@ -2,7 +2,7 @@ package tech.bigfig.roma.util
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.util.Log
+import timber.log.Timber
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.util.Util
@@ -26,7 +26,7 @@ class GlideMatrixTransformation(val focus: Attachment.Focus): BitmapTransformati
         FocalPointUtil.updateFocalPointMatrix(toTransform.width.toFloat(), toTransform.height.toFloat(),
                 outWidth.toFloat(), outHeight.toFloat(),
                 focus, focalMatrix)
-        Log.d("GlideMatrixTrans","transform: $outWidth-$outHeight")
+        Timber.d("GlideMatrixTrans","transform: $outWidth-$outHeight")
         return Bitmap.createBitmap(toTransform,0,0,outWidth,outHeight,focalMatrix,true)
     }
 

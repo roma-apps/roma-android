@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
-import android.util.Log
+import timber.log.Timber
 import androidx.lifecycle.Lifecycle
 import com.uber.autodispose.AutoDispose.autoDisposable
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from
@@ -45,7 +45,7 @@ class PrivacyPolicyActivity : BaseActivity() {
                             content.text = text
                         },
                         { error ->
-                            Log.d(TAG,"Failed to load content",error)
+                            Timber.d(TAG,"Failed to load content",error)
                             finish()
                         }
                 )

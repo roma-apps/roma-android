@@ -19,7 +19,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import timber.log.Timber
 import android.view.View
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -236,13 +236,13 @@ class AccountPreferencesFragment : PreferenceFragmentCompat(),
                                 accountManager.saveAccount(it)
                             }
                         } else {
-                            Log.e("AccountPreferences", "failed updating settings on server")
+                            Timber.e("AccountPreferences", "failed updating settings on server")
                             showErrorSnackbar(visibility, sensitive)
                         }
                     }
 
                     override fun onFailure(call: Call<Account>, t: Throwable) {
-                        Log.e("AccountPreferences", "failed updating settings on server", t)
+                        Timber.e("AccountPreferences", "failed updating settings on server", t)
                         showErrorSnackbar(visibility, sensitive)
                     }
 

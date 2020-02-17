@@ -47,7 +47,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -354,7 +354,7 @@ public final class ComposeActivity
 
                 @Override
                 public void onFailure(@NonNull Call<List<Emoji>> call, @NonNull Throwable t) {
-                    Log.w(TAG, "error loading custom emojis", t);
+                    Timber.w("error loading custom emojis", t);
                     loadCachedInstanceMetadata(activeAccount);
                 }
             });
@@ -1061,7 +1061,7 @@ public final class ComposeActivity
                 currentInputContentInfo.releasePermission();
             }
         } catch (Exception e) {
-            Log.e(TAG, "InputContentInfoCompat#releasePermission() failed." + e.getMessage());
+            Timber.e("InputContentInfoCompat#releasePermission() failed." + e.getMessage());
         } finally {
             currentInputContentInfo = null;
         }
@@ -1077,7 +1077,7 @@ public final class ComposeActivity
             try {
                 inputContentInfo.requestPermission();
             } catch (Exception e) {
-                Log.e(TAG, "InputContentInfoCompat#requestPermission() failed." + e.getMessage());
+                Timber.e("InputContentInfoCompat#requestPermission() failed." + e.getMessage());
                 return false;
             }
         }
@@ -1089,7 +1089,7 @@ public final class ComposeActivity
         try {
             descriptor = getContentResolver().openAssetFileDescriptor(uri, "r");
         } catch (FileNotFoundException e) {
-            Log.d(TAG, Log.getStackTraceString(e));
+            Timber.d(e);
             // Eat this exception, having the descriptor be null is sufficient.
         }
         if (descriptor != null) {
@@ -1591,7 +1591,7 @@ public final class ComposeActivity
         try {
             stream = getContentResolver().openInputStream(item.uri);
         } catch (FileNotFoundException e) {
-            Log.w(TAG, e);
+            Timber.w(e);
             return;
         }
 
@@ -1625,14 +1625,14 @@ public final class ComposeActivity
                         item.updateDescription.run();
                     }
                 } else {
-                    Log.d(TAG, "Upload request failed. " + response.message());
+                    Timber.d(TAG, "Upload request failed. " + response.message());
                     onUploadFailure(item, call.isCanceled());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Attachment> call, @NonNull Throwable t) {
-                Log.d(TAG, "Upload request failed. " + t.getMessage());
+                Timber.d(TAG, "Upload request failed. " + t.getMessage());
                 onUploadFailure(item, call.isCanceled());
                 item.updateDescription = null;
             }
@@ -1749,7 +1749,7 @@ public final class ComposeActivity
             tempInput.close();
             out.close();
         } catch(IOException e) {
-            Log.w(TAG, e);
+            Timber.w(e);
             uri = inUri;
         } finally {
             IOUtils.closeQuietly(tempInput);
@@ -1851,7 +1851,7 @@ public final class ComposeActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.d(TAG, event.toString());
+        Timber.d(TAG, event.toString());
         if (event.isCtrlPressed()) {
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 // send toot by pressing CTRL + ENTER
@@ -1942,14 +1942,14 @@ public final class ComposeActivity
                                 ComposeAutoCompleteAdapter.HashtagResult::new
                         );
                     } else {
-                        Log.e(TAG, String.format("Autocomplete search for %s failed.", token));
+                        Timber.e(String.format("Autocomplete search for %s failed.", token));
                         return Collections.emptyList();
                     }
                 case ':':
                     try {
                         emojiListRetrievalLatch.await();
                     } catch (InterruptedException e) {
-                        Log.e(TAG, String.format("Autocomplete search for %s was interrupted.", token));
+                        Timber.e(String.format("Autocomplete search for %s was interrupted.", token));
                         return Collections.emptyList();
                     }
                     if (emojiList != null) {
@@ -1981,11 +1981,11 @@ public final class ComposeActivity
                         return Collections.emptyList();
                     }
                 default:
-                    Log.w(TAG, "Unexpected autocompletion token: " + token);
+                    Timber.w("Unexpected autocompletion token: " + token);
                     return Collections.emptyList();
             }
         } catch (IOException e) {
-            Log.e(TAG, String.format("Autocomplete search for %s failed.", token));
+            Timber.e(String.format("Autocomplete search for %s failed.", token));
             return Collections.emptyList();
         }
     }
@@ -2055,7 +2055,7 @@ public final class ComposeActivity
     }
 
     private void onFetchInstanceFailure(Throwable throwable) {
-        Log.w(TAG, "error loading instance data", throwable);
+        Timber.w("error loading instance data", throwable);
         loadCachedInstanceMetadata(accountManager.getActiveAccount());
     }
 

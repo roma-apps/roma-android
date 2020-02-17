@@ -10,7 +10,7 @@ import android.os.Build;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
+import timber.log.Timber;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -234,7 +234,7 @@ public class EmojiPreference extends Preference {
      */
     private void saveSelectedFont() {
         int index = selected.getId();
-        Log.i(TAG, "saveSelectedFont: Font ID: " + index);
+        Timber.i(TAG, "saveSelectedFont: Font ID: " + index);
         // It's saved using the key FONT_PREFERENCE
         PreferenceManager
                 .getDefaultSharedPreferences(getContext())
